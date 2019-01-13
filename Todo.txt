@@ -1,0 +1,25 @@
+
+
+Todo for 2019:
+
+Now:
+[] Replace rapidjson with nlohmann::json
+[] Replace boost::lexical_cast and any other boost dependencies. 
+[] Consider updating SFML
+[] Replace TGUI with Dear ImGui
+[] Replace simplex noise with libnoise. See here: http://libnoise.sourceforge.net/ and here: https://github.com/qknight/libnoise
+   Also see FastNoise: https://github.com/Auburns/FastNoise and FastNoiseSIMD: https://github.com/Auburns/FastNoiseSIMD
+
+Next:
+[] Try to split up massive .cpp and .h files and better organize things + refactor.
+[] Fix render bugs and use better fonts, consider replacing pixel view with a bunch of small sprites. Ex: 8x8 pixels.
+[] Make tile view more performant.
+[] Fix occasional color bugs (cyan color at mountain / ice bases). 
+[] Try replacing existing color system with hsv adjustments.
+[] Add ability to save/load map settings with gui
+[] Store terrain coloring variables in json
+
+Later / distant future:
+[] Let lua control terrain coloring
+[] Consider wholly or partially replacing json with lua
+[] Try fixing river bugs

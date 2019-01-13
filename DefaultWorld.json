@@ -1,0 +1,44 @@
+{
+"ProfileName": "",//Name of the this config profile.
+"MapHeight": 128, //Y-value of this map, the map is a 2d plane.
+"MapWidth": 128, //X-value of this map, again, the map is a 2d plane.
+"Octaves": 30.0, //Higher numbers result in more varied maps. However, they also result in longer generation times.
+"Persistence": 0.65, //Higher values result in more varied or "Noisy" looking maps, lower values result in the map being much smoother.
+"Scale": 0.005, //Lower values result in larger bodies of water and landmasses. It's almost like a zoom slider on the noise generator.
+"CornerSmoothScale": 16,
+"SideSmoothScale": 8,
+"CenterSmoothScale": 1, //This and the two above are used to adjust how the smooth functions behave... the zoom functions are garbage and soon to be removed so these might result in some funny looking things.
+"SeedType": 0,//Set to zero for a random seed, any other value and the seed will be that value.
+"DoMapSmoothing": false,//Whether or not to smooth the height map.
+"DoMapSideSmoothing": false,//Since the smooth function is old it doesn't smooth any tiles on the map borders. You should use this in conjuction with the smooth function.
+"TempLowBound": 273.3,//Not currently used.
+"TempHighBound": 318.15,//Not currently used.
+"HeightOfEquator": 2,//Not currently used.
+"RainfallDivisor": 4,
+"RainfallOverlapValue": 70,
+"RainfallOverlapMultiplier": 4,
+"BaseWindRainfall": 135,//Used to in rainshadow calculatons to determine the rainfall level that the function is always trying to revert to. Lower values means overall lower rainfall levels, and higher results in the opposite.
+"PostMountainRainfall": 5,//The amount of rainfall the rainshadow has after hitting a mountain. Used to simulate the loss (or gain if you wish) of rainfall after a weather system hits a mountain. 
+"PostWaterRainfall": 180,//Used to simulate the amount of rainfall a weather system picks up after having hit water.
+"RainfallIncreaseDelta": 2.5,//How quickly rainfall increases when hitting water or returning to equilibrium.
+"RainfallDecreaseDelta": 1.5,//How quickly rainfall decreases when hitting mountains or returning to equilibrium.
+"RainfallMultiplier": 6.0,
+"MountainRate1": 4,//Used in turbulence function.
+"MountainRate2": 4,//Also used in turbulence function.
+"LandDecreaseLevel": 28,//Used in the turbulence function, modifies each non mountain and non water tiles elevation. Negative to increase, positive to decrease.
+"MountainDecreaseLevel": 10,//Same as above except used for mountains only.
+"RainfallNoiseThreshold": 170,//Minimum noise a tile must have for the rainfall noise function to effect it.
+"HeightTurbulence": true,//Whether or not to apply turbulence to the map, generally results in more interesting and varied maps. Through the use of the above variables it also allows slightly more control over how the map looks.
+"SeaLevel": 130,//At this elevation and below a tile is automatically set to be a water tile.
+"MountainLevel": 190, //At this height until SnowLevel - 1 a tile is set to be a mountain tile.
+"SnowLevel": 212,//At this height to maxiumum height a tile is set to be a snow capped mountain.
+"MinimumWaterBodySize": 30,//Minimum size a water body must be to not be turned automatically turned into land.
+"NumberOfHeightTiers": 8,//Used in height region calculations. Currently doesn't do much.
+"MinimumSeparationDistance": 5,//Minimum distance that each river start point must be from each other.
+"MaximumRivers": 120,//Number of rivers that the program will try to generate, it might not generate if some of the rivers fail for various reasons.
+"MaximumVariance": 10,//Used in determining direction restrictions, higher numbers result in less strict restrictions.
+"MaximumSameMoveDirection": 7,//Maximum times a river can move in the same direction in a row, used to make rivers not go in perfectly straight lines across the map.
+"SameMoveRestrictions": false,//Explained in the variable immediately above this.
+"DirectionRestrictions": true,//Used to control which directions a river can go. Aids in them finding an ocean instead of just getting stuck inland.
+"MinimumTargetSize": 60//Minimum size of a water body that a river will seek.
+}
