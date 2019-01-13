@@ -9,7 +9,7 @@ It's been several years since I've worked on this project, and I aim to update i
 - Remove boost::lexical_cast requirement as a dependency.
 - Update SFML to it's newest version.
 - Replace TGUI with [Dear ImGUI](https://github.com/ocornut/imgui). This should include improving the existing gui and providing better help and setting menus.
-- Replace simplex noise code with [libnoise](http://libnoise.sourceforge.net/) or one of it's variants, such as [FastNoise](https://github.com/Auburns/FastNoise) or [FastNoise SIMD](https://github.com/Auburns/FastNoiseSIMD).
+- Replace simplex noise code with [libnoise](http://libnoise.sourceforge.net/) or one of it's variants, such as [FastNoise](https://github.com/Auburns/FastNoise) or [FastNoiseSIMD](https://github.com/Auburns/FastNoiseSIMD).
 - Refactor old code. Split massive .h and .cpp files, rename .h to .hpp, and make sure each class has it's own file rather than bunching several together as they are in GameMap.h. Try to utilize new C++ langauge features where possible.
 - Improve documentation and readme on how to use.
 
