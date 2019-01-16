@@ -3,6 +3,16 @@ This project generates a height map and then applies temperature, rainfall, and 
 
 Note: This project currently won't build, as I am in the process of replacing a few libraries. See 1.0.0 on the roadmap below for more details. I'll upload a the release with 1.0.0 rather than using an old version from a few years ago.
 
+## Gallery
+![alt text](https://github.com/Moneyl/World-Generator/blob/master/World_Generator_Sbvg45lKoY.png "Shaded biome map 400x256 world. blue = ocean, dark green = forests, light green = grasslands, sand colored = desert, golden = savannha.")
+Shaded biome map for a 400x256 world. blue = ocean, dark green = forests, light green = grasslands, sand colored = desert, golden = savannha.
+
+![alt text](https://github.com/Moneyl/World-Generator/blob/master/World_Generator_8ZgboOAyxh.png "Height map 400x256 world. The brighter the color the higher the elevation.")
+Height map for a 400x256 world. The brighter the color the higher the elevation.
+
+![alt text](https://github.com/Moneyl/World-Generator/blob/master/World_Generator_kmhuLwwyQq.png "Temperature map 400x256 world. Red is warmer, blue is colder.")
+Temperature map for a 400x256 world. Red is warmer, blue is colder.
+
 ## Roadmap (WIP)
 It's been several years since I've worked on this project, and I aim to update it with some new libraries and remedy some of the poor coding practices used. I've listed some of the changes I'd like to make in Todo.txt, but I'll also include them here. The first release will be 1.0.0 as previous versions had no set numbering system. I'll do my best to follow [semantic versioning](https://semver.org/).
 
