@@ -29,7 +29,7 @@ bool MapSystem::River::Contains(int Position)
 
 void MapSystem::River::AddAdjacentTiles(int Position)
 {
-    char FileName[] = "";//C:/Users/Luke/Desktop/AddAdjacentTiles.txt";
+    char FileName[] = "";//C:/Users/moneyl/Desktop/AddAdjacentTiles.txt";
     std::ofstream fout(FileName, std::ios::trunc);
 
     //std::cout << "\n\nCurrent Tile Being Processed:";

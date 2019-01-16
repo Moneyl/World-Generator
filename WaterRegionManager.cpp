@@ -2,7 +2,7 @@
 
 void MapSystem::WaterRegionManager::FlattenSmallWaterBodies()
 {
-    char FileName[] = "";//C:/Users/Luke/Desktop/WaterFlatten.txt";
+    char FileName[] = "";//C:/Users/moneyl/Desktop/WaterFlatten.txt";
     std::ofstream fout(FileName, std::ios::trunc);
 
     //fout << "\nContained Regions Size: " << ContainedRegions.size();
@@ -53,7 +53,7 @@ void MapSystem::WaterRegionManager::Reset()
 
 void MapSystem::WaterRegionManager::CalculateWaterRegions(bool DebugMessages)
 {
-    char FileName[] = "";//C:/Users/Luke/Desktop/WaterRegionDetection.txt";
+    char FileName[] = "";//C:/Users/moneyl/Desktop/WaterRegionDetection.txt";
     std::ofstream fout(FileName, std::ios::trunc);
 
     if(DebugMessages)

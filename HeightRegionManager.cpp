@@ -47,7 +47,7 @@ bool MapSystem::HeightRegionManager::Contained(int Position)
 
 void MapSystem::HeightRegionManager::CalculateHeightRegions(bool DebugMessages)
 {
-    char FileName[] = "";//C:/Users/Luke/Desktop/HeightRegionDetection.txt";
+    char FileName[] = "";//C:/Users/moneyl/Desktop/HeightRegionDetection.txt";
     std::ofstream fout(FileName, std::ios::trunc);
 
     if(DebugMessages)

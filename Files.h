@@ -21,7 +21,7 @@
 #include <cstdio>
 #include <cstdlib>
 
-#include "lexical_cast.hpp"
+//#include "lexical_cast.hpp"
 //#include "boost\filesystem.hpp"
 
 //RapidJSON includes
@@ -40,5 +40,10 @@
 #include "reader.h"
 #include "stringbuffer.h"
 #include "writer.h"
+
+#include <filesystem>
+#include <experimental/filesystem>
+
+//#include <nlohmann/json.hpp>
 
 #endif // FILES_H

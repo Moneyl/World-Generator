@@ -295,7 +295,7 @@ int MapSystem::RiverManager::ClosestStartPoint(int Position)
 
 int MapSystem::RiverManager::PickStartPosition()
 {
-    char FileName[] = "";//C:/Users/Luke/Desktop/PickStartPosition.txt";
+    char FileName[] = "";//C:/Users/moneyl/Desktop/PickStartPosition.txt";
     std::ofstream fout(FileName, std::ios::trunc);
 
     int MapX = CurrentMap->x;
@@ -371,7 +371,7 @@ int MapSystem::RiverManager::PickStartPosition()
 
 int MapSystem::RiverManager::NextPosition(int Position, bool DebugMessages)
 {
-    char FileName[] = "";//C:/Users/Luke/Desktop/RiverNextPosition.txt";
+    char FileName[] = "";//C:/Users/moneyl/Desktop/RiverNextPosition.txt";
     std::ofstream fout(FileName, std::ios::app);
 
     if(DebugMessages)
@@ -934,7 +934,7 @@ bool MapSystem::RiverManager::SurroundedByMountains(int Position)
 
 int MapSystem::RiverManager::TestPositionFinder(int Position)
 {
-    char FileName[] = "";//C:/Users/Luke/Desktop/TestPositionFinder.txt";
+    char FileName[] = "";//C:/Users/moneyl/Desktop/TestPositionFinder.txt";
     std::ofstream fout(FileName, std::ios::app);
 
     //std::cout << "\n\nValue Passed To TestPositionFinder(): " << Position;
@@ -1245,7 +1245,7 @@ int MapSystem::RiverManager::TestPositionFinder(int Position)
 
 void MapSystem::RiverManager::GenerateRivers(bool DebugMessages)
 {
-    char FileName[] = "";//C:/Users/Luke/Desktop/RiverGeneration.txt";
+    char FileName[] = "";//C:/Users/moneyl/Desktop/RiverGeneration.txt";
     std::ofstream fout(FileName, std::ios::trunc);
 
     if(DebugMessages)

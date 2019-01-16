@@ -315,7 +315,7 @@ int MapSystem::GameMap::SetBaseWindRainfall(int Position)
 
 void MapSystem::GameMap::CalculateRainShadow(bool DebugMessages)
 {
-char FileName[] = "";//C:/Users/Luke/Desktop/RainShadow_Output.txt";
+char FileName[] = "";//C:/Users/moneyl/Desktop/RainShadow_Output.txt";
     std::ofstream fout(FileName);
 
 
@@ -555,7 +555,7 @@ void MapSystem::GameMap::ApplyNoiseToWindAngles()
 
 void MapSystem::GameMap::CalculateMapRainfall(bool DebugMessages)
 {
-    char FileName[] = "";//C:/Users/Luke/Desktop/Rainfall_Calc_Output.txt";
+    char FileName[] = "";//C:/Users/moneyl/Desktop/Rainfall_Calc_Output.txt";
     std::ofstream fout(FileName);
 
     if(DebugMessages)
@@ -1453,7 +1453,7 @@ bool MapSystem::GameMap::IsBiomeBorder(int Position)
 
 bool MapSystem::GameMap::IsIsolatedWater(int Position)
 {
-    char FileName[] = "";//C:/Users/Luke/Desktop/IsIsolatedWater.txt";
+    char FileName[] = "";//C:/Users/moneyl/Desktop/IsIsolatedWater.txt";
     std::ofstream fout(FileName, std::ios::app);
     if(data[Position].z <= SeaLevel)
     {
@@ -1704,7 +1704,7 @@ void MapSystem::GameMap::SetWorldTileCoordinates()
 
 void MapSystem::GameMap::SmoothNoise(bool DebugMessages)
 {
-    char FileName[] = "";//C:/Users/Luke/Desktop/Debug_Output_Smoothing.txt";
+    char FileName[] = "";//C:/Users/moneyl/Desktop/Debug_Output_Smoothing.txt";
     std::ofstream fout(FileName, std::ios::app);
 
     if(DebugMessages)
@@ -2030,7 +2030,7 @@ void MapSystem::GameMap::SmoothNoiseOutside(bool DebugMessages)
     int YLimit = y - 1;
     int CurrentPos = 0;
 
-    char FileName[] = "";//C:/Users/Luke/Desktop/OutsideSmooth.txt";
+    char FileName[] = "";//C:/Users/moneyl/Desktop/OutsideSmooth.txt";
     std::ofstream fout(FileName, std::ios::app);
 
     if(DebugMessages)
@@ -2200,7 +2200,7 @@ void MapSystem::GameMap::CalculateMapRegions(bool DebugMessages)
     //10 = scorched
     //11 = water
 
-    char FileName[] = "";//C:/Users/Luke/Desktop/RegionDetection.txt";
+    char FileName[] = "";//C:/Users/moneyl/Desktop/RegionDetection.txt";
     std::ofstream fout(FileName, std::ios::trunc);
 
     if(DebugMessages)
