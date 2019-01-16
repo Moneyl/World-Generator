@@ -1,6 +1,8 @@
 # World Generator
 This project generates a height map and then applies temperature, rainfall, and river simulations to it to form a world map. It represents the final world as a 2D map and has options for multiple map views, including the biome map, heightmap, temperature map, rainfall map, region map, water region map, and more. My original work on this project was in spring of 2015. This was my first major C++ project and when I finally began to understand the language. Keep in mind that because of that, there are many poor code practices in this project such as having massive files and classes instead of splitting them up. 
 
+Note: This project currently won't build, as I am in the process of replacing a few libraries. See 1.0.0 on the roadmap below for more details. I'll upload a the release with 1.0.0 rather than using an old version from a few years ago.
+
 ## Roadmap (WIP)
 It's been several years since I've worked on this project, and I aim to update it with some new libraries and remedy some of the poor coding practices used. I've listed some of the changes I'd like to make in Todo.txt, but I'll also include them here. The first release will be 1.0.0 as previous versions had no set numbering system. I'll do my best to follow [semantic versioning](https://semver.org/).
 
