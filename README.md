@@ -16,7 +16,7 @@ Height map for a 400x256 world. The brighter the color the higher the elevation.
 Temperature map for a 400x256 world. Red is warmer, blue is colder.
 
 ## Roadmap (WIP)
-It's been several years since I've worked on this project, and I aim to update it with some new libraries and remedy some of the poor coding practices used. I've listed some of the changes I'd like to make in Todo.txt, but I'll also include them here. The first release will be 1.0.0 as previous versions had no set numbering system. I'll do my best to follow [semantic versioning](https://semver.org/).
+It's been several years since I've worked on this project, and I aim to update it with some new libraries and remedy some of the poor coding practices used. I've listed some of the changes I'd like to make in Todo.txt, but I'll also include them here. The first release will be 1.0.0 as previous versions had no set numbering system. I'll do my best to follow [semantic versioning](https://semver.org/). Keep in mind that this roadmap is subject to change. I won't give any deadlines on when I might complete these as I'm currently more invested in some of my other projects.
 
 ### 1.0.0 (In progress)
 - Replace rapidjson with [Json for modern c++](https://github.com/nlohmann/json)
@@ -24,10 +24,12 @@ It's been several years since I've worked on this project, and I aim to update i
 - Update SFML to it's newest version.
 - Replace TGUI with [Dear ImGUI](https://github.com/ocornut/imgui). This should include improving the existing gui and providing better help and setting menus.
 - Replace simplex noise code with [libnoise](http://libnoise.sourceforge.net/) or one of it's variants, such as [FastNoise](https://github.com/Auburns/FastNoise) or [FastNoise SIMD](https://github.com/Auburns/FastNoiseSIMD). This should allow for much more interesting heightmaps. See [here](https://imgur.com/a/2W9xF0A) for examples on another one of my projects.
+
+### 1.1.0
 - Refactor old code. Split massive .h and .cpp files, rename .h to .hpp, and make sure each class has it's own file rather than bunching several together as they are in GameMap.h. Try to utilize new C++ langauge features where possible.
 - Improve documentation and readme on how to use.
 
-### 1.1.0
+### 1.2.0
 - Fix any issues with fonts being blurry or skewed.
 - Fix map view scaling or consider replacing each pixel with a small sprite (eg: 8x8 pixels)
 - Improve performance of the tile view
@@ -37,10 +39,16 @@ It's been several years since I've worked on this project, and I aim to update i
 - Allow users to save and load generated maps.
 - Store terrain coloring rules in json files.
 
-### 1.2.0
+### 1.3.0
 - Add basic lua scripting and allow lua scripts to control terrain coloring. Give them access to all of the map data.
 - Consider wholly or partially replacing json with lua
 - Attempt to improve river pathfinding so there are less failed rivers.
 
+### 1.4.0
+- Attempt zoom feature. Allowing you to zoom in closer to the world map and be provided finer details.
+
 ### 2.0.0
-- Split world generation, map image generation, and gui code into separate projects. This way people can easily use the world generation in their own projects.
+- Split world generation, map image generation, and gui code into separate projects (Still on the same repo). This way people can easily use the world generation in their own projects and pick which parts they want instead of needed to pull apart all of these different systems.
+
+### 2.1.0
+- Split world generation into multiple "modules". Ex: heightmap gen, temperature sim, rainfall sim, river gen, erosion sim, tectonics sim, volcanism sim. Should allow for easier mixing and matching of modules to create unique maps. 
