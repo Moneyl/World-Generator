@@ -92,7 +92,17 @@ public:
 	ProgramManager() {};
 	~ProgramManager() {};
 
-	enum States {MainMenu, WorldGenSetup, ProgramSettings, WorldGen, InGame, WorldMap, Running, Paused};
+	enum States 
+	{
+		MainMenu, 
+		WorldGenSetup, 
+		ProgramSettings, 
+		WorldGen, 
+		InGame, 
+		WorldMap, 
+		Running, 
+		Paused
+	};
 	States CurrentState;
 
 	void SetState(States NewState)
@@ -108,9 +118,9 @@ public:
 	void ProcessSignal(int SignalID);
 
 	void UpdateShaderVariables(int ArrayXSize, int TileID);
-	void LoadProgramSettings();
+	bool LoadProgramSettings();
 	void SaveProgramSettings();
-	void CreateProgramSettings();
+	//void CreateProgramSettings();
 
 	void StartStateManager();
 	void ExitMainMenu();
@@ -129,9 +139,9 @@ public:
 	void ExitWorldGen();
 
 	void SaveWorldGenSettings();
-	void LoadWorldGenSettings();
+	bool LoadWorldGenSettings();
 
-	void ConfigureJSONDocs();
+	//void ConfigureJSONDocs();
 
 	void DrawHeightMap(bool ColorWater);
 	void DrawTemperatureMap(bool Greyscale);
@@ -239,8 +249,11 @@ public:
 	sf::Color BaseReplaceColor;//(255, 0, 255);
 	sf::Color ForeReplaceColor;//(255, 255, 255);
 
-	rapidjson::Document ProgramSettingsDoc;
-	rapidjson::Document WorldGenSettingsDoc;
+	json MainConfig;
+	json WorldGenConfig;
+
+	//rapidjson::Document ProgramSettingsDoc;
+	//rapidjson::Document WorldGenSettingsDoc;
 
 	int WindowWidth;
 	int WindowHeight;

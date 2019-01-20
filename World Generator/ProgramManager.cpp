@@ -2413,15 +2413,9 @@ void ProgramManager::CommenceWorldGen()
 	UIMan.WGListBox->addItem(printout);
 }
 
-void ProgramManager::LoadWorldGenSettings()
+void ProgramManager::SetWorldGenSettings() 
 {
-
-}
-
-void ProgramManager::SetWorldGenSettings() //FIX AFTER UI REBUILD
-{
-	/*
-	std::string TempString;
+	/*std::string TempString;
 
 	TempString = UIMan.WGSMapWidth->getText();
 	MMan._x = std::stoi(TempString);
@@ -2542,7 +2536,7 @@ void ProgramManager::SetWorldGenSettings() //FIX AFTER UI REBUILD
 	MMan._MinimumTargetSize = std::stoi(TempString);*/
 }
 
-void ProgramManager::UpdateWorldGenSettings() //FIX AFTER UI
+void ProgramManager::UpdateWorldGenSettings() 
 {/*
 	//WGSProfileName->setText();
 	UIMan.WGSMapWidth->setText(tgui::to_string(MMan._x));
@@ -2684,115 +2678,135 @@ void ProgramManager::CloseProgramSettings()
 	//UIMan.ProgramSettingsForm->hide();
 }
 
-void ProgramManager::LoadProgramSettings()
+bool ProgramManager::LoadProgramSettings()
 {
-	if(FileExists("Settings.json") == 0)
+	std::string ExePath = GetExePath();
+	fs::remove(ExePath + "/Logs/Load Log.txt");
+	std::ofstream LogFile(ExePath + "/Logs/Load Log.txt");
+
+	if (fs::exists(ExePath + "/Settings/Settings.json"))
 	{
-		rapidjson::Document Doc;
+		//LogFile << "Settings.json found. Loading into string buffer..." << std::endl;
 
-		const char json[] = "{\"WindowWidth\": 1920,\"WindowHeight\": 1080, \"Fullscreen\": false, \"AntiAliasingLevel\": 0,\"VSync\": true,\"FramerateLimit\": 0,\"Automatic GL Version\": true,\"GLMajor\": 3,\"GLMinor\": 0,\"FontLocation\": \"fonts/DejaVuSans.ttf\",\"GuiConfigLocation\": \"widgets/MaterialBlackGold.conf\"}";
-		rapidjson::StringStream s(json);
-		Doc.ParseStream(s);
+		//LogFile << "Preparing to parse..." << std::endl;
 
-		FILE* afp = fopen("Settings.json", "wb"); // non-Windows use "w"
+		try
+		{
+			LogFile << "Parsing Settings.json..." << std::endl;
+			std::ifstream Config(ExePath + "/Settings/Settings.json");
+			Config >> MainConfig;
+			Config.close();
+			//MainConfig.parse(Buffer);
+			//LogFile << "Done parsing Settings.json" << std::endl;
+		}
+		catch (nlohmann::json::parse_error& Exception)
+		{
+			LogFile << "Parse error while parsing Settings.json!" << std::endl;
+			LogFile << Exception.what() << std::endl;
+			std::string ExceptionMessage("Exception when parsing Settings.json!\n");
+			ExceptionMessage += "Message: ";
+			ExceptionMessage += Exception.what();
 
-		char awriteBuffer[65536];
-		rapidjson::FileWriteStream aos(afp, awriteBuffer, sizeof(awriteBuffer));
+			//MessageBoxA(find_main_window(GetProcessID("rfg.exe")), ExceptionMessage.c_str(), "Json parsing exception", MB_OK);
+			LogFile << "Failed to parse Settings.json, exiting." << std::endl;
+			return false;
+		}
+		catch (std::exception& Exception)
+		{
+			LogFile << "General exception when parsing Settings.json!" << std::endl;
+			LogFile << Exception.what() << std::endl;
+			std::string ExceptionMessage("General exception when parsing Settings.json!\n");
+			ExceptionMessage += "Message: ";
+			ExceptionMessage += Exception.what();
 
-		rapidjson::PrettyWriter<rapidjson::FileWriteStream> awriter(aos);
-		Doc.Accept(awriter);
+			//MessageBoxA(find_main_window(GetProcessID("rfg.exe")), ExceptionMessage.c_str(), "Json general exception", MB_OK);
+			LogFile << "Failed to parse Settings.json, exiting." << std::endl;
+			return false;
+		}
+		catch (...)
+		{
+			LogFile << "Default exception when parsing settings.json!" << std::endl;
 
-		fclose(afp);
+			//MessageBoxA(find_main_window(GetProcessID("rfg.exe")), "Default exception while parsing Settings.json", "Json parsing exception", MB_OK);
+			LogFile << "Failed to parse Settings.json, exiting." << std::endl;
+			return false;
+		}
+		/*catch (nlohmann::json::basic_json::invalid_iterator& Exception)
+		{
 
+		}
+		catch (nlohmann::json::basic_json::type_error& Exception)
+		{
+
+		}
+		catch (nlohmann::json::basic_json::out_of_range& Exception)
+		{
+
+		}
+		catch (nlohmann::json::basic_json::other_error& Exception)
+		{
+
+		}*/
+		LogFile << "No parse exceptions detected." << std::endl;
+	}
+	else
+	{
+		CreateDirectoryIfNull(ExePath + "/Settings/");
+		LogFile << "Settings.json not found. Creating from default values." << std::endl;
+
+		MainConfig["Window Width"] = 1920;
+		MainConfig["Window Height"] = 1080;
+		MainConfig["Fullscreen"] = false;
+		MainConfig["Anti Aliasing Level"] = 0;
+		MainConfig["Use VSync"] = true;
+		MainConfig["Framerate Limit"] = 0;
+		MainConfig["Automatic GL Version"] = true;
+		MainConfig["GL Major"] = 3;
+		MainConfig["GL Minor"] = 0;
+		MainConfig["Font Location"] = "fonts/DejaVuSans.ttf";
+		MainConfig["GUI Config Location"] = "widgets/MaterialBlackGold.conf";
+
+		std::ofstream ConfigOutput(ExePath + "/Settings/Settings.json");
+		ConfigOutput << std::setw(4) << MainConfig << std::endl;
+		ConfigOutput.close();
 	}
 
-	FILE* fp = fopen("Settings.json", "rb");
-
-	char readBuffer[65536];
-	rapidjson::FileReadStream is(fp, readBuffer, sizeof(readBuffer));
-
-	ProgramSettingsDoc.ParseStream(is);
-
-	fclose(fp);
-
-	assert(ProgramSettingsDoc.IsObject());
-
-	assert(ProgramSettingsDoc.HasMember("WindowWidth"));
-	assert(ProgramSettingsDoc["WindowWidth"].IsInt());
-
-	assert(ProgramSettingsDoc.HasMember("WindowHeight"));
-	assert(ProgramSettingsDoc["WindowHeight"].IsInt());
-
-	assert(ProgramSettingsDoc.HasMember("Fullscreen"));
-	assert(ProgramSettingsDoc["Fullscreen"].IsBool());
-
-	assert(ProgramSettingsDoc.HasMember("AntiAliasingLevel"));
-	assert(ProgramSettingsDoc["AntiAliasingLevel"].IsInt());
-
-	assert(ProgramSettingsDoc.HasMember("VSync"));
-	assert(ProgramSettingsDoc["VSync"].IsBool());
-
-	assert(ProgramSettingsDoc.HasMember("FramerateLimit"));
-	assert(ProgramSettingsDoc["FramerateLimit"].IsInt());
-
-	assert(ProgramSettingsDoc.HasMember("Automatic GL Version"));
-	assert(ProgramSettingsDoc["Automatic GL Version"].IsBool());
-
-	assert(ProgramSettingsDoc.HasMember("GLMajor"));
-	assert(ProgramSettingsDoc["GLMajor"].IsInt());
-
-	assert(ProgramSettingsDoc.HasMember("GLMinor"));
-	assert(ProgramSettingsDoc["GLMinor"].IsInt());
-
-	assert(ProgramSettingsDoc.HasMember("FontLocation"));
-	assert(ProgramSettingsDoc["FontLocation"].IsString());
-
-	assert(ProgramSettingsDoc.HasMember("GuiConfigLocation"));
-	assert(ProgramSettingsDoc["GuiConfigLocation"].IsString());
-
-	WindowWidth = ProgramSettingsDoc["WindowWidth"].GetInt();
-	WindowHeight = ProgramSettingsDoc["WindowHeight"].GetInt();
-	Fullscreen = ProgramSettingsDoc["Fullscreen"].GetBool();
-	AntiAliasingLevel = ProgramSettingsDoc["AntiAliasingLevel"].GetInt();
-	VSync = ProgramSettingsDoc["VSync"].GetBool();
-	FramerateLimit = ProgramSettingsDoc["FramerateLimit"].GetInt();
-	AutoGL = ProgramSettingsDoc["Automatic GL Version"].GetBool();
-	GLMajor = ProgramSettingsDoc["GLMajor"].GetInt();
-	GLMinor = ProgramSettingsDoc["GLMinor"].GetInt();
-	FontLocation = ProgramSettingsDoc["FontLocation"].GetString();
-	GuiConfigLocation = ProgramSettingsDoc["GuiConfigLocation"].GetString();
+	WindowWidth = MainConfig["Window Width"].get<int>();
+	WindowHeight = MainConfig["Window Height"].get<int>();
+	Fullscreen = MainConfig["Fullscreen"].get<bool>();
+	AntiAliasingLevel = MainConfig["Anti Aliasing Level"].get<int>();
+	VSync = MainConfig["Use VSync"].get<bool>();
+	FramerateLimit = MainConfig["Framerate Limit"].get<int>();
+	AutoGL = MainConfig["Automatic GL Version"].get<bool>();
+	GLMajor = MainConfig["GL Major"].get<int>();
+	GLMinor = MainConfig["GL Minor"].get<int>();
+	FontLocation = MainConfig["Font Location"].get<std::string>();
+	GuiConfigLocation = MainConfig["GUI Config Location"].get<std::string>();
 
 	UIMan.FontLocation = FontLocation;
 	UIMan.ConfigLocation = GuiConfigLocation;
+
+	LogFile.close();
+	return true;
 }
 
-void ProgramManager::SaveProgramSettings()
+void ProgramManager::SaveProgramSettings() //Todo: Add exception catching.
 {
-	ProgramSettingsDoc["WindowWidth"] = WindowWidth;
-	ProgramSettingsDoc["WindowHeight"] = WindowHeight;
-	ProgramSettingsDoc["DisplayRiverStartPoints"] = DisplayRiverStartPoints;
-	ProgramSettingsDoc["DisplayAsTiles"] = DisplayAsTiles;
-	ProgramSettingsDoc["UIScaleFactor"] = UIScaleFactor;
-	ProgramSettingsDoc["Fullscreen"] = Fullscreen;
-	ProgramSettingsDoc["AntiAliasingLevel"] = AntiAliasingLevel;
-	ProgramSettingsDoc["VSync"] = VSync;
-	ProgramSettingsDoc["FramerateLimit"] = FramerateLimit;
-	ProgramSettingsDoc["GLMajor"] = GLMajor;
-	ProgramSettingsDoc["GLMinor"] = GLMinor;
-	/*char TempBuffer[120] = FontLocation.;
-	ProgramSettingsDoc["FontLocation"] = TempBuffer;
-	TempBuffer = GuiConfigLocation;
-	ProgramSettingsDoc["GuiConfigLocation"] = TempBuffer;*/
+	MainConfig["Window Width"] = WindowWidth;
+	MainConfig["Window Height"] = WindowHeight;
+	MainConfig["Full screen"] = Fullscreen;
+	MainConfig["Anti Aliasing Level"] = AntiAliasingLevel;
+	MainConfig["Use VSync"] = VSync;
+	MainConfig["Framerate Limit"] = FramerateLimit;
+	MainConfig["GL Major"] = GLMajor;
+	MainConfig["GL Minor"] = GLMinor;
+	//MainConfig["Display River Start Points"] = DisplayRiverStartPoints;
+	//MainConfig["Display As Tiles"] = DisplayAsTiles;
+	//MainConfig["UI Scale Factor"] = UIScaleFactor;
 
-	FILE* fp = fopen("Settings.json", "wb"); // non-Windows use "w"
-
-	char writeBuffer[65536];
-	rapidjson::FileWriteStream os(fp, writeBuffer, sizeof(writeBuffer));
-
-	rapidjson::PrettyWriter<rapidjson::FileWriteStream> writer(os);
-	ProgramSettingsDoc.Accept(writer);
-
-	fclose(fp);
+	std::ofstream ConfigOutput(GetExePath() + "/Settings/Settings.json");
+	ConfigOutput << std::setw(4) << MainConfig << std::endl;
+	ConfigOutput.close();
 }
 
 bool ProgramManager::FileExists(std::string FileName)
@@ -2811,277 +2825,225 @@ bool ProgramManager::FileExists(std::string FileName)
 	}
 }
 
-void ProgramManager::ConfigureJSONDocs()
+bool ProgramManager::LoadWorldGenSettings()
 {
-	const char json[] = "{\"ProfileName\": \"\",\"MapHeight\": 128,\"MapWidth\": 128,\"Octaves\": 7.0,\"Persistence\": 0.65,\"Scale\": 0.005,\"CornerSmoothScale\": 16,\"SideSmoothScale\": 8,\"CenterSmoothScale\": 1,\"SeedType\": 0,\"DoMapSmoothing\": false,\"DoMapSideSmoothing\": false,\"TempLowBound\": 273.3,\"TempHighBound\": 318.15,\"HeightOfEquator\": 2,\"RainfallDivisor\": 4,\"RainfallOverlapValue\": 70,\"RainfallOverlapMultiplier\": 4,\"BaseWindRainfall\": 135,\"PostMountainRainfall\": 35,\"PostWaterRainfall\": 180,\"RainfallIncreaseDelta\": 1.5,\"RainfallDecreaseDelta\": 1.5,\"RainfallMultiplier\": 6.0,\"MountainRate1\": 4,\"MountainRate2\": 4,\"LandDecreaseLevel\": 10,\"MountainDecreaseLevel\": 20,\"RainfallNoiseThreshold\": 170,\"HeightTurbulence\": true,\"SeaLevel\": 130,\"MountainLevel\": 175,\"SnowLevel\": 200,\"MinimumWaterBodySize\": 30,\"NumberOfHeightTiers\": 8,\"MinimumSeparationDistance\": 5,\"MaximumRivers\": 20,\"MaximumVariance\": 10,\"MaximumSameMoveDirection\": 7,\"SameMoveRestrictions\": false,\"DirectionRestrictions\": false,\"MinimumTargetSize\": 60}";
-	WorldGenSettingsDoc.Parse(json);
+	std::string ExePath = GetExePath();
+	fs::remove(ExePath + "/Logs/Load Log.txt");
+	std::ofstream LogFile(ExePath + "/Logs/Load Log.txt");
 
-	assert(WorldGenSettingsDoc.IsObject());
+	if (fs::exists(ExePath + "/Settings/World Gen Settings.json"))
+	{
+		//LogFile << "World Gen Settings.json found. Loading into string buffer..." << std::endl;
 
-	assert(WorldGenSettingsDoc.HasMember("ProfileName"));
-	assert(WorldGenSettingsDoc["ProfileName"].IsString());
+		//LogFile << "Preparing to parse..." << std::endl;
 
-	assert(WorldGenSettingsDoc.HasMember("MapWidth"));
-	assert(WorldGenSettingsDoc["MapWidth"].IsInt());
+		try
+		{
+			LogFile << "Parsing World Gen Settings.json..." << std::endl;
+			std::ifstream Config(ExePath + "/Settings/World Gen Settings.json");
+			Config >> MainConfig;
+			Config.close();
+			//MainConfig.parse(Buffer);
+			//LogFile << "Done parsing World Gen Settings.json" << std::endl;
+		}
+		catch (nlohmann::json::parse_error& Exception)
+		{
+			LogFile << "Parse error while parsing World Gen Settings.json!" << std::endl;
+			LogFile << Exception.what() << std::endl;
+			std::string ExceptionMessage("Exception when parsing World Gen Settings.json!\n");
+			ExceptionMessage += "Message: ";
+			ExceptionMessage += Exception.what();
 
-	assert(WorldGenSettingsDoc.HasMember("MapHeight"));
-	assert(WorldGenSettingsDoc["MapHeight"].IsInt());
+			//MessageBoxA(find_main_window(GetProcessID("rfg.exe")), ExceptionMessage.c_str(), "Json parsing exception", MB_OK);
+			LogFile << "Failed to parse World Gen Settings.json, exiting." << std::endl;
+			return false;
+		}
+		catch (std::exception& Exception)
+		{
+			LogFile << "General exception when parsing World Gen Settings.json!" << std::endl;
+			LogFile << Exception.what() << std::endl;
+			std::string ExceptionMessage("General exception when parsing World Gen Settings.json!\n");
+			ExceptionMessage += "Message: ";
+			ExceptionMessage += Exception.what();
 
-	assert(WorldGenSettingsDoc.HasMember("Octaves"));
-	assert(WorldGenSettingsDoc["Octaves"].IsDouble());
+			//MessageBoxA(find_main_window(GetProcessID("rfg.exe")), ExceptionMessage.c_str(), "Json general exception", MB_OK);
+			LogFile << "Failed to parse World Gen Settings.json, exiting." << std::endl;
+			return false;
+		}
+		catch (...)
+		{
+			LogFile << "Default exception when parsing World Gen Settings.json!" << std::endl;
 
-	assert(WorldGenSettingsDoc.HasMember("Persistence"));
-	assert(WorldGenSettingsDoc["Persistence"].IsDouble());
+			//MessageBoxA(find_main_window(GetProcessID("rfg.exe")), "Default exception while parsing Settings.json", "Json parsing exception", MB_OK);
+			LogFile << "Failed to parse World Gen Settings.json, exiting." << std::endl;
+			return false;
+		}
+		/*catch (nlohmann::json::basic_json::invalid_iterator& Exception)
+		{
 
-	assert(WorldGenSettingsDoc.HasMember("Scale"));
-	assert(WorldGenSettingsDoc["Scale"].IsDouble());
+		}
+		catch (nlohmann::json::basic_json::type_error& Exception)
+		{
 
-	assert(WorldGenSettingsDoc.HasMember("CornerSmoothScale"));
-	assert(WorldGenSettingsDoc["CornerSmoothScale"].IsInt());
+		}
+		catch (nlohmann::json::basic_json::out_of_range& Exception)
+		{
 
-	assert(WorldGenSettingsDoc.HasMember("SideSmoothScale"));
-	assert(WorldGenSettingsDoc["SideSmoothScale"].IsInt());
+		}
+		catch (nlohmann::json::basic_json::other_error& Exception)
+		{
 
-	assert(WorldGenSettingsDoc.HasMember("CenterSmoothScale"));
-	assert(WorldGenSettingsDoc["CenterSmoothScale"].IsInt());
+		}*/
+		LogFile << "No parse exceptions detected." << std::endl;
+	}
+	else
+	{
+		CreateDirectoryIfNull(ExePath + "/Settings/");
+		LogFile << "World Gen Settings.json not found. Creating from default values." << std::endl;
 
-	assert(WorldGenSettingsDoc.HasMember("SeedType"));
-	assert(WorldGenSettingsDoc["SeedType"].IsInt());
+		MainConfig["Profile Name"] = "Default World Gen";
+		MainConfig["Map Height"] = 400;
+		MainConfig["Map Width"] = 256;
+		MainConfig["Octaves"] = 30.0f;
+		MainConfig["Persistence"] = 0.65f;
+		MainConfig["Scale"] = 0.0065f;
+		MainConfig["Corner Smooth Scale"] = 16;
+		MainConfig["Side Smooth Scale"] = 8;
+		MainConfig["Center Smooth Scale"] = 1;
+		MainConfig["Seed"] = 0;
+		MainConfig["Do Map Smoothing"] = false;
+		MainConfig["Do Map Side Smoothing"] = false;
+		MainConfig["Temp Low Bound"] = 273.3f;
+		MainConfig["Temp High Bound"] = 318.15f;
+		MainConfig["Height of Equator"] = 2;
+		MainConfig["Rainfall Divisor"] = 4;
+		MainConfig["Rainfall Overlap Value"] = 70;
+		MainConfig["Rainfall Multiplier"] = 4;
+		MainConfig["Base Wind Rainfall"] = 135;
+		MainConfig["Post Mountain Wind Rainfall"] = 35;
+		MainConfig["Post Water Wind Rainfall"] = 180;
+		MainConfig["Rainfall Increase Delta"] = 2.5f;
+		MainConfig["Rainfall Decrease Delta"] = 1.5f;
+		MainConfig["Rainfall Multiplier"] = 6.0f;
+		MainConfig["Mountain Rate 1"] = 4;
+		MainConfig["Mountain Rate 2"] = 4;
+		MainConfig["Land Decrease Level"] = 28;
+		MainConfig["Mountain Decrease Level"] = 10;
+		MainConfig["Rainfall Noise Threshold"] = 170.0f;
+		MainConfig["Height Turbulence"] = true;
+		MainConfig["Sea Level"] = 130;
+		MainConfig["Mountain Level"] = 170;
+		MainConfig["Snow Level"] = 200;
+		MainConfig["Minimum Water Body Size"] = 30;
+		MainConfig["Number of Height Tiers"] = 8;
+		MainConfig["Minimum Separation Distance"] = 5;
+		MainConfig["Maximum Rivers"] = 120;
+		MainConfig["Maximum Variance"] = 10;
+		MainConfig["Maximum Same Move Direction"] = 7;
+		MainConfig["Same Move Restrictions"] = false;
+		MainConfig["Direction Restrictions"] = false;
+		MainConfig["Minimum Target Size"] = 60;
+		
+		std::ofstream ConfigOutput(ExePath + "/Settings/World Gen Settings.json");
+		ConfigOutput << std::setw(4) << MainConfig << std::endl;
+		ConfigOutput.close();
+	}
 
-	assert(WorldGenSettingsDoc.HasMember("DoMapSmoothing"));
-	assert(WorldGenSettingsDoc["DoMapSmoothing"].IsBool());
+	MMan.ProfileName = MainConfig["Profile Name"].get<std::string>();
+	MMan._x = MainConfig["Map Width"].get<int>();
+	MMan._y = MainConfig["Map Height"].get<int>();
+	MMan._octaves = MainConfig["Octaves"].get<float>();
+	MMan._persistence = MainConfig["Persistence"].get<float>();
+	MMan._scale = MainConfig["Scale"].get<float>();
+	MMan._CornerSmoothScale = MainConfig["Corner Smooth Scale"].get<int>();
+	MMan._SideSmoothScale = MainConfig["Side Smooth Scale"].get<int>();
+	MMan._CenterSmoothScale = MainConfig["Center Smooth Scale"].get<int>();
+	MMan._SeedType = MainConfig["Seed"].get<int>();
+	MMan._DoMapSmoothing = MainConfig["Do Map Smoothing"].get<bool>();
+	MMan._DoMapSideSmoothing = MainConfig["Do Map Side Smoothing"].get<bool>();
+	MMan._TempLowBound = MainConfig["Temp Low Bound"].get<float>();
+	MMan._TempHighBound = MainConfig["Temp High Bound"].get<float>();
+	MMan._HeightOfEquator = MainConfig["Height of Equator"].get<int>();
+	MMan._RainfallDivisor = MainConfig["Rainfall Divisor"].get<float>();
+	MMan._RainfallOverlapValue = MainConfig["Rainfall Overlap Value"].get<float>();
+	MMan._RainfallMultiplier = MainConfig["Rainfall Multiplier"].get<float>();
+	MMan._BaseWindRainfall = MainConfig["Base Wind Rainfall"].get<float>();
+	MMan._PostMountainWindRainfall = MainConfig["Post Mountain Wind Rainfall"].get<float>();
+	MMan._PostWaterWindRainfall = MainConfig["Post Water Wind Rainfall"].get<float>();
+	MMan._RainfallIncreaseDelta = MainConfig["Rainfall Increase Delta"].get<float>();
+	MMan._RainfallDecreaseDelta = MainConfig["Rainfall Decrease Delta"].get<float>();
+	MMan._RainfallMultiplier = MainConfig["Rainfall Multiplier"].get<float>();
+	MMan._MountainRate1 = MainConfig["Mountain Rate 1"].get<float>();
+	MMan._MountainRate2 = MainConfig["Mountain Rate 2"].get<float>();
+	MMan._LandDecreaseLevel = MainConfig["Land Decrease Level"].get<float>();
+	MMan._MountainDecreaseLevel = MainConfig["Mountain Decrease Level"].get<float>();
+	MMan._RainfallNoiseThreshold = MainConfig["Rainfall Noise Threshold"].get<float>();
+	MMan._HeightTurbulence = MainConfig["Height Turbulence"].get<bool>();
+	MMan._SeaLevel = MainConfig["Sea Level"].get<int>();
+	MMan._MountainLevel = MainConfig["Mountain Level"].get<int>();
+	MMan._SnowLevel = MainConfig["Snow Level"].get<int>();
+	MMan._MinimumWaterBodySize = MainConfig["Minimum Water Body Size"].get<int>();
+	MMan._NumberOfTiers = MainConfig["Number of Height Tiers"].get<int>();
+	MMan._MinimumSeparationDistance = MainConfig["Minimum Separation Distance"].get<int>();
+	MMan._MaxRivers = MainConfig["Maximum Rivers"].get<int>();
+	MMan._MaximumVariance = MainConfig["Maximum Variance"].get<int>();
+	MMan._MaximumSameMoveDirection = MainConfig["Maximum Same Move Direction"].get<int>();
+	MMan._SameMoveRestrictions = MainConfig["Same Move Restrictions"].get<bool>();
+	MMan._DirectionRestrictions = MainConfig["Direction Restrictions"].get<bool>();
+	MMan._MinimumTargetSize = MainConfig["Minimum Target Size"].get<int>();
 
-	assert(WorldGenSettingsDoc.HasMember("DoMapSideSmoothing"));
-	assert(WorldGenSettingsDoc["DoMapSideSmoothing"].IsBool());
-
-	assert(WorldGenSettingsDoc.HasMember("TempLowBound"));
-	assert(WorldGenSettingsDoc["TempLowBound"].IsDouble());
-
-	assert(WorldGenSettingsDoc.HasMember("TempHighBound"));
-	assert(WorldGenSettingsDoc["TempHighBound"].IsDouble());
-
-	assert(WorldGenSettingsDoc.HasMember("HeightOfEquator"));
-	assert(WorldGenSettingsDoc["HeightOfEquator"].IsInt());
-
-	assert(WorldGenSettingsDoc.HasMember("RainfallDivisor"));
-	assert(WorldGenSettingsDoc["RainfallDivisor"].IsInt());
-
-	assert(WorldGenSettingsDoc.HasMember("RainfallOverlapValue"));
-	assert(WorldGenSettingsDoc["RainfallOverlapValue"].IsInt());
-
-	assert(WorldGenSettingsDoc.HasMember("RainfallMultiplier"));
-	assert(WorldGenSettingsDoc["RainfallMultiplier"].IsDouble());
-
-	assert(WorldGenSettingsDoc.HasMember("BaseWindRainfall"));
-	assert(WorldGenSettingsDoc["BaseWindRainfall"].IsInt());
-
-	assert(WorldGenSettingsDoc.HasMember("PostMountainRainfall"));
-	assert(WorldGenSettingsDoc["PostMountainRainfall"].IsInt());
-
-	assert(WorldGenSettingsDoc.HasMember("PostWaterRainfall"));
-	assert(WorldGenSettingsDoc["PostWaterRainfall"].IsInt());
-
-	assert(WorldGenSettingsDoc.HasMember("RainfallIncreaseDelta"));
-	assert(WorldGenSettingsDoc["RainfallIncreaseDelta"].IsDouble());
-
-	assert(WorldGenSettingsDoc.HasMember("RainfallDecreaseDelta"));
-	assert(WorldGenSettingsDoc["RainfallDecreaseDelta"].IsDouble());
-
-	assert(WorldGenSettingsDoc.HasMember("RainfallMultiplier"));
-	assert(WorldGenSettingsDoc["RainfallMultiplier"].IsDouble());
-
-	assert(WorldGenSettingsDoc.HasMember("MountainRate1"));
-	assert(WorldGenSettingsDoc["MountainRate1"].IsInt());
-
-	assert(WorldGenSettingsDoc.HasMember("MountainRate2"));
-	assert(WorldGenSettingsDoc["MountainRate2"].IsInt());
-
-	assert(WorldGenSettingsDoc.HasMember("LandDecreaseLevel"));
-	assert(WorldGenSettingsDoc["LandDecreaseLevel"].IsInt());
-
-	assert(WorldGenSettingsDoc.HasMember("MountainDecreaseLevel"));
-	assert(WorldGenSettingsDoc["MountainDecreaseLevel"].IsInt());
-
-	assert(WorldGenSettingsDoc.HasMember("RainfallNoiseThreshold"));
-	assert(WorldGenSettingsDoc["RainfallNoiseThreshold"].IsInt());
-
-	assert(WorldGenSettingsDoc.HasMember("HeightTurbulence"));
-	assert(WorldGenSettingsDoc["HeightTurbulence"].IsBool());
-
-	assert(WorldGenSettingsDoc.HasMember("SeaLevel"));
-	assert(WorldGenSettingsDoc["SeaLevel"].IsInt());
-
-	assert(WorldGenSettingsDoc.HasMember("MountainLevel"));
-	assert(WorldGenSettingsDoc["MountainLevel"].IsInt());
-
-	assert(WorldGenSettingsDoc.HasMember("SnowLevel"));
-	assert(WorldGenSettingsDoc["SnowLevel"].IsInt());
-
-	assert(WorldGenSettingsDoc.HasMember("MinimumWaterBodySize"));
-	assert(WorldGenSettingsDoc["MinimumWaterBodySize"].IsInt());
-
-	assert(WorldGenSettingsDoc.HasMember("NumberOfHeightTiers"));
-	assert(WorldGenSettingsDoc["NumberOfHeightTiers"].IsInt());
-
-	assert(WorldGenSettingsDoc.HasMember("MinimumSeparationDistance"));
-	assert(WorldGenSettingsDoc["MinimumSeparationDistance"].IsInt());
-
-	assert(WorldGenSettingsDoc.HasMember("MaximumRivers"));
-	assert(WorldGenSettingsDoc["MaximumRivers"].IsInt());
-
-	assert(WorldGenSettingsDoc.HasMember("MaximumVariance"));
-	assert(WorldGenSettingsDoc["MaximumVariance"].IsInt());
-
-	assert(WorldGenSettingsDoc.HasMember("MaximumSameMoveDirection"));
-	assert(WorldGenSettingsDoc["MaximumSameMoveDirection"].IsInt());
-
-	assert(WorldGenSettingsDoc.HasMember("SameMoveRestrictions"));
-	assert(WorldGenSettingsDoc["SameMoveRestrictions"].IsBool());
-
-	assert(WorldGenSettingsDoc.HasMember("DirectionRestrictions"));
-	assert(WorldGenSettingsDoc["DirectionRestrictions"].IsBool());
-
-	assert(WorldGenSettingsDoc.HasMember("MinimumTargetSize"));
-	assert(WorldGenSettingsDoc["MinimumTargetSize"].IsInt());
+	LogFile.close();
+	return true;
 }
 
-void ProgramManager::SaveWorldGenSettings() //FIX AFTER REDOING UI
+void ProgramManager::SaveWorldGenSettings() //Todo: Add exception handling
 {
-	/*std::string TempString;
+	CreateDirectoryIfNull(GetExePath() + "/Settings/");
 
-	TempString = UIMan.WGSProfileName->getText();
-	const char* temp = TempString.c_str();
-	WorldGenSettingsDoc["ProfileName"];// = temp;//.SetString(temp);
+	MainConfig["Profile Name"] = MMan.ProfileName;
+	MainConfig["Map Height"] = MMan._x;
+	MainConfig["Map Width"] = MMan._y;
+	MainConfig["Octaves"] = MMan._octaves;
+	MainConfig["Persistence"] = MMan._persistence;
+	MainConfig["Scale"] = MMan._scale;
+	MainConfig["Corner Smooth Scale"] = MMan._CornerSmoothScale;
+	MainConfig["Side Smooth Scale"] = MMan._SideSmoothScale;
+	MainConfig["Center Smooth Scale"] = MMan._CenterSmoothScale;
+	MainConfig["Seed"] = MMan._Seed;
+	MainConfig["Do Map Smoothing"] = MMan._DoMapSmoothing;
+	MainConfig["Do Map Side Smoothing"] = MMan._DoMapSideSmoothing;
+	MainConfig["Temp Low Bound"] = MMan._TempLowBound;
+	MainConfig["Temp High Bound"] = MMan._TempHighBound;
+	MainConfig["Height of Equator"] = MMan._HeightOfEquator;
+	MainConfig["Rainfall Divisor"] = MMan._RainfallDivisor;
+	MainConfig["Rainfall Overlap Value"] = MMan._RainfallOverlapValue;
+	MainConfig["Rainfall Multiplier"] = MMan._RainfallMultiplier;
+	MainConfig["Base Wind Rainfall"] = MMan._BaseWindRainfall;
+	MainConfig["Post Mountain Wind Rainfall"] = MMan._PostMountainWindRainfall;
+	MainConfig["Post Water Rainfall"] = MMan._PostWaterWindRainfall;
+	MainConfig["Rainfall Increase Delta"] = MMan._RainfallIncreaseDelta;
+	MainConfig["Rainfall Decrease Delta"] = MMan._RainfallDecreaseDelta;
+	MainConfig["Rainfall Multiplier"] = MMan._RainfallMultiplier;
+	MainConfig["Mountain Rate 1"] = MMan._MountainRate1;
+	MainConfig["Mountain Rate 2"] = MMan._MountainRate2;
+	MainConfig["Land Decrease Level"] = MMan._LandDecreaseLevel;
+	MainConfig["Mountain Decrease Level"] = MMan._MountainDecreaseLevel;
+	MainConfig["Rainfall Noise Threshold"] = MMan._RainfallNoiseThreshold;
+	MainConfig["Height Turbulence"] = MMan._HeightTurbulence;
+	MainConfig["Sea Level"] = MMan._SeaLevel;
+	MainConfig["Mountain Level"] = MMan._MountainLevel;
+	MainConfig["Snow Level"] = MMan._SnowLevel;
+	MainConfig["Minimum Water Body Size"] = MMan._MinimumWaterBodySize;
+	MainConfig["Number of Height Tiers"] = MMan._NumberOfTiers;
+	MainConfig["Minimum Separation Distance"] = MMan._MinimumSeparationDistance;
+	MainConfig["Maximum Rivers"] = MMan._MaxRivers;
+	MainConfig["Maximum Variance"] = MMan._MaximumVariance;
+	MainConfig["Maximum Same Move Direction"] = MMan._MaximumSameMoveDirection;
+	MainConfig["Same Move Restrictions"] = MMan._SameMoveRestrictions;
+	MainConfig["Direction Restrictions"] = MMan._DirectionRestrictions;
+	MainConfig["Minimum Target Size"] = MMan._MinimumTargetSize;
 
-	TempString = UIMan.WGSMapWidth->getText();
-	WorldGenSettingsDoc["MapWidth"] = boost::lexical_cast<int>(TempString);
-
-	TempString = UIMan.WGSMapHeight->getText();
-	WorldGenSettingsDoc["MapHeight"] = boost::lexical_cast<int>(TempString);
-
-	TempString = UIMan.WGSOctaves->getText();
-	WorldGenSettingsDoc["Octaves"] = boost::lexical_cast<double>(TempString);
-
-	TempString = UIMan.WGSPersistence->getText();
-	WorldGenSettingsDoc["Persistence"] = boost::lexical_cast<double>(TempString);
-
-	TempString = UIMan.WGSScale->getText();
-	WorldGenSettingsDoc["Scale"] = boost::lexical_cast<double>(TempString);
-
-	TempString = UIMan.WGSCornerSmoothScale->getText();
-	WorldGenSettingsDoc["CornerSmoothScale"] = boost::lexical_cast<int>(TempString);
-
-	TempString = UIMan.WGSSideSmoothScale->getText();
-	WorldGenSettingsDoc["SideSmoothScale"] = boost::lexical_cast<int>(TempString);
-
-	TempString = UIMan.WGSCenterSmoothScale->getText();
-	WorldGenSettingsDoc["CenterSmoothScale"] = boost::lexical_cast<int>(TempString);
-
-	TempString = UIMan.WGSSeedType->getText();
-	WorldGenSettingsDoc["SeedType"] = boost::lexical_cast<int>(TempString);
-
-	WorldGenSettingsDoc["DoMapSmoothing"] = UIMan.WGSDoMapSmoothing->isChecked();
-
-	WorldGenSettingsDoc["DoMapSideSmoothing"] = UIMan.WGSDoMapSideSmoothing->isChecked();
-
-	TempString = UIMan.WGSTempLowBound->getText();
-	WorldGenSettingsDoc["TempLowBound"] = boost::lexical_cast<double>(TempString);
-
-	TempString = UIMan.WGSTempHighBound->getText();
-	WorldGenSettingsDoc["TempHighBound"] = boost::lexical_cast<double>(TempString);
-
-	TempString = UIMan.WGSHeightOfEquator->getText();
-	WorldGenSettingsDoc["HeightOfEquator"] = boost::lexical_cast<int>(TempString);
-
-	TempString = UIMan.WGSRainfallDivisor->getText();
-	WorldGenSettingsDoc["RainfallDivisor"] = boost::lexical_cast<int>(TempString);
-
-	TempString = UIMan.WGSRainfallOverlapValue->getText();
-	WorldGenSettingsDoc["RainfallOverlapValue"] = boost::lexical_cast<int>(TempString);
-
-	TempString = UIMan.WGSRainfallMultiplier->getText();
-	WorldGenSettingsDoc["RainfallMultiplier"] = boost::lexical_cast<double>(TempString);
-
-	TempString = UIMan.WGSBaseWindRainfall->getText();
-	WorldGenSettingsDoc["BaseWindRainfall"] = boost::lexical_cast<int>(TempString);
-
-	TempString = UIMan.WGSPostMountainRainfall->getText();
-	WorldGenSettingsDoc["PostMountainRainfall"] = boost::lexical_cast<int>(TempString);
-
-	TempString = UIMan.WGSPostWaterRainfall->getText();
-	WorldGenSettingsDoc["PostWaterRainfall"] = boost::lexical_cast<int>(TempString);
-
-	TempString = UIMan.WGSRainfallIncreaseDelta->getText();
-	WorldGenSettingsDoc["RainfallIncreaseDelta"] = boost::lexical_cast<double>(TempString);
-
-	TempString = UIMan.WGSRainfallDecreaseDelta->getText();
-	WorldGenSettingsDoc["RainfallDecreaseDelta"] = boost::lexical_cast<double>(TempString);
-
-	TempString = UIMan.WGSRainfallMultiplier->getText();
-	WorldGenSettingsDoc["RainfallMultiplier"] = boost::lexical_cast<double>(TempString);
-
-	TempString = UIMan.WGSMountainRate1->getText();
-	WorldGenSettingsDoc["MountainRate1"] = boost::lexical_cast<int>(TempString);
-
-	TempString = UIMan.WGSMountainRate2->getText();
-	WorldGenSettingsDoc["MountainRate2"] = boost::lexical_cast<int>(TempString);
-
-	TempString = UIMan.WGSLandDecreaseLevel->getText();
-	WorldGenSettingsDoc["LandDecreaseLevel"] = boost::lexical_cast<int>(TempString);
-
-	TempString = UIMan.WGSMountainDecreaseLevel->getText();
-	WorldGenSettingsDoc["MountainDecreaseLevel"] = boost::lexical_cast<int>(TempString);
-
-	TempString = UIMan.WGSRainfallNoiseThreshold->getText();
-	WorldGenSettingsDoc["RainfallNoiseThreshold"] = boost::lexical_cast<int>(TempString);
-
-	WorldGenSettingsDoc["HeightTurbulence"] = UIMan.WGSHeightTurbulence->isChecked();
-
-	TempString = UIMan.WGSSeaLevel->getText();
-	WorldGenSettingsDoc["SeaLevel"] = boost::lexical_cast<int>(TempString);
-
-	TempString = UIMan.WGSMountainLevel->getText();
-	WorldGenSettingsDoc["MountainLevel"] = boost::lexical_cast<int>(TempString);
-
-	TempString = UIMan.WGSSnowLevel->getText();
-	WorldGenSettingsDoc["SnowLevel"] = boost::lexical_cast<int>(TempString);
-
-	TempString = UIMan.WGSMinimumWaterBodySize->getText();
-	WorldGenSettingsDoc["MinimumWaterBodySize"] = boost::lexical_cast<int>(TempString);
-
-	TempString = UIMan.WGSNumberOfHeightTiers->getText();
-	WorldGenSettingsDoc["NumberOfHeightTiers"] = boost::lexical_cast<int>(TempString);
-
-	TempString = UIMan.WGSMinimumSeparationDistance->getText();
-	WorldGenSettingsDoc["MinimumSeparationDistance"] = boost::lexical_cast<int>(TempString);
-
-	TempString = UIMan.WGSMaximumRivers->getText();
-	WorldGenSettingsDoc["MaximumRivers"] = boost::lexical_cast<int>(TempString);
-
-	TempString = UIMan.WGSMaximumVariance->getText();
-	WorldGenSettingsDoc["MaximumVariance"] = boost::lexical_cast<int>(TempString);
-
-	TempString = UIMan.WGSMaximumSameMoveDirection->getText();
-	WorldGenSettingsDoc["MaximumSameMoveDirection"] = boost::lexical_cast<int>(TempString);
-
-	WorldGenSettingsDoc["SameMoveRestrictions"] = UIMan.WGSSameMoveRestrictions->isChecked();
-
-	WorldGenSettingsDoc["DirectionRestrictions"] = UIMan.WGSDirectionRestrictions->isChecked();
-
-	TempString = UIMan.WGSMinimumTargetSize->getText();
-	WorldGenSettingsDoc["MinimumTargetSize"] = boost::lexical_cast<int>(TempString);
-
-	std::string TempString2 = WorldName + WorldEnd;
-
-	const char * c = TempString2.c_str();
-
-	FILE* fp = fopen(c, "wb"); // non-Windows use "w"
-
-	char writeBuffer[65536];
-	rapidjson::FileWriteStream os(fp, writeBuffer, sizeof(writeBuffer));
-
-	rapidjson::PrettyWriter<rapidjson::FileWriteStream> writer(os);
-	WorldGenSettingsDoc.Accept(writer);
-
-	fclose(fp);*/
+	std::ofstream ConfigOutput(GetExePath() + "/Settings/World Gen Settings.json");
+	ConfigOutput << std::setw(4) << MainConfig << std::endl;
+	ConfigOutput.close();
 }

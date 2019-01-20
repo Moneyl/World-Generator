@@ -521,215 +521,215 @@ void UIManager::ConfigureWorldGenSetup()
 /*
 void UIManager::ConfigureMenusOld()
 {
-    GameGui.setWindow(*CurrentWindow);
+	GameGui.setWindow(*CurrentWindow);
 	GameGui.setFont(FontLocation);
 	GuiTheme = tgui::Theme::create(ConfigLocation);// Try this: "../../widgets/Black.txt"
 
-    MenuBackgroundColor.r = 112;
-    MenuBackgroundColor.g = 112;
-    MenuBackgroundColor.b = 112;
-    MenuBackgroundColor.a = 255;
+	MenuBackgroundColor.r = 112;
+	MenuBackgroundColor.g = 112;
+	MenuBackgroundColor.b = 112;
+	MenuBackgroundColor.a = 255;
 
-    TextColor.r = 225;
-    TextColor.g = 174;
-    TextColor.b = 51;
-    TextColor.a = 255;
+	TextColor.r = 225;
+	TextColor.g = 174;
+	TextColor.b = 51;
+	TextColor.a = 255;
 
-    DefaultBorder1.bottom = 10;
-    DefaultBorder1.top = 22;
-    DefaultBorder1.left = 33;
-    DefaultBorder1.right = 32;
+	DefaultBorder1.bottom = 10;
+	DefaultBorder1.top = 22;
+	DefaultBorder1.left = 33;
+	DefaultBorder1.right = 32;
 
-    Border2.bottom = 0;
-    Border2.top = 0;
-    Border2.left = 0;
-    Border2.right = 0;
+	Border2.bottom = 0;
+	Border2.top = 0;
+	Border2.left = 0;
+	Border2.right = 0;
 
-    Border3.bottom = 10;
-    Border3.top = 408;
-    Border3.left = 62;
-    Border3.right = 0;
+	Border3.bottom = 10;
+	Border3.top = 408;
+	Border3.left = 62;
+	Border3.right = 0;
 
-    Border4.bottom = 10;
-    Border4.top = 408;
-    Border4.left = 0;
-    Border4.right = 0;
+	Border4.bottom = 10;
+	Border4.top = 408;
+	Border4.left = 0;
+	Border4.right = 0;
 
-    Border5.bottom = 10;
-    Border5.top = 22;
-    Border5.left = 25;
-    Border5.right = 0;
+	Border5.bottom = 10;
+	Border5.top = 22;
+	Border5.left = 25;
+	Border5.right = 0;
 
-    Border6.bottom = 10;
-    Border6.top = 25;
-    Border6.left = 15;
-    Border6.right = 0;
+	Border6.bottom = 10;
+	Border6.top = 25;
+	Border6.left = 15;
+	Border6.right = 0;
 
-    Border7.bottom = 10;
-    Border7.top = 15;
-    Border7.left = 33;
-    Border7.right = 32;
+	Border7.bottom = 10;
+	Border7.top = 15;
+	Border7.left = 33;
+	Border7.right = 32;
 
-    Border8.bottom = 10;
-    Border8.top = 8;
-    Border8.left = 40;
-    Border8.right = 35;
+	Border8.bottom = 10;
+	Border8.top = 8;
+	Border8.left = 40;
+	Border8.right = 35;
 
-    Border9.top = 8;
-    Border9.bottom = 8;
-    Border9.left = 0;
-    Border9.right = 0;
+	Border9.top = 8;
+	Border9.bottom = 8;
+	Border9.left = 0;
+	Border9.right = 0;
 
-    Border10.top = 0;
-    Border10.bottom = 10;
-    Border10.left = 13;
-    Border10.right = 13;
+	Border10.top = 0;
+	Border10.bottom = 10;
+	Border10.left = 13;
+	Border10.right = 13;
 
-    GameGui.add(MainMenuForm, "MainMenuForm");
-    GameGui.add(WorldGenSetupForm, "WorldGenSetupForm");
-    GameGui.add(ProgramSettingsForm, "ProgramSettingsForm");
-    GameGui.add(WGS2, "WorldGenSetupForm2");
-    GameGui.add(WorldGenForm, "WorldGenForm");
-    GameGui.add(WGSScrollbar, "WorldGenSetupScrollbar");
-    GameGui.add(WG2, "WorldGenForm2");
+	GameGui.add(MainMenuForm, "MainMenuForm");
+	GameGui.add(WorldGenSetupForm, "WorldGenSetupForm");
+	GameGui.add(ProgramSettingsForm, "ProgramSettingsForm");
+	GameGui.add(WGS2, "WorldGenSetupForm2");
+	GameGui.add(WorldGenForm, "WorldGenForm");
+	GameGui.add(WGSScrollbar, "WorldGenSetupScrollbar");
+	GameGui.add(WG2, "WorldGenForm2");
 
-    MainMenuForm->add(MainMenuGrid, "MainMenuGrid");
-    MainMenuForm->add(MenuButton1, "MainButton1");
-    MainMenuForm->add(MenuButton2, "MainButton2");
-    MainMenuForm->add(MenuButton3, "MainButton3");
+	MainMenuForm->add(MainMenuGrid, "MainMenuGrid");
+	MainMenuForm->add(MenuButton1, "MainButton1");
+	MainMenuForm->add(MenuButton2, "MainButton2");
+	MainMenuForm->add(MenuButton3, "MainButton3");
 
-    WorldGenForm->add(WorldGenGrid, "WorldGenGrid");
-    WorldGenForm->add(WorldGenLoadingBar, "WorldGenLoadingBar");
-    WorldGenForm->add(WorldGenLogBox, "WorldGenLogBox");
+	WorldGenForm->add(WorldGenGrid, "WorldGenGrid");
+	WorldGenForm->add(WorldGenLoadingBar, "WorldGenLoadingBar");
+	WorldGenForm->add(WorldGenLogBox, "WorldGenLogBox");
 
-    WG2->add(WG2Grid, "WG2Grid");
-    WG2->add(BackToMain, "BackToMain");
-    WG2->add(BackToSetup, "BackToSetup");
-    WG2->add(RunNewSeed, "RunNewSeed");
+	WG2->add(WG2Grid, "WG2Grid");
+	WG2->add(BackToMain, "BackToMain");
+	WG2->add(BackToSetup, "BackToSetup");
+	WG2->add(RunNewSeed, "RunNewSeed");
 
-    MenuBackgroundTexture.loadFromFile("WindowBackground6.png");
-    BackgroundTexture.loadFromFile("Background2.png");
+	MenuBackgroundTexture.loadFromFile("WindowBackground6.png");
+	BackgroundTexture.loadFromFile("Background2.png");
 
-    BackgroundSprite.setTexture(BackgroundTexture);
-    BackgroundSprite.setPosition(0, 0);
+	BackgroundSprite.setTexture(BackgroundTexture);
+	BackgroundSprite.setPosition(0, 0);
 
-    MainMenuForm->setSize(300, 350);
-    MainMenuForm->setPosition(30, 700);
-    MainMenuForm->setBackgroundColor(MenuBackgroundColor);
-    //MainMenuForm->setBackgroundTexture(&MenuBackgroundTexture);
+	MainMenuForm->setSize(300, 350);
+	MainMenuForm->setPosition(30, 700);
+	MainMenuForm->setBackgroundColor(MenuBackgroundColor);
+	//MainMenuForm->setBackgroundTexture(&MenuBackgroundTexture);
 
-    ProgramSettingsForm->setSize(500, 500);
-    ProgramSettingsForm->setPosition(300, 250);
-    ProgramSettingsForm->setBackgroundColor(MenuBackgroundColor);
-    //ProgramSettingsForm->setBackgroundTexture(&MenuBackgroundTexture);
+	ProgramSettingsForm->setSize(500, 500);
+	ProgramSettingsForm->setPosition(300, 250);
+	ProgramSettingsForm->setBackgroundColor(MenuBackgroundColor);
+	//ProgramSettingsForm->setBackgroundTexture(&MenuBackgroundTexture);
 
-    WorldGenForm->setSize(752, 300);
-    WorldGenForm->setPosition(248, 700);
-    WorldGenForm->setBackgroundColor(MenuBackgroundColor);
-    //WorldGenForm->setBackgroundTexture(&MenuBackgroundTexture);
+	WorldGenForm->setSize(752, 300);
+	WorldGenForm->setPosition(248, 700);
+	WorldGenForm->setBackgroundColor(MenuBackgroundColor);
+	//WorldGenForm->setBackgroundTexture(&MenuBackgroundTexture);
 
-    WG2->setSize(200, 300);
-    WG2->setPosition(24, 700);
-    WG2->setBackgroundColor(MenuBackgroundColor);
-    //WG2->setBackgroundTexture(&MenuBackgroundTexture);
+	WG2->setSize(200, 300);
+	WG2->setPosition(24, 700);
+	WG2->setBackgroundColor(MenuBackgroundColor);
+	//WG2->setBackgroundTexture(&MenuBackgroundTexture);
 
 	WorldGenLoadingBar = GuiTheme->load("ProgressBar");
-    WorldGenLoadingBar->setSize(726, 30);
-    WorldGenLoadingBar->setPosition(37, 700);
-    WorldGenLoadingBar->setMinimum(0);
-    WorldGenLoadingBar->setMaximum(12);
-    WorldGenLoadingBar->setTextSize(16);
-    //WorldGenLoadingBar->setTextColor(sf::Color(0,0,0,255));
+	WorldGenLoadingBar->setSize(726, 30);
+	WorldGenLoadingBar->setPosition(37, 700);
+	WorldGenLoadingBar->setMinimum(0);
+	WorldGenLoadingBar->setMaximum(12);
+	WorldGenLoadingBar->setTextSize(16);
+	//WorldGenLoadingBar->setTextColor(sf::Color(0,0,0,255));
 
-    WorldGenLogBox = GuiTheme->load("ListBox");
-    WorldGenLogBox->setSize(726, 250);
-    WorldGenLogBox->setPosition(37, 740);
-    //WorldGenLogBox->setTextColor(sf::Color::Blue);
+	WorldGenLogBox = GuiTheme->load("ListBox");
+	WorldGenLogBox->setSize(726, 250);
+	WorldGenLogBox->setPosition(37, 740);
+	//WorldGenLogBox->setTextColor(sf::Color::Blue);
 
-    BackToMain = GuiTheme->load("Button");
-    BackToMain->setSize(200, 30);
-    BackToMain->setText("Back to main menu");
-    BackToMain->setTextSize(12);
+	BackToMain = GuiTheme->load("Button");
+	BackToMain->setSize(200, 30);
+	BackToMain->setText("Back to main menu");
+	BackToMain->setTextSize(12);
 
-    BackToSetup = GuiTheme->load("Button");
-    BackToSetup->setSize(200, 30);
-    BackToSetup->setText("Back to setup");
-    BackToSetup->setTextSize(12);
+	BackToSetup = GuiTheme->load("Button");
+	BackToSetup->setSize(200, 30);
+	BackToSetup->setText("Back to setup");
+	BackToSetup->setTextSize(12);
 
-    RunNewSeed = GuiTheme->load("Button");
-    RunNewSeed->setSize(200, 30);
-    RunNewSeed->setText("Generate with new seed");
-    RunNewSeed->setTextSize(12);
+	RunNewSeed = GuiTheme->load("Button");
+	RunNewSeed->setSize(200, 30);
+	RunNewSeed->setText("Generate with new seed");
+	RunNewSeed->setTextSize(12);
 
-    MenuButton1 = GuiTheme->load("Button");
-    MenuButton1->setSize(300, 30);
-    MenuButton1->setPosition(35, 25);
-    MenuButton1->setText("Generate Random World");
-    MenuButton1->setTextSize(16);
+	MenuButton1 = GuiTheme->load("Button");
+	MenuButton1->setSize(300, 30);
+	MenuButton1->setPosition(35, 25);
+	MenuButton1->setText("Generate Random World");
+	MenuButton1->setTextSize(16);
 
-    MenuButton2 = GuiTheme->load("Button");
-    MenuButton2->setSize(300, 30);
-    MenuButton2->setPosition(35, 75);
-    MenuButton2->setText("Generate Custom World");
-    MenuButton2->setTextSize(16);
+	MenuButton2 = GuiTheme->load("Button");
+	MenuButton2->setSize(300, 30);
+	MenuButton2->setPosition(35, 75);
+	MenuButton2->setText("Generate Custom World");
+	MenuButton2->setTextSize(16);
 
-    MenuButton3 = GuiTheme->load("Button");
-    MenuButton3->setSize(300, 30);
-    MenuButton3->setPosition(80, 175);
-    MenuButton3->setText("Exit");
-    MenuButton3->setTextSize(16);
+	MenuButton3 = GuiTheme->load("Button");
+	MenuButton3->setSize(300, 30);
+	MenuButton3->setPosition(80, 175);
+	MenuButton3->setText("Exit");
+	MenuButton3->setTextSize(16);
 
-    int EditBoxXSize = 120;
-    int EditBoxYSize = 30;
-    int EditBoxTextSize = 16;
+	int EditBoxXSize = 120;
+	int EditBoxYSize = 30;
+	int EditBoxTextSize = 16;
 
-    int CheckBoxXSize = 30;
-    int CheckBoxYSize = 30;
+	int CheckBoxXSize = 30;
+	int CheckBoxYSize = 30;
 
-    //WorldGenLogBox->setTextColor(TextColor);
+	//WorldGenLogBox->setTextColor(TextColor);
 
-    /*MenuButton1->bindCallback(tgui::Button::LeftMouseClicked);
-    MenuButton1->setCallbackId(1);
-    MenuButton2->bindCallback(tgui::Button::LeftMouseClicked);
-    MenuButton2->setCallbackId(2);
-    MenuButton3->bindCallback(tgui::Button::LeftMouseClicked);
-    MenuButton3->setCallbackId(3);
+	/*MenuButton1->bindCallback(tgui::Button::LeftMouseClicked);
+	MenuButton1->setCallbackId(1);
+	MenuButton2->bindCallback(tgui::Button::LeftMouseClicked);
+	MenuButton2->setCallbackId(2);
+	MenuButton3->bindCallback(tgui::Button::LeftMouseClicked);
+	MenuButton3->setCallbackId(3);
 
-    WGS2Generate->bindCallback(tgui::Button::LeftMouseClicked);
-    WGS2Generate->setCallbackId(10);
-    WGS2MainMenu->bindCallback(tgui::Button::LeftMouseClicked);
-    WGS2MainMenu->setCallbackId(11);
-    WGS2New->bindCallback(tgui::Button::LeftMouseClicked);
-    WGS2New->setCallbackId(12);
+	WGS2Generate->bindCallback(tgui::Button::LeftMouseClicked);
+	WGS2Generate->setCallbackId(10);
+	WGS2MainMenu->bindCallback(tgui::Button::LeftMouseClicked);
+	WGS2MainMenu->setCallbackId(11);
+	WGS2New->bindCallback(tgui::Button::LeftMouseClicked);
+	WGS2New->setCallbackId(12);
 
-    BackToMain->bindCallback(tgui::Button::LeftMouseClicked);
-    BackToMain->setCallbackId(13);
-    BackToSetup->bindCallback(tgui::Button::LeftMouseClicked);
-    BackToSetup->setCallbackId(14);
-    RunNewSeed->bindCallback(tgui::Button::LeftMouseClicked);
-    RunNewSeed->setCallbackId(15);
+	BackToMain->bindCallback(tgui::Button::LeftMouseClicked);
+	BackToMain->setCallbackId(13);
+	BackToSetup->bindCallback(tgui::Button::LeftMouseClicked);
+	BackToSetup->setCallbackId(14);
+	RunNewSeed->bindCallback(tgui::Button::LeftMouseClicked);
+	RunNewSeed->setCallbackId(15);
 
-    MainMenuGrid->addWidget(MenuButton1, 1, 2);
-    MainMenuGrid->addWidget(MenuButton2, 2, 2);
-    MainMenuGrid->addWidget(MenuButton3, 3, 2);
+	MainMenuGrid->addWidget(MenuButton1, 1, 2);
+	MainMenuGrid->addWidget(MenuButton2, 2, 2);
+	MainMenuGrid->addWidget(MenuButton3, 3, 2);
 
-    /*MainMenuGrid->changeWidgetLayout(MenuButton1, tgui::Grid::Layout::Up);
-    MainMenuGrid->changeWidgetLayout(MenuButton2, tgui::Grid::Layout::Center);
-    MainMenuGrid->changeWidgetLayout(MenuButton3, tgui::Grid::Layout::Bottom);
+	/*MainMenuGrid->changeWidgetLayout(MenuButton1, tgui::Grid::Layout::Up);
+	MainMenuGrid->changeWidgetLayout(MenuButton2, tgui::Grid::Layout::Center);
+	MainMenuGrid->changeWidgetLayout(MenuButton3, tgui::Grid::Layout::Bottom);
 
-    MainMenuGrid->changeWidgetBorders(MenuButton1, Border2);
-    MainMenuGrid->changeWidgetBorders(MenuButton2, Border2);
-    MainMenuGrid->changeWidgetBorders(MenuButton3, Border2);
+	MainMenuGrid->changeWidgetBorders(MenuButton1, Border2);
+	MainMenuGrid->changeWidgetBorders(MenuButton2, Border2);
+	MainMenuGrid->changeWidgetBorders(MenuButton3, Border2);
 
-    WorldGenGrid->addWidget(WorldGenLoadingBar, 1, 1);
-    WorldGenGrid->addWidget(WorldGenLogBox, 2, 1);
+	WorldGenGrid->addWidget(WorldGenLoadingBar, 1, 1);
+	WorldGenGrid->addWidget(WorldGenLogBox, 2, 1);
 
-    WG2Grid->addWidget(BackToMain, 1, 1);
-    WG2Grid->addWidget(BackToSetup, 2, 1);
-    WG2Grid->addWidget(RunNewSeed, 3, 1);
+	WG2Grid->addWidget(BackToMain, 1, 1);
+	WG2Grid->addWidget(BackToSetup, 2, 1);
+	WG2Grid->addWidget(RunNewSeed, 3, 1);
 
-    WorldGenGrid->changeWidgetBorders(WorldGenLoadingBar, Border10);
-    WorldGenGrid->changeWidgetBorders(WorldGenLogBox, Border10);
+	WorldGenGrid->changeWidgetBorders(WorldGenLoadingBar, Border10);
+	WorldGenGrid->changeWidgetBorders(WorldGenLogBox, Border10);
 }
 
 void UIManager::ConfigureWorldGenSetupOld()

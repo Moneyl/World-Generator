@@ -3,81 +3,83 @@
 
 int main()
 {
-	ProgramManager ProgMan;
-	
-	ProgMan.ConfigureJSONDocs();
-	ProgMan.LoadProgramSettings();
+	ProgramManager Program;
+
+	//Program.ConfigureJSONDocs();
+	Program.LoadProgramSettings();
+	Program.LoadWorldGenSettings();
+	//Program.SetWorldGenSettings();
 
 	sf::RenderWindow MainWindow;
 	std::string InputText;
 	
-	sf::ContextSettings GLContext(0, 0, ProgMan.AntiAliasingLevel, ProgMan.GLMajor, ProgMan.GLMinor);
-	if(ProgMan.AutoGL)
+	sf::ContextSettings GLContext(0, 0, Program.AntiAliasingLevel, Program.GLMajor, Program.GLMinor);
+	if(Program.AutoGL)
 	{
-		if(ProgMan.Fullscreen)
+		if(Program.Fullscreen)
 		{
-			MainWindow.create(sf::VideoMode(ProgMan.WindowWidth, ProgMan.WindowHeight), "World Generator 1.0", sf::Style::Fullscreen);
+			MainWindow.create(sf::VideoMode(Program.WindowWidth, Program.WindowHeight), "World Generator 1.0", sf::Style::Fullscreen);
 		}
-		if(!ProgMan.Fullscreen)
+		if(!Program.Fullscreen)
 		{
-			MainWindow.create(sf::VideoMode(ProgMan.WindowWidth, ProgMan.WindowHeight), "World Generator 1.0", sf::Style::Default);
+			MainWindow.create(sf::VideoMode(Program.WindowWidth, Program.WindowHeight), "World Generator 1.0", sf::Style::Default);
 		}
 	}
-	if(!ProgMan.AutoGL)
+	if(!Program.AutoGL)
 	{
-		if(ProgMan.Fullscreen)
+		if(Program.Fullscreen)
 		{
-			MainWindow.create(sf::VideoMode(ProgMan.WindowWidth, ProgMan.WindowHeight), "World Generator 1.0", sf::Style::Fullscreen, GLContext);
+			MainWindow.create(sf::VideoMode(Program.WindowWidth, Program.WindowHeight), "World Generator 1.0", sf::Style::Fullscreen, GLContext);
 		}
-		if(!ProgMan.Fullscreen)
+		if(!Program.Fullscreen)
 		{
-			MainWindow.create(sf::VideoMode(ProgMan.WindowWidth, ProgMan.WindowHeight), "World Generator 1.0", sf::Style::Default, GLContext);
+			MainWindow.create(sf::VideoMode(Program.WindowWidth, Program.WindowHeight), "World Generator 1.0", sf::Style::Default, GLContext);
 		}
 	}
 
-	if(ProgMan.FramerateLimit > 0)
+	if(Program.FramerateLimit > 0)
 	{
-		MainWindow.setFramerateLimit(ProgMan.FramerateLimit);
+		MainWindow.setFramerateLimit(Program.FramerateLimit);
 	}
-	MainWindow.setVerticalSyncEnabled(ProgMan.VSync);
+	MainWindow.setVerticalSyncEnabled(Program.VSync);
 
-	ProgMan.CurrentWindow = &MainWindow;
+	Program.CurrentWindow = &MainWindow;
 
-	ProgMan.UIMan.Initialize(MainWindow);
-	ProgMan.UIMan.ConfigureMenus();
-	ProgMan.UIMan.ConfigureWorldGenSetup();
+	Program.UIMan.Initialize(MainWindow);
+	Program.UIMan.ConfigureMenus();
+	Program.UIMan.ConfigureWorldGenSetup();
 
-	ProgMan.StartStateManager();
+	Program.StartStateManager();
 
 	std::cout << "MARKER 1" << std::endl;
 
-	ProgMan.UIMan.MainGenerate->connect("pressed", &ProgramManager::ProcessSignal, &ProgMan, 1);
-	ProgMan.UIMan.MainGenCustom->connect("pressed", &ProgramManager::ProcessSignal, &ProgMan, 2);
-	ProgMan.UIMan.MainSettings->connect("pressed", &ProgramManager::ProcessSignal, &ProgMan, 10);
-	ProgMan.UIMan.MainExit->connect("pressed", &ProgramManager::ProcessSignal, &ProgMan, 3);
+	Program.UIMan.MainGenerate->connect("pressed", &ProgramManager::ProcessSignal, &Program, 1);
+	Program.UIMan.MainGenCustom->connect("pressed", &ProgramManager::ProcessSignal, &Program, 2);
+	Program.UIMan.MainSettings->connect("pressed", &ProgramManager::ProcessSignal, &Program, 10);
+	Program.UIMan.MainExit->connect("pressed", &ProgramManager::ProcessSignal, &Program, 3);
 	
-	ProgMan.UIMan.WGLeftArrow->connect("pressed", &ProgramManager::ProcessSignal, &ProgMan, 11);
-	ProgMan.UIMan.WGRightArrow->connect("pressed", &ProgramManager::ProcessSignal, &ProgMan, 12);
-	ProgMan.UIMan.WGRegen->connect("pressed", &ProgramManager::ProcessSignal, &ProgMan, 9);
-	ProgMan.UIMan.WGConfig->connect("pressed", &ProgramManager::ProcessSignal, &ProgMan, 8);
-	ProgMan.UIMan.WGMainMenu->connect("pressed", &ProgramManager::ProcessSignal, &ProgMan, 7);
+	Program.UIMan.WGLeftArrow->connect("pressed", &ProgramManager::ProcessSignal, &Program, 11);
+	Program.UIMan.WGRightArrow->connect("pressed", &ProgramManager::ProcessSignal, &Program, 12);
+	Program.UIMan.WGRegen->connect("pressed", &ProgramManager::ProcessSignal, &Program, 9);
+	Program.UIMan.WGConfig->connect("pressed", &ProgramManager::ProcessSignal, &Program, 8);
+	Program.UIMan.WGMainMenu->connect("pressed", &ProgramManager::ProcessSignal, &Program, 7);
 
-	ProgMan.UIMan.WGSGenerate->connect("pressed", &ProgramManager::ProcessSignal, &ProgMan, 4);
-	ProgMan.UIMan.WGSMainMenu->connect("pressed", &ProgramManager::ProcessSignal, &ProgMan, 5);
-	ProgMan.UIMan.WGSNew->connect("pressed", &ProgramManager::ProcessSignal, &ProgMan, 6);//Sets as default
-	ProgMan.UIMan.WGSLoad->connect("pressed", &ProgramManager::ProcessSignal, &ProgMan, 13);
-	ProgMan.UIMan.WGSSave->connect("pressed", &ProgramManager::ProcessSignal, &ProgMan, 14);
+	Program.UIMan.WGSGenerate->connect("pressed", &ProgramManager::ProcessSignal, &Program, 4);
+	Program.UIMan.WGSMainMenu->connect("pressed", &ProgramManager::ProcessSignal, &Program, 5);
+	Program.UIMan.WGSNew->connect("pressed", &ProgramManager::ProcessSignal, &Program, 6);//Sets as default
+	Program.UIMan.WGSLoad->connect("pressed", &ProgramManager::ProcessSignal, &Program, 13);
+	Program.UIMan.WGSSave->connect("pressed", &ProgramManager::ProcessSignal, &Program, 14);
 
-	/*ProgMan.UIMan.MenuButton1->connect("pressed", &ProgramManager::ProcessSignal, &ProgMan, 1);//1-3 in old code.
-	ProgMan.UIMan.MenuButton2->connect("pressed", &ProgramManager::ProcessSignal, &ProgMan, 2);
-	ProgMan.UIMan.MenuButton3->connect("pressed", &ProgramManager::ProcessSignal, &ProgMan, 3);
+	/*Program.UIMan.MenuButton1->connect("pressed", &ProgramManager::ProcessSignal, &Program, 1);//1-3 in old code.
+	Program.UIMan.MenuButton2->connect("pressed", &ProgramManager::ProcessSignal, &Program, 2);
+	Program.UIMan.MenuButton3->connect("pressed", &ProgramManager::ProcessSignal, &Program, 3);
 
-	ProgMan.UIMan.WGSGenerate->connect("pressed", &ProgramManager::ProcessSignal, &ProgMan, 4);//10-15 in old code.
-	ProgMan.UIMan.WGSMainMenu->connect("pressed", &ProgramManager::ProcessSignal, &ProgMan, 5);
-	ProgMan.UIMan.WGSNew->connect("pressed", &ProgramManager::ProcessSignal, &ProgMan, 6);
-	ProgMan.UIMan.BackToMain->connect("pressed", &ProgramManager::ProcessSignal, &ProgMan, 7);
-	ProgMan.UIMan.BackToSetup->connect("pressed", &ProgramManager::ProcessSignal, &ProgMan, 8);
-	ProgMan.UIMan.RunNewSeed->connect("pressed", &ProgramManager::ProcessSignal, &ProgMan, 9);*/
+	Program.UIMan.WGSGenerate->connect("pressed", &ProgramManager::ProcessSignal, &Program, 4);//10-15 in old code.
+	Program.UIMan.WGSMainMenu->connect("pressed", &ProgramManager::ProcessSignal, &Program, 5);
+	Program.UIMan.WGSNew->connect("pressed", &ProgramManager::ProcessSignal, &Program, 6);
+	Program.UIMan.BackToMain->connect("pressed", &ProgramManager::ProcessSignal, &Program, 7);
+	Program.UIMan.BackToSetup->connect("pressed", &ProgramManager::ProcessSignal, &Program, 8);
+	Program.UIMan.RunNewSeed->connect("pressed", &ProgramManager::ProcessSignal, &Program, 9);*/
 
 	bool LogFPS = 0;
 	int FPS = 0;
@@ -97,33 +99,32 @@ int main()
 			}
 			if(GameEvent.type == sf::Event::KeyPressed)
 			{
-				int Key = GameEvent.key.code;
-				ProgMan.ProcessKey(Key);
+				Program.ProcessKey(GameEvent.key.code);
 				//std::cout << Key;
 			}
 			if(GameEvent.type == sf::Event::MouseWheelMoved)
 			{
-				ProgMan.AdjustZoom(GameEvent.mouseWheel.delta);
+				Program.AdjustZoom(GameEvent.mouseWheel.delta);
 			}
-			ProgMan.UIMan.GameGui.handleEvent(GameEvent); //**************//
+			Program.UIMan.GameGui.handleEvent(GameEvent); //**************//
 		}
-		if(ProgMan.CurrentState == ProgramManager::WorldGen)
+		if(Program.CurrentState == ProgramManager::WorldGen)
 		{
 			MainWindow.setView(MainWindow.getDefaultView());
-			if(ProgMan.DisplayState == 1)
+			if(Program.DisplayState == 1)
 			{
-				//MainWindow.setView(ProgMan.MapView);
+				//MainWindow.setView(Program.MapView);
 				/*sf::Vector2i MousePos = Mouse.getPosition(MainWindow);
 				sf::Vector2f WorldPos = MainWindow.mapPixelToCoords(MousePos);
-				ProgMan.UpdateTileInfo(WorldPos);*/
+				Program.UpdateTileInfo(WorldPos);*/
 			}
 		}
-		if(ProgMan.CurrentState == ProgramManager::MainMenu)
+		if(Program.CurrentState == ProgramManager::MainMenu)
 		{
 			MainWindow.setView(MainWindow.getDefaultView());
 		}
 		
-		ProgMan.DisplayWindow();
+		Program.DisplayWindow();
 		if(LogFPS)
 		{
 			LoopTime = LoopTimer.getElapsedTime();
@@ -133,7 +134,7 @@ int main()
 			}
 			else if(LoopTime.asSeconds() >= 1)
 			{
-				std::cout << "\nFPS: " << FPS;
+				//std::cout << "\nFPS: " << FPS;
 				FPS = 0;
 				LoopTime.Zero;
 				LoopTimer.restart();

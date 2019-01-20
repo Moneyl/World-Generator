@@ -609,7 +609,7 @@ public:
     float _RainfallOverlapMultiplier = 4;
 
     float _BaseWindRainfall = 135;
-    float _PostMountainWindRainfall = 5;
+    float _PostMountainWindRainfall = 35;
     float _PostWaterWindRainfall = 180;
 
     float _RainfallIncreaseDelta = 2.5;
