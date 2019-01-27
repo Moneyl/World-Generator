@@ -33,7 +33,7 @@ It's been several years since I've worked on this project, and I aim to update i
 
 ### 1.1.0
 - Refactor old code. Split massive .h and .cpp files, rename .h to .hpp, and make sure each class has it's own file rather than bunching several together as they are in GameMap.h. Try to utilize new C++ language features where possible.
-- Make use of auto iterators where possible instead of hand rolling all of them as it is now.
+- Make use of auto iterators and algorithms where possible instead of hand rolling everything as it is now.
 - Improve documentation and readme on how to use.
 
 ### 1.2.0
