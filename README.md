@@ -12,13 +12,13 @@ Note: This project currently won't build, as I am in the process of replacing a 
 
 ## Gallery
 ![alt text](https://github.com/Moneyl/World-Generator/blob/master/Github%20Images/World_Generator_Sbvg45lKoY.png "Shaded biome map 400x256 world. blue = ocean, dark green = forests, light green = grasslands, sand colored = desert, golden = savannha.")
-Shaded biome map for a 400x256 world. blue = ocean, dark green = forests, light green = grasslands, sand colored = desert, golden = savannha.
+Shaded biome map for a 400x256 world. blue = ocean, dark green = forests, light green = grasslands, sand colored = desert, golden = savannha. Forests always tend to be on the western sides of mountains since rainfall is calculated west to east. This makes the maps too regular and needs to be improved.
 
 ![alt text](https://github.com/Moneyl/World-Generator/blob/master/Github%20Images/World_Generator_8ZgboOAyxh.png "Height map 400x256 world. The brighter the color the higher the elevation.")
 Height map for a 400x256 world. The brighter the color the higher the elevation.
 
 ![alt text](https://github.com/Moneyl/World-Generator/blob/master/Github%20Images/World_Generator_kmhuLwwyQq.png "Temperature map 400x256 world. Red is warmer, blue is colder.")
-Temperature map for a 400x256 world. Red is warmer, blue is colder.
+Temperature map for a 400x256 world. Red is warmer, blue is colder. The blue spots in the center are a bug, the temperature calculation needs to be improved.
 
 ## Roadmap (WIP)
 It's been several years since I've worked on this project, and I aim to update it with some new libraries and remedy some of the poor coding practices used. I've listed some of the changes I'd like to make in Todo.txt, but I'll also include them here. The first release will be 1.0.0 as previous versions had no set numbering system. I'll do my best to follow [semantic versioning](https://semver.org/). Keep in mind that this roadmap is subject to change. I won't give any deadlines on when I might complete these as I'm currently more invested in some of my other projects.
