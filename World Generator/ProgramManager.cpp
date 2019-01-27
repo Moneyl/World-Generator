@@ -1069,40 +1069,40 @@ void ProgramManager::BlendTileBackgrounds()
 void ProgramManager::EnterMainMenu()
 {
 	CurrentState = MainMenu;
-	UIMan.MainMenuPanel->show();
+	///UIMan.MainMenuPanel->show();
 }
 
 void ProgramManager::ExitMainMenu()
 {
-	UIMan.MainMenuPanel ->hide();
+	///UIMan.MainMenuPanel ->hide();
 }
 
 void ProgramManager::EnterWorldGenSettings()
 {
 	CurrentState = WorldGenSetup;
-	UIMan.WGSPanel->show();
-	UIMan.WGSScrollbar->show();
+	///UIMan.WGSPanel->show();
+	///UIMan.WGSScrollbar->show();
 	UpdateWorldGenSettings();
 }
 
 void ProgramManager::EnterWorldGen()
 {
 	CurrentState = WorldGen;
-	UIMan.WGPanel->show();
+	///UIMan.WGPanel->show();
 	WorldGenUIVisible = 1;
 	UpdateFloatingTextPosition();
 }
 
 void ProgramManager::ExitWorldGen()
 {
-	UIMan.WGPanel->hide();
+	///UIMan.WGPanel->hide();
 	WorldGenUIVisible = 0;
 }
 
 void ProgramManager::ExitWorldGenSettings()
 {
-	UIMan.WGSPanel->hide();
-	UIMan.WGSScrollbar->hide();
+	///UIMan.WGSPanel->hide();
+	///UIMan.WGSScrollbar->hide();
 }
 
 void ProgramManager::ResetWorldGen()
@@ -1145,11 +1145,11 @@ void ProgramManager::TileDisplayLoop()
 
 void ProgramManager::UpdateTileInfo(int Tile)
 {
-	TileID.setString(to_string(Tile));
-	TileBiome.setString(to_string(CurrentMap->BiomeToString(Tile)));
-	TileElevation.setString(to_string(CurrentMap->data[Tile].z));
-	TileRainfall.setString(to_string(CurrentMap->data[Tile].rainfall));
-	TileTemperature.setString(to_string(CurrentMap->data[Tile].temperature));
+	TileID.setString(std::to_string(Tile));
+	TileBiome.setString(CurrentMap->BiomeToString(Tile));
+	TileElevation.setString(std::to_string(CurrentMap->data[Tile].z));
+	TileRainfall.setString(std::to_string(CurrentMap->data[Tile].rainfall));
+	TileTemperature.setString(std::to_string(CurrentMap->data[Tile].temperature));
 }
 
 void ProgramManager::UpdateTileInfo(sf::Vector2f MousePosition)
@@ -1251,7 +1251,7 @@ void ProgramManager::DisplayWindow()
 	}
 	UpdateFloatingTextPosition();
 
-	UIMan.GameGui.draw();//******************************//
+	///UIMan.GameGui.draw();//******************************//
 	CurrentWindow->display();
 }
 
@@ -1259,12 +1259,12 @@ void ProgramManager::ToggleWorldGenVisibility()
 {
 	if(WorldGenUIVisible == 0)
 	{
-		UIMan.WGPanel->show();
+		///UIMan.WGPanel->show();
 		WorldGenUIVisible = 1;
 	}
 	else if(WorldGenUIVisible == 1)
 	{
-		UIMan.WGPanel->hide();
+		///UIMan.WGPanel->hide();
 		WorldGenUIVisible = 0;
 	}
 }
@@ -1322,21 +1322,21 @@ void ProgramManager::Draw()
 
 void ProgramManager::ProcessKey(int Key)
 {
-	if(Key == 16 || Key == 4)//q = 16 // e = 4 // 71 = left // 72 = right // 73 = up // 74 = down
+	if(Key == sf::Keyboard::Q || Key == sf::Keyboard::E)//q = 16 // e = 4 // 71 = left // 72 = right // 73 = up // 74 = down
 	{
 		if(CurrentState == WorldGen)
 		{
 			ChangeDisplayState(Key);
 		}
 	}
-	if(Key >= 71 && Key <= 74)
+	if(Key >= sf::Keyboard::Left && Key <= sf::Keyboard::Down)
 	{
 		if(CurrentState == WorldGen || CurrentState == WorldMap)
 		{
 			UpdateMapView(Key);
 		}
 	}
-	if(Key == 17)
+	if(Key == sf::Keyboard::R)
 	{
 		if(CurrentState == WorldGen)
 		{
@@ -1344,11 +1344,18 @@ void ProgramManager::ProcessKey(int Key)
 			CommenceWorldGen();
 		}
 	}
-	if(Key == 60)
+	if(Key == sf::Keyboard::Tab)
 	{
 		if(CurrentState == WorldGen)
 		{
 			ToggleWorldGenVisibility();
+		}
+	}
+	if (Key == sf::Keyboard::Return)
+	{
+		if (CurrentState == MainMenu)
+		{
+			EnterWorldGen();
 		}
 	}
 }
@@ -2119,10 +2126,10 @@ void ProgramManager::StartStateManager()
 	MenuBackgroundTexture.loadFromFile("Background2.png");
 	BackgroundSprite.setTexture(MenuBackgroundTexture);
 
-	UIMan.MainSettingsPanel->hide();
-	UIMan.WGSPanel->hide();
-	UIMan.WGSScrollbar->hide();
-	UIMan.WGPanel->hide();
+	//UIMan.MainSettingsPanel->hide();
+	///UIMan.WGSPanel->hide();
+	///UIMan.WGSScrollbar->hide();
+	//UIMan.WGPanel->hide();
 
 	/*WorldName = TempWorldName + tgui::to_string(CurrentWorldNameCount);
 
@@ -2181,7 +2188,7 @@ void ProgramManager::CommenceWorldGen()
 {
 	TileShadeOn();
 	//AdjustMapImageSize();
-	UIMan.WGListBox->removeAllItems();
+	///UIMan.WGListBox->removeAllItems();
 
 	float TotalTime = 0.00;
 
@@ -2203,12 +2210,12 @@ void ProgramManager::CommenceWorldGen()
 	MapImage.create(CurrentMap->x, CurrentMap->y, TempColor);
 	ScaleMapSprite();
 
-	UIMan.WGProgressBar->setMaximum(13);//EDIT IF STEPS ADDED OR REMOVED.
-	UIMan.WGProgressBar->setValue(0);
+	///UIMan.WGProgressBar->setMaximum(13);//EDIT IF STEPS ADDED OR REMOVED.
+	///UIMan.WGProgressBar->setValue(0);
 
 	sf::Clock FunctionTime;
 	FunctionTime.restart();
-	UIMan.WGProgressBar->setText("Generating height map.");
+	///UIMan.WGProgressBar->setText("Generating height map.");
 	DisplayWindow();
 	MMan.MainMap.GenerateHeightMap();
 
@@ -2216,150 +2223,150 @@ void ProgramManager::CommenceWorldGen()
 
 	Draw();
 	DisplayMap = 1;
-	UIMan.WGProgressBar->incrementValue();
+	///UIMan.WGProgressBar->incrementValue();
 	SetupMapSprite();
 	sf::Time FunctionSeconds = FunctionTime.getElapsedTime();
 	temp = "Height map generation time: ";
-	printout = temp + (tgui::to_string(FunctionSeconds.asSeconds())) + seconds;
-	UIMan.WGListBox->addItem(printout);
+	///printout = temp + (tgui::to_string(FunctionSeconds.asSeconds())) + seconds;
+	///UIMan.WGListBox->addItem(printout);
 	TotalTime += FunctionSeconds.asSeconds();
 
 	if(MMan._HeightTurbulence == 1)
 	{
 		FunctionTime.restart();
-		UIMan.WGProgressBar->setText("Applying turbulence to height map.");
+		///UIMan.WGProgressBar->setText("Applying turbulence to height map.");
 		DisplayWindow();
 		MMan.MainMap.Turbulence();
 		Draw();
 		SetupMapSprite();
 		FunctionSeconds = FunctionTime.getElapsedTime();
 		temp = "Height Turbulence Time: ";
-		printout = temp + (tgui::to_string(FunctionSeconds.asSeconds())) + seconds;
-		UIMan.WGListBox->addItem(printout);
+		///printout = temp + (tgui::to_string(FunctionSeconds.asSeconds())) + seconds;
+		///UIMan.WGListBox->addItem(printout);
 		TotalTime += FunctionSeconds.asSeconds();
 	}
 	else if(MMan._HeightTurbulence == 0)
 	{
-		UIMan.WGProgressBar->incrementValue();
+		///UIMan.WGProgressBar->incrementValue();
 		printout = "Height turbulence skipped.";
-		UIMan.WGListBox->addItem(printout);
+		///UIMan.WGListBox->addItem(printout);
 	}
-	UIMan.WGProgressBar->incrementValue();
+	///UIMan.WGProgressBar->incrementValue();
 
 	if(MMan._DoMapSmoothing == 1)//COMBINE INTO SINGLE SMOOTHING VARIABLE/ACTION
 	{
 		FunctionTime.restart();
-		UIMan.WGProgressBar->setText("Smoothing map.");
+		///UIMan.WGProgressBar->setText("Smoothing map.");
 		DisplayWindow();
 		MMan.MainMap.SmoothNoise(0);
 		Draw();
 		SetupMapSprite();
 		FunctionSeconds = FunctionTime.getElapsedTime();
 		temp = "Map Smoothing Time: ";
-		printout = temp + (tgui::to_string(FunctionSeconds.asSeconds())) + seconds;
-		UIMan.WGListBox->addItem(printout);
+		///printout = temp + (tgui::to_string(FunctionSeconds.asSeconds())) + seconds;
+		///UIMan.WGListBox->addItem(printout);
 		TotalTime += FunctionSeconds.asSeconds();
 	}
 	else if(MMan._DoMapSmoothing == 0)
 	{
-		UIMan.WGProgressBar->incrementValue();
+		///UIMan.WGProgressBar->incrementValue();
 		printout = "Map smoothing skipped.";
-		UIMan.WGListBox->addItem(printout);
+		///UIMan.WGListBox->addItem(printout);
 	}
-	UIMan.WGProgressBar->incrementValue();
+	///UIMan.WGProgressBar->incrementValue();
 
 	if(MMan._DoMapSideSmoothing == 1)
 	{
 		FunctionTime.restart();
-		UIMan.WGProgressBar->setText("Smoothing map sides.");
+		///UIMan.WGProgressBar->setText("Smoothing map sides.");
 		DisplayWindow();
 		MMan.MainMap.SmoothNoiseOutside(0);
 		MMan.MainMap.SmoothNoiseOutside(0);
 		SetupMapSprite();
 		FunctionSeconds = FunctionTime.getElapsedTime();
 		temp = "Map Side Smoothing Time: ";
-		printout = temp + (tgui::to_string(FunctionSeconds.asSeconds())) + seconds;
-		UIMan.WGListBox->addItem(printout);
+		///printout = temp + (tgui::to_string(FunctionSeconds.asSeconds())) + seconds;
+		///UIMan.WGListBox->addItem(printout);
 		TotalTime += FunctionSeconds.asSeconds();
 	}
 	else if(MMan._DoMapSideSmoothing == 0)
 	{
-		UIMan.WGProgressBar->incrementValue();
+		///UIMan.WGProgressBar->incrementValue();
 		printout = "Map side smoothing skipped.";
-		UIMan.WGListBox->addItem(printout);
+		///UIMan.WGListBox->addItem(printout);
 	}
-	UIMan.WGProgressBar->incrementValue();
+	///UIMan.WGProgressBar->incrementValue();
 
 	FunctionTime.restart();
-	UIMan.WGProgressBar->setText("Flattening small water bodies.");
+	///UIMan.WGProgressBar->setText("Flattening small water bodies.");
 	DisplayWindow();
 	MMan.MainWRM.CalculateWaterRegions(0);
 	MMan.MainWRM.FlattenSmallWaterBodies();
 	MMan.MainWRM.ClearWaterRegions();
 	MMan.MainWRM.CalculateWaterRegions(0);
 	Draw();
-	UIMan.WGProgressBar->incrementValue();
+	///UIMan.WGProgressBar->incrementValue();
 	SetupMapSprite();
 	FunctionSeconds = FunctionTime.getElapsedTime();
 	temp = "Small water body flattening time: ";
-	printout = temp + (tgui::to_string(FunctionSeconds.asSeconds())) + seconds;
-	UIMan.WGListBox->addItem(printout);
+	///printout = temp + (tgui::to_string(FunctionSeconds.asSeconds())) + seconds;
+	///UIMan.WGListBox->addItem(printout);
 	TotalTime += FunctionSeconds.asSeconds();
 
 	FunctionTime.restart();
-	UIMan.WGProgressBar->setText("Generating rivers.");
+	///UIMan.WGProgressBar->setText("Generating rivers.");
 	DisplayWindow();
 	MMan.MainRM.GenerateRivers(0);
 	Draw();
-	UIMan.WGProgressBar->incrementValue();
+	///UIMan.WGProgressBar->incrementValue();
 	SetupMapSprite();
 	FunctionSeconds = FunctionTime.getElapsedTime();
 	temp = "River generation time: ";
-	printout = temp + (tgui::to_string(FunctionSeconds.asSeconds())) + seconds;
-	UIMan.WGListBox->addItem(printout);
+	///printout = temp + (tgui::to_string(FunctionSeconds.asSeconds())) + seconds;
+	///UIMan.WGListBox->addItem(printout);
 	TotalTime += FunctionSeconds.asSeconds();
 
 	FunctionTime.restart();
-	UIMan.WGProgressBar->setText("Calculating height regions.");
+	///UIMan.WGProgressBar->setText("Calculating height regions.");
 	DisplayWindow();
 	MMan.MainHRM.CalculateHeightRegions(0);//Threadable
 	Draw();
-	UIMan.WGProgressBar->incrementValue();
+	///UIMan.WGProgressBar->incrementValue();
 	SetupMapSprite();
 	FunctionSeconds = FunctionTime.getElapsedTime();
 	temp = "Height region calculation time: ";
-	printout = temp + (tgui::to_string(FunctionSeconds.asSeconds())) + seconds;
-	UIMan.WGListBox->addItem(printout);
+	///printout = temp + (tgui::to_string(FunctionSeconds.asSeconds())) + seconds;
+	///UIMan.WGListBox->addItem(printout);
 	TotalTime += FunctionSeconds.asSeconds();
 
 	FunctionTime.restart();
-	UIMan.WGProgressBar->setText("Generating temperature map.");
+	///UIMan.WGProgressBar->setText("Generating temperature map.");
 	DisplayWindow();
 	MMan.MainMap.GenerateTemperatureMap();//Threadable
 	MMan.MainMap.ApplyNoiseToTemperature();
 	Draw();
-	UIMan.WGProgressBar->incrementValue();
+	///UIMan.WGProgressBar->incrementValue();
 	SetupMapSprite();
 	FunctionSeconds = FunctionTime.getElapsedTime();
 	temp = "Temperature map generation time: ";
-	printout = temp + (tgui::to_string(FunctionSeconds.asSeconds())) + seconds;
-	UIMan.WGListBox->addItem(printout);
+	///printout = temp + (tgui::to_string(FunctionSeconds.asSeconds())) + seconds;
+	///UIMan.WGListBox->addItem(printout);
 	TotalTime += FunctionSeconds.asSeconds();
 
 	FunctionTime.restart();
-	UIMan.WGProgressBar->setText("Generating rainshadow.");
+	///UIMan.WGProgressBar->setText("Generating rainshadow.");
 	DisplayWindow();
 
 	MMan.MainMap.CalculateRainShadow(0);//Threadable
 	MMan.MainMap.SmoothRainfall();
 	MMan.MainMap.ApplyNoiseToRainfall(0);
 	Draw();
-	UIMan.WGProgressBar->incrementValue();
+	///UIMan.WGProgressBar->incrementValue();
 	SetupMapSprite();
 	FunctionSeconds = FunctionTime.getElapsedTime();
 	temp = "Rainshadow generation time: ";
-	printout = temp + (tgui::to_string(FunctionSeconds.asSeconds())) + seconds;
-	UIMan.WGListBox->addItem(printout);
+	///printout = temp + (tgui::to_string(FunctionSeconds.asSeconds())) + seconds;
+	///UIMan.WGListBox->addItem(printout);
 	TotalTime += FunctionSeconds.asSeconds();
 
 	/*FunctionTime.restart();
@@ -2377,40 +2384,40 @@ void ProgramManager::CommenceWorldGen()
 	TotalTime += FunctionSeconds.asSeconds();*/
 
 	FunctionTime.restart();
-	UIMan.WGProgressBar->setText("Setting tile biomes.");
+	///UIMan.WGProgressBar->setText("Setting tile biomes.");
 	DisplayWindow();
 	MMan.MainMap.SetTileBiomes();
 	Draw();
-	UIMan.WGProgressBar->incrementValue();
+	///UIMan.WGProgressBar->incrementValue();
 	SetupMapSprite();
 	FunctionSeconds = FunctionTime.getElapsedTime();
 	temp = "Biome determination time: ";
-	printout = temp + (tgui::to_string(FunctionSeconds.asSeconds())) + seconds;
-	UIMan.WGListBox->addItem(printout);
+	///printout = temp + (tgui::to_string(FunctionSeconds.asSeconds())) + seconds;
+	///UIMan.WGListBox->addItem(printout);
 	TotalTime += FunctionSeconds.asSeconds();
 
 	FunctionTime.restart();
-	UIMan.WGProgressBar->setText("Calculating Map regions.");
+	///UIMan.WGProgressBar->setText("Calculating Map regions.");
 	DisplayWindow();
 	MMan.MainMap.CalculateMapRegions(0);
 	Draw();
-	UIMan.WGProgressBar->incrementValue();
+	///UIMan.WGProgressBar->incrementValue();
 	SetupMapSprite();
 
 	FunctionSeconds = FunctionTime.getElapsedTime();
 	temp = "Map region calculation time: ";
-	printout = temp + (tgui::to_string(FunctionSeconds.asSeconds())) + seconds;
-	UIMan.WGListBox->addItem(printout);
+	///printout = temp + (tgui::to_string(FunctionSeconds.asSeconds())) + seconds;
+	///UIMan.WGListBox->addItem(printout);
 	TotalTime += FunctionSeconds.asSeconds();
 
 	temp = "Total generation time: ";
-	printout = temp + (tgui::to_string(TotalTime)) + seconds;
-	UIMan.WGListBox->addItem(printout);
-	UIMan.WGProgressBar->setText("Complete!");
+	///printout = temp + (tgui::to_string(TotalTime)) + seconds;
+	///UIMan.WGListBox->addItem(printout);
+	///UIMan.WGProgressBar->setText("Complete!");
 
 	temp = "Seed: ";
-	printout = temp + (tgui::to_string(CurrentMap->Seed));
-	UIMan.WGListBox->addItem(printout);
+	///printout = temp + (tgui::to_string(CurrentMap->Seed));
+	///UIMan.WGListBox->addItem(printout);
 }
 
 void ProgramManager::SetWorldGenSettings() 
@@ -2654,7 +2661,7 @@ void ProgramManager::UpdateWorldGenSettings()
 
 void ProgramManager::OpenProgramSettings()
 {
-	UIMan.InProgramSettings = 1;
+	///UIMan.InProgramSettings = 1;
 	//UIMan.ProgramSettingsForm->show();
 	if(DisplayRiverStartPoints == 1)
 	{
@@ -2674,7 +2681,7 @@ void ProgramManager::OpenProgramSettings()
 
 void ProgramManager::CloseProgramSettings()
 {
-	UIMan.InProgramSettings = 0;
+	///UIMan.InProgramSettings = 0;
 	//UIMan.ProgramSettingsForm->hide();
 }
 
@@ -2783,8 +2790,8 @@ bool ProgramManager::LoadProgramSettings()
 	FontLocation = MainConfig["Font Location"].get<std::string>();
 	GuiConfigLocation = MainConfig["GUI Config Location"].get<std::string>();
 
-	UIMan.FontLocation = FontLocation;
-	UIMan.ConfigLocation = GuiConfigLocation;
+	///UIMan.FontLocation = FontLocation;
+	///UIMan.ConfigLocation = GuiConfigLocation;
 
 	LogFile.close();
 	return true;

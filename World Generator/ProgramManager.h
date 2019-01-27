@@ -226,7 +226,7 @@ public:
 	int ColorMinimum = 30;
 	int ColorMaximum = 225;
 
-	UIManager UIMan;
+	//UIManager UIMan;
 	StaticTextManager STextMan;
 	MapSystem::GameMap* CurrentMap;
 	MapSystem::WaterRegionManager* CurrentWRM;

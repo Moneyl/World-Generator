@@ -4,7 +4,7 @@
 #define RAPIDJSON_HAS_STDSTRING 1
 #define _CRT_SECURE_NO_WARNINGS 1
 
-#include "TGUI\TGUI.hpp"
+//#include "TGUI\TGUI.hpp"
 #include "SFML\graphics.hpp"
 #include "SFML\window.hpp"
 #include "SFML\system.hpp"

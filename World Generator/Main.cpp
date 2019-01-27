@@ -45,30 +45,34 @@ int main()
 
 	Program.CurrentWindow = &MainWindow;
 
-	Program.UIMan.Initialize(MainWindow);
+	/*Program.UIMan.Initialize(MainWindow);
 	Program.UIMan.ConfigureMenus();
-	Program.UIMan.ConfigureWorldGenSetup();
+	Program.UIMan.ConfigureWorldGenSetup();*/
 
 	Program.StartStateManager();
 
 	std::cout << "MARKER 1" << std::endl;
 
-	Program.UIMan.MainGenerate->connect("pressed", &ProgramManager::ProcessSignal, &Program, 1);
-	Program.UIMan.MainGenCustom->connect("pressed", &ProgramManager::ProcessSignal, &Program, 2);
-	Program.UIMan.MainSettings->connect("pressed", &ProgramManager::ProcessSignal, &Program, 10);
-	Program.UIMan.MainExit->connect("pressed", &ProgramManager::ProcessSignal, &Program, 3);
-	
-	Program.UIMan.WGLeftArrow->connect("pressed", &ProgramManager::ProcessSignal, &Program, 11);
-	Program.UIMan.WGRightArrow->connect("pressed", &ProgramManager::ProcessSignal, &Program, 12);
-	Program.UIMan.WGRegen->connect("pressed", &ProgramManager::ProcessSignal, &Program, 9);
-	Program.UIMan.WGConfig->connect("pressed", &ProgramManager::ProcessSignal, &Program, 8);
-	Program.UIMan.WGMainMenu->connect("pressed", &ProgramManager::ProcessSignal, &Program, 7);
 
-	Program.UIMan.WGSGenerate->connect("pressed", &ProgramManager::ProcessSignal, &Program, 4);
-	Program.UIMan.WGSMainMenu->connect("pressed", &ProgramManager::ProcessSignal, &Program, 5);
-	Program.UIMan.WGSNew->connect("pressed", &ProgramManager::ProcessSignal, &Program, 6);//Sets as default
-	Program.UIMan.WGSLoad->connect("pressed", &ProgramManager::ProcessSignal, &Program, 13);
-	Program.UIMan.WGSSave->connect("pressed", &ProgramManager::ProcessSignal, &Program, 14);
+	///Program.UIMan.MainGenerate->connect("pressed", &ProgramManager::ProcessSignal, &Program, 1);
+	///Program.UIMan.MainGenCustom->connect("pressed", &ProgramManager::ProcessSignal, &Program, 2);
+	///Program.UIMan.MainSettings->connect("pressed", &ProgramManager::ProcessSignal, &Program, 10);
+	///Program.UIMan.MainExit->connect("pressed", &ProgramManager::ProcessSignal, &Program, 3);
+	
+	///Program.UIMan.WGLeftArrow->connect("pressed", &ProgramManager::ProcessSignal, &Program, 11);
+	///Program.UIMan.WGRightArrow->connect("pressed", &ProgramManager::ProcessSignal, &Program, 12);
+	///Program.UIMan.WGRegen->connect("pressed", &ProgramManager::ProcessSignal, &Program, 9);
+	///Program.UIMan.WGConfig->connect("pressed", &ProgramManager::ProcessSignal, &Program, 8);
+	///Program.UIMan.WGMainMenu->connect("pressed", &ProgramManager::ProcessSignal, &Program, 7);
+	
+	///Program.UIMan.WGSGenerate->connect("pressed", &ProgramManager::ProcessSignal, &Program, 4);
+	///Program.UIMan.WGSMainMenu->connect("pressed", &ProgramManager::ProcessSignal, &Program, 5);
+	///Program.UIMan.WGSNew->connect("pressed", &ProgramManager::ProcessSignal, &Program, 6);//Sets as default
+	///Program.UIMan.WGSLoad->connect("pressed", &ProgramManager::ProcessSignal, &Program, 13);
+	///Program.UIMan.WGSSave->connect("pressed", &ProgramManager::ProcessSignal, &Program, 14);
+
+
+
 
 	/*Program.UIMan.MenuButton1->connect("pressed", &ProgramManager::ProcessSignal, &Program, 1);//1-3 in old code.
 	Program.UIMan.MenuButton2->connect("pressed", &ProgramManager::ProcessSignal, &Program, 2);
@@ -106,7 +110,7 @@ int main()
 			{
 				Program.AdjustZoom(GameEvent.mouseWheel.delta);
 			}
-			Program.UIMan.GameGui.handleEvent(GameEvent); //**************//
+			///Program.UIMan.GameGui.handleEvent(GameEvent); //**************//
 		}
 		if(Program.CurrentState == ProgramManager::WorldGen)
 		{
