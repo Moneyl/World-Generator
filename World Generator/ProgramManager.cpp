@@ -2410,8 +2410,10 @@ void ProgramManager::CommenceWorldGen()
 	///UIMan.WGListBox->addItem(printout);
 	TotalTime += FunctionSeconds.asSeconds();
 
+	std::cout << "Total generation time: " << TotalTime << "s" << std::endl;
+	std::cout << "Total generation time: " << TotalTime * 1000.0f << "ms" << std::endl;
 	temp = "Total generation time: ";
-	///printout = temp + (tgui::to_string(TotalTime)) + seconds;
+	///printout = temp + (std::to_string(TotalTime)) + seconds;
 	///UIMan.WGListBox->addItem(printout);
 	///UIMan.WGProgressBar->setText("Complete!");
 
@@ -2909,8 +2911,8 @@ bool ProgramManager::LoadWorldGenSettings()
 		LogFile << "World Gen Settings.json not found. Creating from default values." << std::endl;
 
 		MainConfig["Profile Name"] = "Default World Gen";
-		MainConfig["Map Height"] = 400;
-		MainConfig["Map Width"] = 256;
+		MainConfig["Map Width"] = 400;
+		MainConfig["Map Height"] = 256;
 		MainConfig["Octaves"] = 30.0f;
 		MainConfig["Persistence"] = 0.65f;
 		MainConfig["Scale"] = 0.0065f;
