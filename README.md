@@ -38,6 +38,7 @@ It's been several years since I've worked on this project, and I aim to update i
 - Improve documentation and readme on how to use.
 
 ### 1.2.0
+- Attempt to make map gen more deterministic for a given seed. IIRC there was some excessive use of rand() in situations which didn't require it so a given seed might vary in ways which could be unwanted. Worth examining this validity of this.
 - Fix any issues with fonts being blurry or skewed.
 - Fix map view scaling or consider replacing each pixel with a small sprite (eg: 8x8 pixels)
 - Improve performance of the tile view
