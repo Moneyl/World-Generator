@@ -29,7 +29,7 @@ void CreateDirectoryIfNull(std::string Directory)
 
 /*Credit for this function goes to Grom on Stack Overflow:
 https://stackoverflow.com/a/17467 */
-bool AlmostEqual2sComplement(float A, float B, int maxUlps)
+bool FloatAlmostEqual(float A, float B, int maxUlps)
 {
 	// Make sure maxUlps is non-negative and small enough that the    
 	// default NAN won't compare as equal to anything.    

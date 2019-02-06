@@ -1,3 +1,4 @@
+#pragma once
 #include "Files.h"
 
 extern const int MaxUnitsOfLeastPrecision;
@@ -8,4 +9,4 @@ void CreateDirectoryIfNull(std::string Directory);
 
 /*Credit for this function goes to Grom on Stack Overflow:
 https://stackoverflow.com/a/17467 */
-bool AlmostEqual2sComplement(float A, float B, int maxUlps = MaxUnitsOfLeastPrecision);
+bool FloatAlmostEqual(float A, float B, int maxUlps = MaxUnitsOfLeastPrecision);
