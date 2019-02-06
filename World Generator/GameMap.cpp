@@ -33,11 +33,11 @@ void MapSystem::GameMap::GenerateHeightMap()
         data[i].z = static_cast<int> (NewHeight);
     }
 
-    if(SeedModifier < 1)
+    if(SeedModifier < 1.0f)
     {
         SeedModifier += .01f;
     }
-    if(SeedModifier >= 1)
+    if(SeedModifier >= 1.0f)
     {
         SeedModifier = .01f;
     }
@@ -50,13 +50,14 @@ void MapSystem::GameMap::Turbulence()
 {
     for(int i = 0; i < MapSize; i++)
     {
-        float NewHeight = scaled_octave_noise_3d(15, .99, .005, 1, 0, 255, data[i].x, data[i].y, data[i].z);
+        float NewHeight = scaled_octave_noise_3d(15.0f, 0.99f, 0.005f, 1.0f, 
+			0.0f, 255.0f, (float)data[i].x, (float)data[i].y, (float)data[i].z);
 
         if(data[i].z > SeaLevel)
         {
             if(data[i].z + (NewHeight / MountainRate1) < 235 && data[i].z > SeaLevel)
             {
-                data[i].z += NewHeight / MountainRate2;
+                data[i].z += (int)(NewHeight / MountainRate2);
             }
             else if(data[i].z + (NewHeight / 4) > 255)
             {
@@ -64,11 +65,11 @@ void MapSystem::GameMap::Turbulence()
             }
             if(data[i].z > SeaLevel && data[i].z < MountainLevel)
             {
-                data[i].z -= LandDecreaseLevel;
+                data[i].z -= (int)LandDecreaseLevel;
             }
             if(data[i].z >= MountainLevel)
             {
-                data[i].z -= MountainDecreaseLevel;
+                data[i].z -= (int)MountainDecreaseLevel;
             }
         }
     }
@@ -285,23 +286,23 @@ bool MapSystem::GameMap::InBounds(int Position)
     }
 }
 
-int MapSystem::GameMap::SetBaseWindRainfall(int Position)
+int MapSystem::GameMap::SetBaseWindRainfall(int Position) //Todo: Replace error codes with a better method of error reporting and have this return floats.
 {
     if(InBounds(Position))
     {
         if(data[Position].z <= SeaLevel)
         {
-            return PostWaterWindRainfall;
+            return (int)PostWaterWindRainfall;
         }
         else if(data[Position].z > SeaLevel)
         {
             if(data[Position].z < MountainLevel)
             {
-                return BaseWindRainfall;
+                return (int)BaseWindRainfall;
             }
             else if(data[Position].z >= MountainLevel)
             {
-                return PostMountainWindRainfall;
+                return (int)PostMountainWindRainfall;
             }
         }
     }
@@ -453,18 +454,18 @@ void MapSystem::GameMap::IncrementModifiers()
     {
         ModifierOne += ModOneAdd;
     }
-    else if(ModifierOne == ModOneMax)
+    else if(FloatAlmostEqual(ModifierOne, ModOneMax))
     {
-        ModifierOne = .01;
+        ModifierOne = 0.01f;
     }
 
     if(ModifierTwo < ModTwoMax)
     {
         ModifierTwo += ModTwoAdd;
     }
-    else if(ModifierTwo == ModTwoMax)
+    else if(FloatAlmostEqual(ModifierTwo, ModTwoMax))
     {
-        ModifierTwo = .0001;
+        ModifierTwo = 0.0001f;
     }
 }
 
@@ -547,7 +548,10 @@ void MapSystem::GameMap::ApplyNoiseToWindAngles()
 {
     for(int i = 0; i < (x * y) - 1; i++)
     {
-        int Noise = static_cast<int>(rand() * scaled_octave_noise_3d(15, .99, .005, 1, 0, MaximumNoiseAngle, data[i].y, data[i].z, data[i].x)) % MaximumNoiseAngle;
+        int Noise = static_cast<int>(rand() * scaled_octave_noise_3d(15.0f, 
+			0.99f, 0.005f, 1.0f, 0.0f, (float)MaximumNoiseAngle, 
+			(float)data[i].y, (float)data[i].z, 
+			(float)data[i].x)) % MaximumNoiseAngle;
 
         data[i].WindAngle += Noise;
     }
@@ -1580,7 +1584,9 @@ void MapSystem::GameMap::ApplyNoiseToRainfall(bool DebugMessages)
 {
     for(int i = 0; i < MapSize; i++)
     {
-        float NewRainfall = scaled_octave_noise_3d(1, .1, .01, 1, 0, 255, data[i].x, data[i].y, data[i].rainfall);
+        float NewRainfall = scaled_octave_noise_3d(1.0f, 0.1f, 0.01f, 1.0f, 
+			0.0f, 255.0f, (float)data[i].x, (float)data[i].y, 
+			(float)data[i].rainfall);
         //float NewRainfall = scaled_octave_noise_3d(1, .9, .1, 1, 0, 255, data[i].x, data[i].y, data[i].rainfall); //Neat rainfall noise, possibly looks more realistic.
 
         if(data[i].rainfall < 70)
@@ -1672,8 +1678,8 @@ void MapSystem::GameMap::ApplyNoiseToTemperature()//Observe differences between 
     {
         int seed2 = time(NULL);
         srand(seed2);
-
-        float NewTemperature = scaled_octave_noise_3d(7, .5, .1, 1, 0, 255, data[i].x, data[i].y, rand());
+		
+        float NewTemperature = scaled_octave_noise_3d(7.0f, 0.5f, 0.1f, 1.0f, 0.0f, 255.0f, (float)data[i].x, (float)data[i].y, (float)rand());
 
         if(data[i].temperature + (NewTemperature / 4) < 255)
         {
@@ -1811,14 +1817,14 @@ void MapSystem::GameMap::InterpolateX(bool DebugMessages)
     {
         int TempArrayPos = ConvertToAbsolute(GridX, GridY);
 
-        float TempFloatZX = data[TempArrayPos].z;
+        float TempFloatZX = (float)data[TempArrayPos].z;
         float var1 = TempFloatZX * 3.1415927;
         float var2 = (1 - cosf(var1)) * .5;
         float var3;
 
         if(CurrentPos > 0)
         {
-            float LastZPos = data[ConvertToAbsolute(GridX - 1, GridY)].z;
+            float LastZPos = (float)data[ConvertToAbsolute(GridX - 1, GridY)].z;
             float var4 = LastZPos * (1 - var2);
             float var5 = TempFloatZX * var2;
             var3 = var4 + var5;
@@ -1828,7 +1834,7 @@ void MapSystem::GameMap::InterpolateX(bool DebugMessages)
 
         else if(CurrentPos == 0)
         {
-            float NextZPos = data[ConvertToAbsolute(GridX + 1, GridY)].z;
+            float NextZPos = (float)data[ConvertToAbsolute(GridX + 1, GridY)].z;
             float var4 = NextZPos * (1 - var2);
             float var5 = TempFloatZX * var2;
             var3 = var4 + var5;
@@ -1876,14 +1882,14 @@ void MapSystem::GameMap::InterpolateY(bool DebugMessages)
     {
         int TempArrayPos = ConvertToAbsolute(GridX, GridY);
 
-        float TempFloatZX = data[TempArrayPos].z;
+        float TempFloatZX = (float)data[TempArrayPos].z;
         float var1 = TempFloatZX * 3.1415927;
         float var2 = (1 - cosf(var1)) * .5;
         float var3;
 
         if(CurrentPos > 0)
         {
-            float LastZPos = data[ConvertToAbsolute(GridX - 1, GridY)].z;
+            float LastZPos = (float)data[ConvertToAbsolute(GridX - 1, GridY)].z;
             float var4 = LastZPos * (1 - var2);
             float var5 = TempFloatZX * var2;
             var3 = var4 + var5;
@@ -1893,7 +1899,7 @@ void MapSystem::GameMap::InterpolateY(bool DebugMessages)
 
         else if(CurrentPos == 0)
         {
-            float NextZPos = data[ConvertToAbsolute(GridX + 1, GridY)].z;
+            float NextZPos = (float)data[ConvertToAbsolute(GridX + 1, GridY)].z;
             float var4 = NextZPos * (1 - var2);
             float var5 = TempFloatZX * var2;
             var3 = var4 + var5;
@@ -2045,14 +2051,14 @@ void MapSystem::GameMap::SmoothNoiseOutside(bool DebugMessages)
     {
         TempArrayPos = ConvertToAbsolute(GridX, GridY);
 
-        float TempFloatZX = data[TempArrayPos].z;
+        float TempFloatZX = (float)data[TempArrayPos].z;
         float var1 = TempFloatZX * 3.1415927;
         float var2 = (1 - cosf(var1)) * .5;
         float var3;
 
         if(CurrentPos > 0)
         {
-            float LastZPos = data[ConvertToAbsolute(GridX - 1, GridY)].z;
+            float LastZPos = (float)data[ConvertToAbsolute(GridX - 1, GridY)].z;
             float var4 = LastZPos * (1 - var2);
             float var5 = TempFloatZX * var2;
             var3 = var4 + var5;
@@ -2062,7 +2068,7 @@ void MapSystem::GameMap::SmoothNoiseOutside(bool DebugMessages)
 
         else if(CurrentPos == 0)
         {
-            float NextZPos = data[ConvertToAbsolute(GridX + 1, GridY)].z;
+            float NextZPos = (float)data[ConvertToAbsolute(GridX + 1, GridY)].z;
             float var4 = NextZPos * (1 - var2);
             float var5 = TempFloatZX * var2;
             var3 = var4 + var5;
@@ -2081,14 +2087,14 @@ void MapSystem::GameMap::SmoothNoiseOutside(bool DebugMessages)
     {
         int TempArrayPos = ConvertToAbsolute(GridX, GridY);
 
-        float TempFloatZX = data[TempArrayPos].z;
+        float TempFloatZX = (float)data[TempArrayPos].z;
         float var1 = TempFloatZX * 3.1415927;
         float var2 = (1 - cosf(var1)) * .5;
         float var3;
 
         if(CurrentPos > 0)
         {
-            float LastZPos = data[ConvertToAbsolute(GridX - 1, GridY)].z;
+            float LastZPos = (float)data[ConvertToAbsolute(GridX - 1, GridY)].z;
             float var4 = LastZPos * (1 - var2);
             float var5 = TempFloatZX * var2;
             var3 = var4 + var5;
@@ -2098,7 +2104,7 @@ void MapSystem::GameMap::SmoothNoiseOutside(bool DebugMessages)
 
         else if(CurrentPos == 0)
         {
-            float NextZPos = data[ConvertToAbsolute(GridX + 1, GridY)].z;
+            float NextZPos = (float)data[ConvertToAbsolute(GridX + 1, GridY)].z;
             float var4 = NextZPos * (1 - var2);
             float var5 = TempFloatZX * var2;
             var3 = var4 + var5;
@@ -2117,14 +2123,14 @@ void MapSystem::GameMap::SmoothNoiseOutside(bool DebugMessages)
     {
         int TempArrayPos = ConvertToAbsolute(GridX, GridY);
 
-        float TempFloatZX = data[TempArrayPos].z;
+        float TempFloatZX = (float)data[TempArrayPos].z;
         float var1 = TempFloatZX * 3.1415927;
         float var2 = (1 - cosf(var1)) * .5;
         float var3;
 
         if(CurrentPos > 0)
         {
-            float LastZPos = data[ConvertToAbsolute(GridX, GridY - 1)].z;
+            float LastZPos = (float)data[ConvertToAbsolute(GridX, GridY - 1)].z;
             float var4 = LastZPos * (1 - var2);
             float var5 = TempFloatZX * var2;
             var3 = var4 + var5;
@@ -2134,7 +2140,7 @@ void MapSystem::GameMap::SmoothNoiseOutside(bool DebugMessages)
 
         else if(CurrentPos == 0)
         {
-            float NextZPos = data[ConvertToAbsolute(GridX, GridY + 1)].z;
+            float NextZPos = (float)data[ConvertToAbsolute(GridX, GridY + 1)].z;
             float var4 = NextZPos * (1 - var2);
             float var5 = TempFloatZX * var2;
             var3 = var4 + var5;
@@ -2153,14 +2159,14 @@ void MapSystem::GameMap::SmoothNoiseOutside(bool DebugMessages)
     {
         int TempArrayPos = ConvertToAbsolute(GridX, GridY);
 
-        float TempFloatZX = data[TempArrayPos].z;
+        float TempFloatZX = (float)data[TempArrayPos].z;
         float var1 = TempFloatZX * 3.1415927;
         float var2 = (1 - cosf(var1)) * .5;
         float var3;
 
         if(CurrentPos > 0)
         {
-            float LastZPos = data[ConvertToAbsolute(GridX, GridY - 1)].z;
+            float LastZPos = (float)data[ConvertToAbsolute(GridX, GridY - 1)].z;
             float var4 = LastZPos * (1 - var2);
             float var5 = TempFloatZX * var2;
             var3 = var4 + var5;
@@ -2170,7 +2176,7 @@ void MapSystem::GameMap::SmoothNoiseOutside(bool DebugMessages)
 
         else if(CurrentPos == 0)
         {
-            float NextZPos = data[ConvertToAbsolute(GridX, GridY + 1)].z;
+            float NextZPos = (float)data[ConvertToAbsolute(GridX, GridY + 1)].z;
             float var4 = NextZPos * (1 - var2);
             float var5 = TempFloatZX * var2;
             var3 = var4 + var5;
@@ -2902,10 +2908,10 @@ int MapSystem::GameMap::GetDistance(int PositionOne, int PositionTwo)
     int x2 = PositionTwo % x;
     int y2 = PositionTwo / x;
 
-    int x3 = pow(x2 - x1, 2);
-    int y3 = pow(y2 - y1, 2);
+    int x3 = (int)pow(x2 - x1, 2);
+    int y3 = (int)pow(y2 - y1, 2);
 
-    return sqrt(x3 + y3);
+    return (int)sqrt(x3 + y3);
 }
 
 std::string MapSystem::GameMap::BiomeToString(int TileID)
