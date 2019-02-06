@@ -26,9 +26,8 @@ void MapSystem::GameMap::GenerateHeightMap()
 
     for(int i = 0; i < MapSize; i++)
     {
-        float NewHeight;
-        //NewHeight = scaled_octave_noise_3d(1, .2, .1, 1, 0, 255, data[i].x, data[i].y, data[i].z);
-        NewHeight = scaled_octave_noise_3d(octaves, persistence, scale, amplitude, 0.0, 255.0, data[i].x, data[i].y, data[i].z);
+        //float NewHeight = scaled_octave_noise_3d(1, .2, .1, 1, 0, 255, data[i].x, data[i].y, data[i].z);
+        float NewHeight = scaled_octave_noise_3d(octaves, persistence, scale, amplitude, 0.0, 255.0, data[i].x, data[i].y, data[i].z);
 
         data[i].z = static_cast<int> (NewHeight);
     }

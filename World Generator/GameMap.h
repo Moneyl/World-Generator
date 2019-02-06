@@ -169,14 +169,14 @@ public:
     int MaximumAngle = 359;
     int MaximumNoiseAngle = 90;
 
-    float ModifierOne = .01;
-    float ModifierTwo = .0001;
+    float ModifierOne = .01f;
+    float ModifierTwo = .0001f;
 
-    float ModOneAdd = .01;
-    float ModTwoAdd = .0003;
+    float ModOneAdd = .01f;
+    float ModTwoAdd = .0003f;
 
-    float ModOneMax = 3.0;
-    float ModTwoMax = .01;
+    float ModOneMax = 3.0f;
+    float ModTwoMax = .01f;
 
     std::vector <int> ChannelLocations;
 
@@ -196,7 +196,7 @@ public:
     int CenterSmoothScale;
 
     int SeedType;
-    float SeedModifier = .001;
+    float SeedModifier = .001f;
 
     float TempLowBound; //Both in Celsius
     float TempHighBound;
@@ -230,8 +230,8 @@ public:
     int MountainLevel;
     int SnowLevel;
 
-    float TemperatureMultiplier = .6;
-    float TemperatureDivisor = 30;
+    float TemperatureMultiplier = 0.6f;
+    float TemperatureDivisor = 30.0f;
 
     std::vector <NatureRegion> NatureRegionsContainer;
 
@@ -292,8 +292,8 @@ public:
     int StepLimit = 1000;//300;
     int TotalSystems;
 
-    float RainfallDivisor = 1; //Modifies how quickly moisture within a system transfers to the ground below. Used so systems don't immediately turn anything they pass over into a rainforest.
-    float CloudgainDivisor = 4; //Modifies how quickly a system can gain moisture from water or other moisture source.
+    float RainfallDivisor = 1.0f; //Modifies how quickly moisture within a system transfers to the ground below. Used so systems don't immediately turn anything they pass over into a rainforest.
+    float CloudgainDivisor = 4.0f; //Modifies how quickly a system can gain moisture from water or other moisture source.
 
     int MinimumChannelHeight = 10;
     int MaximumChannelHeight = 20;
@@ -301,29 +301,29 @@ public:
     int MaximumAngle = 360;
     int MaximumNoiseAngle = 90;
 
-    bool UseVaryingRadius = 1;
+    bool UseVaryingRadius = true;
     int MinimumRadius = 4;
     int MaximumRadius = 15;
     int ConstantRadius = 15;
 
-    bool UseVaryingStartSpeed = 1;
+    bool UseVaryingStartSpeed = true;
     int MinimumStartSpeed = 1;
     int MaximumStartSpeed = 3;
     int ConstantStartSpeed = 4;
 
-    bool UseVaryingStartMoisture = 1;
+    bool UseVaryingStartMoisture = true;
     int MinimumStartMoisture = 50;
     int MaximumStartMoisture = 200;
     int ConstantStartMoisture = 255;
 
-    float ModifierOne = .01;
-    float ModifierTwo = .0001;
+    float ModifierOne = .01f;
+    float ModifierTwo = .0001f;
 
-    float ModOneAdd = .01;
-    float ModTwoAdd = .0003;
+    float ModOneAdd = .01f;
+    float ModTwoAdd = .0003f;
 
-    float ModOneMax = 20.0;
-    float ModTwoMax = .001;
+    float ModOneMax = 20.0f;
+    float ModTwoMax = .001f;
 };
 
 class WaterRegion
@@ -360,7 +360,7 @@ public:
     int AbsoluteMidpointPosition;
 
     sf::Color RegionColor;
-    bool ColorSet = 0;
+    bool ColorSet = false;
 
     MapSystem::GameMap* CurrentMap;
 };
@@ -399,7 +399,7 @@ public:
     int TierSize;
 
     sf::Color RegionColor;
-    bool ColorSet = 0;
+    bool ColorSet = false;
 };
 
 class HeightRegion
@@ -486,10 +486,10 @@ public:
     bool HitDeadEnd;
     int LastMoveDirection;
 
-    bool NoLeft = 0;
-    bool NoRight = 0;
-    bool NoUp = 0;
-    bool NoDown = 0;
+    bool NoLeft = false;
+    bool NoRight = false;
+    bool NoUp = false;
+    bool NoDown = false;
 
     void AddAdjacentTiles(int Position);
     bool IsAdjacentToSelf(int Position);
@@ -543,11 +543,11 @@ public:
     int MaximumVariance;
     int MaximumSameMoveDirection;
 
-    bool SameMoveRestrictions = 0;
-    bool DirectionRestrictions = 1;
+    bool SameMoveRestrictions = false;
+    bool DirectionRestrictions = true;
 
-    float CurrentCount = .01;
-    float Modifier = .01;
+    float CurrentCount = 0.01f;
+    float Modifier = 0.01f;
 
     int MinimumTargetSize;
 
@@ -583,47 +583,47 @@ public:
     int _x = 400;
     int _y = 256;
 
-    float _octaves = 30.0;
-    float _persistence = .65;
-    float _scale = .0065;
-    float _amplitude = 1;
+    float _octaves = 30.0f;
+    float _persistence = 0.65f;
+    float _scale = 0.0065f;
+    float _amplitude = 1.0f;
 
     int _CornerSmoothScale = 16;
     int _SideSmoothScale = 8;
     int _CenterSmoothScale = 1;
     int _SeedType = 0;
 
-    bool _DoMapSmoothing = 0;
-    bool _DoMapSideSmoothing = 0;
+    bool _DoMapSmoothing = false;
+    bool _DoMapSideSmoothing = false;
 
-    float _TempLowBound = 273.3; //Both in Kelvin
-    float _TempHighBound = 318.15;
+    float _TempLowBound = 273.3f; //Both in Kelvin
+    float _TempHighBound = 318.15f;
 
     float _TempRange;
     float _TempChangeDelta;
 
     int _HeightOfEquator = 2; // Preferably an even number to make the equator look nice.
 
-    float _RainfallDivisor = 4;
-    float _RainfallOverlapValue = 70;
-    float _RainfallOverlapMultiplier = 4;
+    float _RainfallDivisor = 4.0f;
+    float _RainfallOverlapValue = 70.0f;
+    float _RainfallOverlapMultiplier = 4.0f;
 
-    float _BaseWindRainfall = 135;
-    float _PostMountainWindRainfall = 35;
-    float _PostWaterWindRainfall = 180;
+    float _BaseWindRainfall = 135.0f;
+    float _PostMountainWindRainfall = 35.0f;
+    float _PostWaterWindRainfall = 180.0f;
 
-    float _RainfallIncreaseDelta = 2.5;
-    float _RainfallDecreaseDelta = 1.5;
-    float _RainfallMultiplier = 6.0;
+    float _RainfallIncreaseDelta = 2.5f;
+    float _RainfallDecreaseDelta = 1.5f;
+    float _RainfallMultiplier = 6.0f;
 
-    float _MountainRate1 = 4;
-    float _MountainRate2 = 4;
+    float _MountainRate1 = 4.0f;
+    float _MountainRate2 = 4.0f;
 
-    float _LandDecreaseLevel = 28;
-    float _MountainDecreaseLevel = 10;
+    float _LandDecreaseLevel = 28.0f;
+    float _MountainDecreaseLevel = 10.0f;
 
-    float _RainfallNoiseThreshold = 170;
-    bool _HeightTurbulence = 1;
+	float _RainfallNoiseThreshold = 170.0f;
+    bool _HeightTurbulence = true;
 
     int _SeaLevel = 130;
     int _MountainLevel = 190;
@@ -659,11 +659,11 @@ public:
     int _MaximumVariance = 10;
     int _MaximumSameMoveDirection = 7;
 
-    bool _SameMoveRestrictions = 0;
-    bool _DirectionRestrictions = 0;
+    bool _SameMoveRestrictions = false;
+    bool _DirectionRestrictions = false;
 
-    float _CurrentCount = .01;
-    float _Modifier = .01;
+    float _CurrentCount = 0.01f;
+    float _Modifier = 0.01f;
 
     int _MinimumTargetSize = 60;
 
