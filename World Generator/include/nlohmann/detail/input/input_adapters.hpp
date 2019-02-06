@@ -10,6 +10,7 @@
 #include <string> // string, char_traits
 #include <type_traits> // enable_if, is_base_of, is_pointer, is_integral, remove_pointer
 #include <utility> // pair, declval
+#include <cstdio> //FILE *
 
 #include <nlohmann/detail/macro_scope.hpp>
 
@@ -44,6 +45,27 @@ struct input_adapter_protocol
 
 /// a type to simplify interfaces
 using input_adapter_t = std::shared_ptr<input_adapter_protocol>;
+
+/*!
+Input adapter for stdio file access. This adapter read only 1 byte and do not use any
+ buffer. This adapter is a very low level adapter.
+*/
+class file_input_adapter : public input_adapter_protocol
+{
+  public:
+    explicit file_input_adapter(std::FILE* f)  noexcept
+        : m_file(f)
+    {}
+
+    std::char_traits<char>::int_type get_character() noexcept override
+    {
+        return std::fgetc(m_file);
+    }
+  private:
+    /// the file pointer to read from
+    std::FILE* m_file;
+};
+
 
 /*!
 Input adapter for a (caching) istream. Ignores a UFT Byte Order Mark at
@@ -293,7 +315,8 @@ class input_adapter
 {
   public:
     // native support
-
+    input_adapter(std::FILE* file)
+        : ia(std::make_shared<file_input_adapter>(file)) {}
     /// input adapter for input stream
     input_adapter(std::istream& i)
         : ia(std::make_shared<input_stream_adapter>(i)) {}
@@ -337,7 +360,7 @@ class input_adapter
     /// input adapter for iterator range with contiguous storage
     template<class IteratorType,
              typename std::enable_if<
-                 std::is_same<typename std::iterator_traits<IteratorType>::iterator_category, std::random_access_iterator_tag>::value,
+                 std::is_same<typename iterator_traits<IteratorType>::iterator_category, std::random_access_iterator_tag>::value,
                  int>::type = 0>
     input_adapter(IteratorType first, IteratorType last)
     {
@@ -356,7 +379,7 @@ class input_adapter
 
         // assertion to check that each element is 1 byte long
         static_assert(
-            sizeof(typename std::iterator_traits<IteratorType>::value_type) == 1,
+            sizeof(typename iterator_traits<IteratorType>::value_type) == 1,
             "each element in the iterator range must have the size of 1 byte");
 
         const auto len = static_cast<size_t>(std::distance(first, last));
@@ -380,7 +403,7 @@ class input_adapter
     /// input adapter for contiguous container
     template<class ContiguousContainer, typename
              std::enable_if<not std::is_pointer<ContiguousContainer>::value and
-                            std::is_base_of<std::random_access_iterator_tag, typename std::iterator_traits<decltype(std::begin(std::declval<ContiguousContainer const>()))>::iterator_category>::value,
+                            std::is_base_of<std::random_access_iterator_tag, typename iterator_traits<decltype(std::begin(std::declval<ContiguousContainer const>()))>::iterator_category>::value,
                             int>::type = 0>
     input_adapter(const ContiguousContainer& c)
         : input_adapter(std::begin(c), std::end(c)) {}
