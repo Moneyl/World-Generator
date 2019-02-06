@@ -27,18 +27,19 @@ void MapSystem::GameMap::GenerateHeightMap()
     for(int i = 0; i < MapSize; i++)
     {
         //float NewHeight = scaled_octave_noise_3d(1, .2, .1, 1, 0, 255, data[i].x, data[i].y, data[i].z);
-        float NewHeight = scaled_octave_noise_3d(octaves, persistence, scale, amplitude, 0.0, 255.0, data[i].x, data[i].y, data[i].z);
+        float NewHeight = scaled_octave_noise_3d(octaves, persistence, scale, 
+			amplitude, 0.0f, 255.0f, (float)data[i].x, (float)data[i].y, (float)data[i].z);
 
         data[i].z = static_cast<int> (NewHeight);
     }
 
     if(SeedModifier < 1)
     {
-        SeedModifier += .01;
+        SeedModifier += .01f;
     }
     if(SeedModifier >= 1)
     {
-        SeedModifier = .01;
+        SeedModifier = .01f;
     }
 
     sf::Time FunctionSeconds = FunctionTime.getElapsedTime();
