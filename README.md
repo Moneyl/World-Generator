@@ -32,10 +32,11 @@ It's been several years since I've worked on this project, and I aim to update i
 - Move all code into /src folder so you don't need to scroll way down to get to the readme on github.
 
 ### 1.1.0
-- Refactor old code. Split massive .h and .cpp files, rename .h to .hpp, and make sure each class has it's own file rather than bunching several together as they are in GameMap.h. Try to utilize new C++ language features where possible.
+- Refactor old code. Split massive .h and .cpp files, rename .h to .hpp, and make sure each class has it's own file rather than bunching several together as they are in GameMap.h. Try to utilize new C++ language features where possible. For an example of how bad it can get check out MapSystem::CalculateRainShadow() or MapSystem::RiverManager::GenerateRivers().
 - Replace errors code with exceptions or some other form of error reporting. Returning -1 for errors can be clunky at times.
 - Make use of auto iterators and algorithms where possible instead of hand rolling everything as it is now.
 - Improve documentation and readme on how to use.
+- Replace all uses of rand() with modern c++ methods (std::random_device, std::mt19937, std::uniform_int_distribution, etc). Allows for more control and probably better random number gen. Should also reduce the chance of messing up seeding and other simple things.
 
 ### 1.2.0
 - Attempt to make map gen more deterministic for a given seed. IIRC there was some excessive use of rand() in situations which didn't require it so a given seed might vary in ways which could be unwanted. Worth examining this validity of this.
