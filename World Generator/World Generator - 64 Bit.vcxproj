@@ -160,6 +160,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameMap.cpp" />
+    <ClCompile Include="Globals.cpp" />
     <ClCompile Include="HeightRegion.cpp" />
     <ClCompile Include="HeightRegionInfo.cpp" />
     <ClCompile Include="HeightRegionManager.cpp" />

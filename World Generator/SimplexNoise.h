@@ -44,7 +44,7 @@ dimension, you can ensure that each gets a unique noise value and they don't
 all look identical.
 */
 
-#include "Files.h"
+#include "Globals.h"
 
 // Multi-octave Simplex noise
 // For each octave, a higher frequency/lower amplitude function will be added to the original.

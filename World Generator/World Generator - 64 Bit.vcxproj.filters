@@ -119,6 +119,9 @@
     <ClCompile Include="WorldTile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Globals.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc">

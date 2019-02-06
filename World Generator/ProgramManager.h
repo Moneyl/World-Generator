@@ -2,7 +2,7 @@
 #include "GameMap.h"
 #include "StaticTextManager.h"
 #include "UIManager.h"
-#include "Globals.h"
+//#include "Globals.h"
 
 class TileShader
 {
