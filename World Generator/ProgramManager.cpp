@@ -47,18 +47,18 @@ sf::Color ProgramManager::GetRandomColor()
 	{
 		ModifierOne += ModOneAdd;
 	}
-	else if(ModifierOne == ModOneMax)
+	else if(FloatAlmostEqual(ModifierOne, ModOneMax))
 	{
-		ModifierOne = .01;
+		ModifierOne = 0.01f;
 	}
 
 	if(ModifierTwo < ModTwoMax)
 	{
 		ModifierTwo += ModTwoAdd;
 	}
-	else if(ModifierTwo == ModTwoMax)
+	else if(FloatAlmostEqual(ModifierTwo, ModTwoMax))
 	{
-		ModifierTwo = .0001;
+		ModifierTwo = 0.0001f;
 	}
 
 	return TempColor;
@@ -137,15 +137,15 @@ void ProgramManager::DrawTemperatureMap(bool Greyscale)
 
 		if(!Greyscale)
 		{
-			TempColor.r = CurrentMap->data[i].temperature;
+			TempColor.r = (char)CurrentMap->data[i].temperature;
 			TempColor.g = 0;
-			TempColor.b = 255 - CurrentMap->data[i].temperature;
+			TempColor.b = (char)(255.0f - CurrentMap->data[i].temperature);
 		}
 		if(Greyscale)
 		{
-			TempColor.r = CurrentMap->data[i].temperature;
-			TempColor.g = CurrentMap->data[i].temperature;
-			TempColor.b = CurrentMap->data[i].temperature;
+			TempColor.r = (char)CurrentMap->data[i].temperature;
+			TempColor.g = (char)CurrentMap->data[i].temperature;
+			TempColor.b = (char)CurrentMap->data[i].temperature;
 		}
 
 		MapImage.setPixel(GridX, GridY, TempColor);
@@ -181,16 +181,16 @@ void ProgramManager::DrawRainfallMap(bool Greyscale, bool ColorWater)
 				}
 				else
 				{
-					TempColor.r = CurrentMap->data[i].rainfall;
-					TempColor.g = CurrentMap->data[i].rainfall;
-					TempColor.b = CurrentMap->data[i].rainfall;
+					TempColor.r = (char)CurrentMap->data[i].rainfall;
+					TempColor.g = (char)CurrentMap->data[i].rainfall;
+					TempColor.b = (char)CurrentMap->data[i].rainfall;
 				}
 			}
 			else if(!ColorWater)
 			{
-				TempColor.r = CurrentMap->data[i].rainfall;
-				TempColor.g = CurrentMap->data[i].rainfall;
-				TempColor.b = CurrentMap->data[i].rainfall;
+				TempColor.r = (char)CurrentMap->data[i].rainfall;
+				TempColor.g = (char)CurrentMap->data[i].rainfall;
+				TempColor.b = (char)CurrentMap->data[i].rainfall;
 			}
 		}
 
@@ -433,8 +433,8 @@ void ProgramManager::DrawBiomeMap()
 		}
 		else if(CurrentMap->data[TempArrayPos].Biome == 4)
 		{
-			TempColor.r = GrasslandColor.r + (CurrentMap->data[TempArrayPos].z - CurrentMap->SeaLevel) / 3;
-			TempColor.g = GrasslandColor.g + (CurrentMap->data[TempArrayPos].z - CurrentMap->SeaLevel) / 1.25;
+			TempColor.r = GrasslandColor.r + (char)((CurrentMap->data[TempArrayPos].z - CurrentMap->SeaLevel) / 3);
+			TempColor.g = GrasslandColor.g + (char)((CurrentMap->data[TempArrayPos].z - CurrentMap->SeaLevel) / 1.25);
 			TempColor.b = GrasslandColor.b;
 			TempColor.a = GrasslandColor.a;
 
@@ -459,9 +459,9 @@ void ProgramManager::DrawBiomeMap()
 		}
 		else if(CurrentMap->data[TempArrayPos].Biome == 6)
 		{
-			TempColor.r = MarshColor.r - (CurrentMap->data[TempArrayPos].z - CurrentMap->SeaLevel) * .5;
+			TempColor.r = MarshColor.r - (char)((CurrentMap->data[TempArrayPos].z - CurrentMap->SeaLevel) * 0.5);
 			TempColor.g = MarshColor.g;
-			TempColor.b = MarshColor.b - (CurrentMap->data[TempArrayPos].z - CurrentMap->SeaLevel) * .5;
+			TempColor.b = MarshColor.b - (char)((CurrentMap->data[TempArrayPos].z - CurrentMap->SeaLevel) * 0.5);
 			TempColor.a = MarshColor.a;
 
 			CurrentMap->data[TempArrayPos].BaseColor.r = TempColor.r;
@@ -1179,16 +1179,16 @@ void ProgramManager::UpdateTileInfoPosition()
 
 	TileID.setPosition(CurrentWindow->mapPixelToCoords(TempPosition, MapView));
 
-	TempPosition.y += TileID.getGlobalBounds().height + 10;
+	TempPosition.y += (int)TileID.getGlobalBounds().height + 10;
 	TileBiome.setPosition(CurrentWindow->mapPixelToCoords(TempPosition, MapView));
 
-	TempPosition.y += TileBiome.getGlobalBounds().height + 10;
+	TempPosition.y += (int)TileBiome.getGlobalBounds().height + 10;
 	TileElevation.setPosition(CurrentWindow->mapPixelToCoords(TempPosition, MapView));
 
-	TempPosition.y += TileElevation.getGlobalBounds().height + 10;
+	TempPosition.y += (int)TileElevation.getGlobalBounds().height + 10;
 	TileRainfall.setPosition(CurrentWindow->mapPixelToCoords(TempPosition, MapView));
 
-	TempPosition.y += TileRainfall.getGlobalBounds().height + 10;
+	TempPosition.y += (int)TileRainfall.getGlobalBounds().height + 10;
 	TileTemperature.setPosition(CurrentWindow->mapPixelToCoords(TempPosition, MapView));
 }
 
@@ -1394,7 +1394,7 @@ void ProgramManager::UpdateMapView(int Key)
 			CurrentCenterTile = CurrentMap->ConvertToAbsolute(NewX, NewY + MapMoveDelta);
 		}
 	}
-	MapView.setCenter(CurrentMap->data[CurrentCenterTile].WindowX, CurrentMap->data[CurrentCenterTile].WindowY + 20);
+	MapView.setCenter((float)(CurrentMap->data[CurrentCenterTile].WindowX), (float)(CurrentMap->data[CurrentCenterTile].WindowY + 20));
 }
 
 void ProgramManager::ChangeDisplayState(int Key)
@@ -1425,7 +1425,7 @@ void ProgramManager::ChangeDisplayState(int Key)
 	{
 		MapView.setCenter(0, 0);
 		sf::Vector2i Pos;
-		Pos.x = (MapScaledSize / 4) + 100;
+		Pos.x = (int)(MapScaledSize / 4.0f) + 100;
 		Pos.y = 50;
 		sf::Vector2f NewPos = CurrentWindow->mapPixelToCoords(Pos);
 		MapSprite.setPosition(NewPos);
@@ -1438,7 +1438,7 @@ void ProgramManager::ChangeDisplayState(int Key)
 	if(Key == -1)
 	{
 		DisplayState = 1;
-		MapView.setSize(WindowWidth, WindowHeight);
+		MapView.setSize((float)WindowWidth, (float)WindowHeight);
 		CurrentWindow->setView(MapView);
 		SetBaseCenterTile();
 	}
@@ -1760,8 +1760,8 @@ void ProgramManager::DrawTiles()
 		}
 		else if(CurrentMap->data[Pos].Biome == 4)
 		{
-			CurrentMap->data[Pos].BaseColor.r = GrasslandColor.r + (CurrentMap->data[Pos].z - CurrentMap->SeaLevel) / 3;
-			CurrentMap->data[Pos].BaseColor.g = GrasslandColor.g + (CurrentMap->data[Pos].z - CurrentMap->SeaLevel) / 1.25;
+			CurrentMap->data[Pos].BaseColor.r = GrasslandColor.r + (char)((CurrentMap->data[Pos].z - CurrentMap->SeaLevel) / 3);
+			CurrentMap->data[Pos].BaseColor.g = GrasslandColor.g + (char)((CurrentMap->data[Pos].z - CurrentMap->SeaLevel) / 1.25);
 			CurrentMap->data[Pos].BaseColor.b = GrasslandColor.b;
 
 			CurrentMap->data[Pos].ForeColor.r = GrasslandColor.r;
@@ -1793,9 +1793,9 @@ void ProgramManager::DrawTiles()
 		}
 		else if(CurrentMap->data[Pos].Biome == 6)
 		{
-			CurrentMap->data[Pos].BaseColor.r = MarshColor.r - (CurrentMap->data[Pos].z - CurrentMap->SeaLevel) * .5;
+			CurrentMap->data[Pos].BaseColor.r = MarshColor.r - (char)((CurrentMap->data[Pos].z - CurrentMap->SeaLevel) * 0.5);
 			CurrentMap->data[Pos].BaseColor.g = MarshColor.g;
-			CurrentMap->data[Pos].BaseColor.b = MarshColor.b - (CurrentMap->data[Pos].z - CurrentMap->SeaLevel) * .5;
+			CurrentMap->data[Pos].BaseColor.b = MarshColor.b - (char)((CurrentMap->data[Pos].z - CurrentMap->SeaLevel) * 0.5);
 
 			CurrentMap->data[Pos].ForeColor.r = MarshColor.r;
 			CurrentMap->data[Pos].ForeColor.g = MarshColor.g;
@@ -1976,7 +1976,7 @@ void ProgramManager::DrawTiles()
 	{
 		CurrentMap->data[Pos].TileSprite.setTexture(CurrentTileset.TilesetTexture);
 		CurrentMap->data[Pos].TileSprite.setTextureRect(CurrentTileset.GetCellBounds(CurrentMap->data[Pos].TileID));
-		CurrentMap->data[Pos].TileSprite.setPosition(CurrentMap->data[Pos].WindowX, CurrentMap->data[Pos].WindowY);
+		CurrentMap->data[Pos].TileSprite.setPosition((float)CurrentMap->data[Pos].WindowX, (float)CurrentMap->data[Pos].WindowY);
 
 		Pos++;
 	}
@@ -2079,8 +2079,8 @@ void ProgramManager::UpdateShaderVariables(int ArrayXSize, int TileID)
 {
 	TShader.ArrayXSize = ArrayXSize;
 	TShader.TileID = TileID;
-	TShader.TileXSize = TilesXSize;
-	TShader.TileYSize = TilesYSize;
+	TShader.TileXSize = (float)TilesXSize;
+	TShader.TileYSize = (float)TilesYSize;
 	TShader.UpdateShaderVariables();
 }
 
@@ -2149,7 +2149,7 @@ void ProgramManager::StartStateManager()
 
 void ProgramManager::SetBaseCenterTile()
 {
-	MapView.setSize(WindowWidth, WindowHeight);
+	MapView.setSize((float)WindowWidth, (float)WindowHeight);
 	sf::Vector2i ZeroXY(0, 0);
 	sf::Vector2i WindowX(WindowWidth, 0);
 	sf::Vector2i WindowY(0, WindowHeight);
@@ -2158,8 +2158,8 @@ void ProgramManager::SetBaseCenterTile()
 	sf::Vector2f XSize = CurrentWindow->mapPixelToCoords(WindowX, MapView);
 	sf::Vector2f YSize = CurrentWindow->mapPixelToCoords(WindowY, MapView);
 
-	WidthInTiles = (XSize.x - ZeroPos.x) / TilesXSize;
-	HeightInTiles = (YSize.y - ZeroPos.y) / TilesYSize;
+	WidthInTiles = (int)((XSize.x - ZeroPos.x) / (float)TilesXSize);
+	HeightInTiles = (int)((YSize.y - ZeroPos.y) / (float)TilesYSize);
 
 	HorizontalTileVariation = WidthInTiles / 2;
 	VerticalTileVariation = HeightInTiles / 2;
@@ -2177,8 +2177,8 @@ void ProgramManager::UpdateVisibleTiles()
 	sf::Vector2f XSize = CurrentWindow->mapPixelToCoords(WindowX, MapView);
 	sf::Vector2f YSize = CurrentWindow->mapPixelToCoords(WindowY, MapView);
 
-	WidthInTiles = (XSize.x - ZeroPos.x) / TilesXSize;
-	HeightInTiles = (YSize.y - ZeroPos.y) / TilesYSize;
+	WidthInTiles = (int)((XSize.x - ZeroPos.x) / (float)TilesXSize);
+	HeightInTiles = (int)((YSize.y - ZeroPos.y) / (float)TilesYSize);
 
 	HorizontalTileVariation = WidthInTiles / 2;
 	VerticalTileVariation = HeightInTiles / 2;

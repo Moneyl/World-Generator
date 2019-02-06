@@ -210,19 +210,19 @@ public:
 	void BlendBiomeColors();
 	void BlendTileBackgrounds();
 
-	bool DoBlendBiomeMap = 1;
-	bool DoBlendTileBackgrounds = 1;
+	bool DoBlendBiomeMap = true;
+	bool DoBlendTileBackgrounds = true;
 
-	float ModifierOne = .01;
-	float ModifierTwo = .0001;
+	float ModifierOne = 0.01f;
+	float ModifierTwo = 0.0001f;
 
-	float ModOneAdd = .01;
-	float ModTwoAdd = .0003;
+	float ModOneAdd = 0.01f;
+	float ModTwoAdd = 0.0003f;
 
-	float ModOneMax = 20.0;
-	float ModTwoMax = .001;
+	float ModOneMax = 20.0f;
+	float ModTwoMax = 0.001f;
 
-	bool UseColorRestraints = 1;
+	bool UseColorRestraints = true;
 	int ColorMinimum = 30;
 	int ColorMaximum = 225;
 
@@ -269,18 +269,18 @@ public:
 
 	sf::Font GlobalFont;
 
-	float MapScaleFactor = 2.3;
+	float MapScaleFactor = 2.3f;
 
-	bool DisplayRiverStartPoints = 0;
-	bool DisplayAsTiles = 1;
-	float UIScaleFactor = 1.00;
-	bool WorldGenUIVisible = 0;
+	bool DisplayRiverStartPoints = false;
+	bool DisplayAsTiles = true;
+	float UIScaleFactor = 1.00f;
+	bool WorldGenUIVisible = false;
 
 	float xscalef;
 	float yscalef;
-	float MapScaledSize = 640.0;
+	float MapScaledSize = 640.0f;
 	int DisplayState = 2; // DISPLAY STATE // 1 = PixelMap 2 = TileMap
-	bool ForceGlyphsOnAll = 0;
+	bool ForceGlyphsOnAll = false;
 
 	int WidthInTiles;
 	int HeightInTiles;
@@ -295,20 +295,20 @@ public:
 	int TilesXSize = 16;
 	int TilesYSize = 16;
 
-	bool DisplayMap = 0;
-	bool MapSpriteScaled = 0;
-	bool ExportMapImages = 1;
-	float BlendDividend = 1.0;//////
+	bool DisplayMap = false;
+	bool MapSpriteScaled = false;
+	bool ExportMapImages = true;
+	float BlendDividend = 1.0f;//////
 	int MapMoveDelta = 4;
 
 	int MapCenterCell;
 	int TileTypeNumber;
 
-	float ViewDelta = 25.0;
-	float ZoomInDelta = .8; //Never Negative!
-	float ZoomOutDelta = 1.2; //Never Negative!
-	float ViewMinimum = 22.0;
-	float ViewMaximum = 200.0;
+	float ViewDelta = 25.0f;
+	float ZoomInDelta = 0.8f; //Never Negative!
+	float ZoomOutDelta = 1.2f; //Never Negative!
+	float ViewMinimum = 22.0f;
+	float ViewMaximum = 200.0f;
 
 	std::vector <int> VisibleTileIDList;
 
@@ -332,5 +332,5 @@ public:
 	sf::Text HelpTip;
 	sf::Text CurrentInfoOverlay;
 
-	bool UpdateVisibleTileList = 1;
+	bool UpdateVisibleTileList = true;
 };
