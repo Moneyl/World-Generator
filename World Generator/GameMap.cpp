@@ -2249,9 +2249,9 @@ void MapSystem::GameMap::CalculateMapRegions(bool DebugMessages)
 
             NatureRegionsContainer.push_back(NatureRegion());
             NatureRegionsContainer[CurrentRegion].Type = CurrentBiome;
-            NatureRegionsContainer[CurrentRegion].RegionColor.r = -1;
-            NatureRegionsContainer[CurrentRegion].RegionColor.g = -1;
-            NatureRegionsContainer[CurrentRegion].RegionColor.b = -1;
+            NatureRegionsContainer[CurrentRegion].RegionColor.r = 0;//-1; There may be a check for -1 someone which always fails since char >= 0
+            NatureRegionsContainer[CurrentRegion].RegionColor.g = 0;//-1;
+            NatureRegionsContainer[CurrentRegion].RegionColor.b = 0;//-1;
 
             CoordinateQueue.push(TempArrayPos);
 
