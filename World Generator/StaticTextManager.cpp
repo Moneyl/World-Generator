@@ -19,7 +19,15 @@ void StaticTextManager::ClearAll()
 
 void StaticTextManager::RemoveText(int TextID)
 {
-
+	//Added this just to silence the compiler warning from not using TextID.
+	if (TextID == 0)
+	{
+		return;
+	}
+	else
+	{
+		return;
+	}
 }
 
 void StaticTextManager::SetTextString(int TextID, std::string TextString)

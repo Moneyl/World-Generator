@@ -15,10 +15,10 @@ int MapSystem::RiverManager::ClosestWaterPosition(int Position)
     int RightPosition = Position;
     int AbovePosition = Position;
     int BelowPosition = Position;
-    int UpperLeftPosition = Position;
+    /*int UpperLeftPosition = Position;
     int UpperRightPosition = Position;
     int LowerLeftPosition = Position;
-    int LowerRightPosition = Position;
+    int LowerRightPosition = Position;*/
 
     int ShortestDistance = 1000000;
     bool exitvar = 0;
@@ -218,10 +218,10 @@ bool MapSystem::RiverManager::IsAdjacentToWater(int Position)
     int aRight = CurrentMap->data[Position].Right();
     int aAbove = CurrentMap->data[Position].Above();
     int aBelow = CurrentMap->data[Position].Below();
-    int aUpperLeft = CurrentMap->data[Position].UpperLeft();
+    /*int aUpperLeft = CurrentMap->data[Position].UpperLeft();
     int aUpperRight = CurrentMap->data[Position].UpperRight();
     int aLowerLeft = CurrentMap->data[Position].LowerLeft();
-    int aLowerRight = CurrentMap->data[Position].LowerRight();
+    int aLowerRight = CurrentMap->data[Position].LowerRight();*/
 
     if(aLeft > -1)
     {
@@ -268,10 +268,10 @@ int MapSystem::RiverManager::ClosestStartPoint(int Position)
             int x2 = RiverStartPoints[i] % CurrentMap->x;
             int y2 = RiverStartPoints[i] / CurrentMap->x;
 
-            int x3 = pow(x2 - x1, 2);
-            int y3 = pow(y2 - y1, 2);
+            int x3 = (int)pow(x2 - x1, 2);
+            int y3 = (int)pow(y2 - y1, 2);
 
-            int Distance = sqrt(x3 + y3);
+            int Distance = (int)sqrt(x3 + y3);
             if(closestpoint != -1)
             {
                 if(Distance < closestpoint)
@@ -302,14 +302,14 @@ int MapSystem::RiverManager::PickStartPosition()
     int MapY = CurrentMap->y;
     int MapSize = (MapX * MapY) - 1;
 
-    bool exit = 0;
-    int num;
-    CurrentCount = .01;
+    bool exit = false;
+    int num = 0;
+    CurrentCount = 0.01f;
     int Counter = 0;
 
-    while(exit == 0)
+    while(!exit)
     {
-        srand((unsigned)time(0));
+        srand((unsigned int)time(0));
         float TempVar = rand() * CurrentCount;
         float TempVar2 = rand() * TempVar * CurrentCount;
         int TempVar3 = static_cast<int>(floorf(TempVar2));
@@ -349,7 +349,7 @@ int MapSystem::RiverManager::PickStartPosition()
         }
         if(num > MapSize)
         {
-            CurrentCount = .01;
+            CurrentCount = 0.01f;
         }
         if(Counter > 10000)
         {
@@ -358,15 +358,11 @@ int MapSystem::RiverManager::PickStartPosition()
         }
 
         Counter++;
-        CurrentCount += .01;
+        CurrentCount += 0.01f;
     }
 
-
     //fout << "\nStart Point Chosen: " << num;
-
-
     return num;
-
 }
 
 int MapSystem::RiverManager::NextPosition(int Position, bool DebugMessages)
@@ -383,10 +379,10 @@ int MapSystem::RiverManager::NextPosition(int Position, bool DebugMessages)
     int aRight = CurrentMap->data[Position].Right();
     int aAbove = CurrentMap->data[Position].Above();
     int aBelow = CurrentMap->data[Position].Below();
-    int aUpperLeft = CurrentMap->data[Position].UpperLeft();
+    /*int aUpperLeft = CurrentMap->data[Position].UpperLeft();
     int aUpperRight = CurrentMap->data[Position].UpperRight();
     int aLowerLeft = CurrentMap->data[Position].LowerLeft();
-    int aLowerRight = CurrentMap->data[Position].LowerRight();
+    int aLowerRight = CurrentMap->data[Position].LowerRight();*/
 
     int CurrentHeight = CurrentMap->data[Position].z;
     int aNextPosition;
@@ -508,7 +504,7 @@ int MapSystem::RiverManager::RandomDirection(int Position, int RestrictedDirecti
     {
         srand((unsigned)time(0));
         float TempVar = rand() * Modifier;
-        float TempVar2 = TempVar;
+        //float TempVar2 = TempVar;
         int num = static_cast<int> (TempVar) % 4 + 1;
         //fout << "\nRandom Direction: " << num;
 
@@ -621,11 +617,11 @@ int MapSystem::RiverManager::RandomDirection(int Position, int RestrictedDirecti
 
         if(num <= (CurrentMap->x * CurrentMap->y) - 1)
         {
-            Modifier += .01;
+            Modifier += 0.01f;
         }
         else if(num > (CurrentMap->x * CurrentMap->y) - 1)
         {
-            Modifier = .01;
+            Modifier = 0.01f;
         }
         if(LeftSelected != 1 && RightSelected != 1 && AboveSelected != 1 && BelowSelected != 1)
         {
@@ -849,7 +845,7 @@ bool MapSystem::RiverManager::SurroundedByMountains(int Position)
         BelowHeight = -1;
     }
 
-    int CurrentPositionHeight = CurrentMap->data[Position].z;
+    //int CurrentPositionHeight = CurrentMap->data[Position].z;
 
     bool LeftTrue = 0;
     bool RightTrue = 0;
@@ -995,7 +991,7 @@ int MapSystem::RiverManager::TestPositionFinder(int Position)
     int LowestMontHeight = 500;
     int LowestMontPos = -1;
 
-    int CurrentPositionHeight = CurrentMap->data[Position].z;
+    //int CurrentPositionHeight = CurrentMap->data[Position].z;
     //std::cout << "\n" << ContainedRivers[CurrentRiver].IsAdjacentToSelf(aLeft);
     if(aLeft > -1)
     {
@@ -1672,6 +1668,6 @@ void MapSystem::RiverManager::Reset()
     {
         RiverStartPoints.pop_back();
     }
-    CurrentCount = .01;
-    Modifier = .01;
+    CurrentCount = 0.01f;
+    Modifier = 0.01f;
 }
