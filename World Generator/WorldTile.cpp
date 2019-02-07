@@ -156,4 +156,5 @@ int WorldTile::IsSide()//Returns follow the sides clockwise, starting at the top
     {
         return 0;
     }
+	return 0;
 }

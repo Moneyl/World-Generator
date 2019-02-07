@@ -660,8 +660,7 @@ int MapSystem::RiverManager::RandomDirection(int Position, int RestrictedDirecti
         //std::cout << "\nRandom Direction Returned Above.";
         return CurrentMap->data[Position].Above();
     }
-
-
+	return -1;
 }
 
 bool MapSystem::RiverManager::SurroundedByObstacles(int Position)
@@ -939,10 +938,10 @@ int MapSystem::RiverManager::TestPositionFinder(int Position)
     int aAbove = CurrentMap->data[Position].Above();
     int aBelow = CurrentMap->data[Position].Below();
 
-    int LeftHeight;// = CurrentMap->data[aLeft].z;
-    int RightHeight;// = CurrentMap->data[aRight].z;
-    int AboveHeight;// = CurrentMap->data[aAbove].z;
-    int BelowHeight;// = CurrentMap->data[aBelow].z;
+    int LeftHeight = -1;// = CurrentMap->data[aLeft].z;
+    int RightHeight = -1;// = CurrentMap->data[aRight].z;
+    int AboveHeight = -1;// = CurrentMap->data[aAbove].z;
+    int BelowHeight = -1;// = CurrentMap->data[aBelow].z;
 
     if(aLeft > -1)
     {
@@ -1266,7 +1265,7 @@ void MapSystem::RiverManager::GenerateRivers(bool DebugMessages)
             int exit = 0;
 
             int CurrentPosition;
-            int aNextPosition;
+            int aNextPosition = -1;
             CurrentRiver = i;
             //fout << "\n\nCurrent River: " << i;
 

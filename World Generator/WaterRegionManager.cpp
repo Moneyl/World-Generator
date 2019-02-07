@@ -135,10 +135,10 @@ void MapSystem::WaterRegionManager::CalculateWaterRegions(bool DebugMessages)
                     int aAbove = CurrentMap->data[CoordinatePos].Above();
                     int aBelow = CurrentMap->data[CoordinatePos].Below();
 
-                    int LeftHeight;
-                    int RightHeight;
-                    int AboveHeight;
-                    int BelowHeight;
+                    int LeftHeight = -1;
+                    int RightHeight = -1;
+                    int AboveHeight = -1;
+                    int BelowHeight = -1;
 
                     if(aLeft > -1)
                     {
@@ -193,10 +193,10 @@ void MapSystem::WaterRegionManager::CalculateWaterRegions(bool DebugMessages)
                                 CurrentMap->data[aLeft].InWaterRegion = 1;
 
                                 int TempX1 = aLeft % CurrentMap->x;
-                                int TempY1 = aLeft / CurrentMap->x;
+                                //int TempY1 = aLeft / CurrentMap->x;
 
                                 int TempX2 = ContainedRegions[CurrentRegion].FurthestLeftPosition % CurrentMap->x;
-                                int TempY2 = ContainedRegions[CurrentRegion].FurthestLeftPosition / CurrentMap-> x;
+                                //int TempY2 = ContainedRegions[CurrentRegion].FurthestLeftPosition / CurrentMap-> x;
 
                                 if(ContainedRegions[CurrentRegion].FurthestLeftPosition != -1)
                                 {
@@ -236,10 +236,10 @@ void MapSystem::WaterRegionManager::CalculateWaterRegions(bool DebugMessages)
                                 CurrentMap->data[aRight].InWaterRegion = 1;
 
                                 int TempX1 = aRight % CurrentMap->x;
-                                int TempY1 = aRight / CurrentMap->x;
+                                //int TempY1 = aRight / CurrentMap->x;
 
                                 int TempX2 = ContainedRegions[CurrentRegion].FurthestRightPosition % CurrentMap->x;
-                                int TempY2 = ContainedRegions[CurrentRegion].FurthestRightPosition / CurrentMap->x;
+                                //int TempY2 = ContainedRegions[CurrentRegion].FurthestRightPosition / CurrentMap->x;
 
                                 if(ContainedRegions[CurrentRegion].FurthestRightPosition != -1)
                                 {
@@ -277,10 +277,10 @@ void MapSystem::WaterRegionManager::CalculateWaterRegions(bool DebugMessages)
                                 ContainedRegions[CurrentRegion].AddCoordinate(aAbove);
                                 CurrentMap->data[aAbove].InWaterRegion = 1;
 
-                                int TempX1 = aAbove % CurrentMap->x;
+                                //int TempX1 = aAbove % CurrentMap->x;
                                 int TempY1 = aAbove / CurrentMap->x;
 
-                                int TempX2 = ContainedRegions[CurrentRegion].FurthestUpPosition % CurrentMap->x;
+                                //int TempX2 = ContainedRegions[CurrentRegion].FurthestUpPosition % CurrentMap->x;
                                 int TempY2 = ContainedRegions[CurrentRegion].FurthestUpPosition / CurrentMap->x;
 
                                 if(ContainedRegions[CurrentRegion].FurthestUpPosition != -1)
@@ -319,10 +319,10 @@ void MapSystem::WaterRegionManager::CalculateWaterRegions(bool DebugMessages)
                                 ContainedRegions[CurrentRegion].AddCoordinate(aBelow);
                                 CurrentMap->data[aBelow].InWaterRegion = 1;
 
-                                int TempX1 = aBelow % CurrentMap->x;
+                                //int TempX1 = aBelow % CurrentMap->x;
                                 int TempY1 = aBelow / CurrentMap->x;
 
-                                int TempX2 = ContainedRegions[CurrentRegion].FurthestDownPosition % CurrentMap->x;
+                                //int TempX2 = ContainedRegions[CurrentRegion].FurthestDownPosition % CurrentMap->x;
                                 int TempY2 = ContainedRegions[CurrentRegion].FurthestDownPosition / CurrentMap->x;
 
                                 if(ContainedRegions[CurrentRegion].FurthestDownPosition != -1)
@@ -373,6 +373,6 @@ void MapSystem::WaterRegionManager::CalculateWaterRegions(bool DebugMessages)
     sf::Time FunctionSeconds = FunctionTime.getElapsedTime();
     std::cout <<  FunctionSeconds.asSeconds() << " Seconds.";
 
-    int RegionCount = ContainedRegions.size();
+    int RegionCount = (int)ContainedRegions.size();
     std::cout << "\n\nNumber of Regions: " << RegionCount;
 }

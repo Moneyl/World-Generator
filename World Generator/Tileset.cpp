@@ -25,8 +25,9 @@ bool Tileset::LoadTileset(std::string FileLocation)
 {
 	if (TilesetTexture.loadFromFile(FileLocation))
 	{
-		return 1;
+		return true;
 	}
+	return false;
 }
 
 void Tileset::AddTile()

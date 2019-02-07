@@ -1322,14 +1322,14 @@ bool MapSystem::GameMap::IsDeepMountain(int Position)
 {
     if(data[Position].z >= MountainLevel)
     {
-        int Left;
-        int Right;
-        int Above;
-        int Below;
-        int UpperLeft;
-        int UpperRight;
-        int LowerLeft;
-        int LowerRight;
+        int Left = 0;
+        int Right = 0;
+        int Above = 0;
+        int Below = 0;
+        int UpperLeft = 0;
+        int UpperRight = 0;
+        int LowerLeft = 0;
+        int LowerRight = 0;
 
         if(data[Position].Left() > -1)
         {
@@ -1364,12 +1364,13 @@ bool MapSystem::GameMap::IsDeepMountain(int Position)
             LowerRight = data[data[Position].LowerRight()].z;
         }
 
+		//Todo: Try to improve the logic here. If MountainLevel == 0, then it will fail.
         if(Left >= MountainLevel && Right >= MountainLevel && Above >= MountainLevel && Below >= MountainLevel && UpperLeft >= MountainLevel && UpperRight >= MountainLevel && LowerLeft >= MountainLevel && LowerRight >= MountainLevel)
         {
-            return 1;
+            return true;
         }
     }
-    return 0;
+    return true;
 }
 
 bool MapSystem::GameMap::IsBiomeBorder(int Position)
@@ -1447,12 +1448,13 @@ bool MapSystem::GameMap::IsBiomeBorder(int Position)
 
     if(LeftBiome + RightBiome + AboveBiome + BelowBiome + UpperLeftBiome + UpperRightBiome + LowerLeftBiome + LowerRightBiome < 8)
     {
-        return 1;
+        return true;
     }
     else if(LeftBiome == 1 && RightBiome == 1 && AboveBiome == 1 && BelowBiome == 1 && UpperLeftBiome == 1 && UpperRightBiome == 1 && LowerLeftBiome == 1 && LowerRightBiome == 1)
     {
-        return 0;
+        return false;
     }
+	return false;
 }
 
 bool MapSystem::GameMap::IsIsolatedWater(int Position)

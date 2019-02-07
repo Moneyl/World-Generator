@@ -18,7 +18,7 @@ void MapSystem::WeatherSystemManager::IncrementModifiers()
     }
     else if(ModifierOne == ModOneMax)
     {
-        ModifierOne = .01;
+        ModifierOne = 0.01f;
     }
 
     if(ModifierTwo < ModTwoMax)
@@ -27,13 +27,13 @@ void MapSystem::WeatherSystemManager::IncrementModifiers()
     }
     else if(ModifierTwo == ModTwoMax)
     {
-        ModifierTwo = .0001;
+        ModifierTwo = 0.0001f;
     }
 }
 
 int MapSystem::WeatherSystemManager::GetChannelHeight()
 {
-    srand(time(NULL));
+    srand((unsigned int)time(NULL));
     int ChannelWidth = 0;
 
     while(ChannelWidth < MinimumChannelHeight)
@@ -46,7 +46,7 @@ int MapSystem::WeatherSystemManager::GetChannelHeight()
 
 void MapSystem::WeatherSystemManager::SetWindAngles()
 {
-    srand(time(NULL));
+    srand((unsigned int)time(NULL));
     int CurrentAngle;
     int CurrentRow = 0; //Current Y-Value.
     int ChannelHeight;
@@ -84,7 +84,10 @@ void MapSystem::WeatherSystemManager::ApplyNoiseToWindAngles()
 {
     for(int i = 0; i < (CurrentMap->x * CurrentMap->y) - 1; i++)
     {
-        int Noise = static_cast<int>(rand() * scaled_octave_noise_3d(15, .99, .005, 1, 0, MaximumNoiseAngle, CurrentMap->data[i].y, CurrentMap->data[i].z, CurrentMap->data[i].x)) % MaximumNoiseAngle;
+        int Noise = static_cast<int>(rand() * scaled_octave_noise_3d(15.0f,
+			0.99f, 0.005f, 1.0f, 0.0f, (float)MaximumNoiseAngle, 
+			(float)CurrentMap->data[i].y, (float)CurrentMap->data[i].z, 
+			(float)CurrentMap->data[i].x)) % MaximumNoiseAngle;
 
         CurrentMap->data[i].WindAngle += Noise;
     }
@@ -101,7 +104,7 @@ int MapSystem::WeatherSystemManager::AddSystem()
 
 int MapSystem::WeatherSystemManager::GetStartTile()
 {
-    srand(time(NULL));
+    srand((unsigned int)time(NULL));
     int StartPosition = -1;
     while(StartPosition < 0 && UsedStartPosition(StartPosition))
     {
@@ -205,7 +208,7 @@ float MapSystem::WeatherSystemManager::PropagateRainfall(int SystemID)
     {
         YDifference = abs(CurrentY - CenterY) * 2;
         //CurrentX = sqrt((pow(Radius, 2) - pow(CurrentY, 2)));
-        CurrentX = CenterX - sqrt(abs((-1 * pow(CurrentY - CenterY, 2)) + pow(Radius, 2)));
+        CurrentX = CenterX - (int)sqrt(abs((-1 * pow(CurrentY - CenterY, 2)) + pow(Radius, 2)));
         //CurrentX = CenterX - sqrt((-1 * pow(CurrentY - CenterY, 2)) + pow(Radius, 2));
         if(CurrentX < 0)
         {
@@ -293,7 +296,7 @@ float MapSystem::WeatherSystemManager::PropagateRainfall(int SystemID)
     {
         if(ContainedSystems[SystemID].Moisture - (255 / RainfallDivisor) >= 0)
         {
-            ContainedSystems[SystemID].Moisture -= 255 / RainfallDivisor;
+            ContainedSystems[SystemID].Moisture -= 255 / (int)RainfallDivisor;
         }
         if(ContainedSystems[SystemID].Moisture - (255 / RainfallDivisor) < 0)
         {
@@ -350,13 +353,13 @@ void MapSystem::WeatherSystemManager::RunWeather()
 
         for(int Step = 0; Step < StepLimit; Step++)
         {
-            float PercentDrop = PropagateRainfall(CurrentSystem);
+            //float PercentDrop = PropagateRainfall(CurrentSystem);
             ContainedSystems[CurrentSystem].MovementAngle = GetResultantAngle(ContainedSystems[CurrentSystem].MovementAngle, CurrentMap->data[CurrentCenter].WindAngle);
 
             int CurrentX = ContainedSystems[CurrentSystem].CenterTile % CurrentMap->x;
             int CurrentY = ContainedSystems[CurrentSystem].CenterTile / CurrentMap->x;
-            int XDelta = ContainedSystems[CurrentSystem].MovementSpeed * cos(ContainedSystems[CurrentSystem].MovementAngle);
-            int YDelta = ContainedSystems[CurrentSystem].MovementSpeed * sin(ContainedSystems[CurrentSystem].MovementAngle);
+            int XDelta = ContainedSystems[CurrentSystem].MovementSpeed * (int)cos(ContainedSystems[CurrentSystem].MovementAngle);
+            int YDelta = ContainedSystems[CurrentSystem].MovementSpeed * (int)sin(ContainedSystems[CurrentSystem].MovementAngle);
             int NewX;
             int NewY;
 
