@@ -39,9 +39,9 @@ sf::Color ProgramManager::GetRandomColor()
 
 
 	sf::Color TempColor;
-	TempColor.r = r;
-	TempColor.g = g;
-	TempColor.b = b;
+	TempColor.r = (char)r;
+	TempColor.g = (char)g;
+	TempColor.b = (char)b;
 
 	if(ModifierOne < ModOneMax)
 	{
@@ -82,7 +82,7 @@ void ProgramManager::DrawHeightMap(bool ColorWater)
 			{
 				TempColor.r = WaterColor.r;
 				TempColor.g = WaterColor.g;
-				TempColor.b = WaterColor.b + CurrentMap->data[i].z;
+				TempColor.b = WaterColor.b + (char)CurrentMap->data[i].z;
 				TempColor.a = WaterColor.a;
 			}
 			if(CurrentMap->data[i].IsRiver == 1)
@@ -102,16 +102,16 @@ void ProgramManager::DrawHeightMap(bool ColorWater)
 			}
 			if(CurrentMap->data[i].z > CurrentMap->SeaLevel && CurrentMap->data[i].IsRiver == 0)
 			{
-				TempColor.r = CurrentMap->data[i].z;
-				TempColor.g = CurrentMap->data[i].z;
-				TempColor.b = CurrentMap->data[i].z;
+				TempColor.r = (char)CurrentMap->data[i].z;
+				TempColor.g = (char)CurrentMap->data[i].z;
+				TempColor.b = (char)CurrentMap->data[i].z;
 			}
 		}
 		else if(ColorWater == 0)
 		{
-			TempColor.r = CurrentMap->data[i].z;
-			TempColor.g = CurrentMap->data[i].z;
-			TempColor.b = CurrentMap->data[i].z;
+			TempColor.r = (char)CurrentMap->data[i].z;
+			TempColor.g = (char)CurrentMap->data[i].z;
+			TempColor.b = (char)CurrentMap->data[i].z;
 		}
 		MapImage.setPixel(GridX, GridY, TempColor);
 	}
@@ -177,7 +177,7 @@ void ProgramManager::DrawRainfallMap(bool Greyscale, bool ColorWater)
 				{
 					TempColor.r = WaterColor.r;
 					TempColor.g = WaterColor.g;
-					TempColor.b = WaterColor.b + CurrentMap->data[i].z;
+					TempColor.b = WaterColor.b + (char)CurrentMap->data[i].z;
 				}
 				else
 				{
@@ -205,8 +205,8 @@ void ProgramManager::DrawRainfallMap(bool Greyscale, bool ColorWater)
 
 void ProgramManager::DrawBiomeMap()
 {
-	int MapSizeX = CurrentMap->x;
-	int MapSizeY = CurrentMap->y;
+	//int MapSizeX = CurrentMap->x;
+	//int MapSizeY = CurrentMap->y;
 
 	sf::Color TempColor;
 	TempColor.r = 255;
@@ -329,7 +329,7 @@ void ProgramManager::DrawBiomeMap()
 			{
 				TempColor.r = WaterColor.r;
 				TempColor.g = WaterColor.g;
-				TempColor.b = WaterColor.b + CurrentMap->data[TempArrayPos].z;
+				TempColor.b = WaterColor.b + (char)CurrentMap->data[TempArrayPos].z;
 				TempColor.a = WaterColor.a;
 
 				CurrentMap->data[TempArrayPos].BaseColor.r = TempColor.r;
@@ -364,9 +364,9 @@ void ProgramManager::DrawBiomeMap()
 			}
 			if(CurrentMap->data[TempArrayPos].z > CurrentMap->SeaLevel && CurrentMap->data[TempArrayPos].IsRiver == 0)
 			{
-				TempColor.r = CurrentMap->data[TempArrayPos].z;
-				TempColor.g = CurrentMap->data[TempArrayPos].z;
-				TempColor.b = CurrentMap->data[TempArrayPos].z;
+				TempColor.r = (char)CurrentMap->data[TempArrayPos].z;
+				TempColor.g = (char)CurrentMap->data[TempArrayPos].z;
+				TempColor.b = (char)CurrentMap->data[TempArrayPos].z;
 				TempColor.a = 255;
 
 				CurrentMap->data[TempArrayPos].BaseColor.r = TempColor.r;
@@ -378,7 +378,7 @@ void ProgramManager::DrawBiomeMap()
 		if(CurrentMap->data[TempArrayPos].Biome == 1)
 		{
 			TempColor.r = TundraColor.r;
-			TempColor.g = TundraColor.g + (CurrentMap->data[TempArrayPos].z - CurrentMap->SeaLevel);
+			TempColor.g = TundraColor.g + (char)(CurrentMap->data[TempArrayPos].z - CurrentMap->SeaLevel);
 			TempColor.b = TundraColor.b;
 			TempColor.a = TundraColor.a;
 
@@ -399,16 +399,16 @@ void ProgramManager::DrawBiomeMap()
 
 			if(CurrentMap->data[TempArrayPos].z < CurrentMap->MountainLevel)
 			{
-				TempColor.r = SnowColor.r + (CurrentMap->data[TempArrayPos].z - CurrentMap->SeaLevel - 1);
-				TempColor.g = SnowColor.g + ((CurrentMap->data[TempArrayPos].z - CurrentMap->SeaLevel - 1) * GreenChange);
+				TempColor.r = SnowColor.r + (char)(CurrentMap->data[TempArrayPos].z - CurrentMap->SeaLevel - 1);
+				TempColor.g = SnowColor.g + (char)((CurrentMap->data[TempArrayPos].z - CurrentMap->SeaLevel - 1) * GreenChange);
 				TempColor.b = SnowColor.b;// + (CurrentMap->data[TempArrayPos].z - CurrentMap->SeaLevel - 1);
 				TempColor.a = SnowColor.a;
 			}
 			if(CurrentMap->data[TempArrayPos].z >= CurrentMap->MountainLevel)
 			{
-				TempColor.r = MountainSnowColor.r - (CurrentMap->data[TempArrayPos].z - CurrentMap->SnowLevel - 1);
-				TempColor.g = MountainSnowColor.g - (CurrentMap->data[TempArrayPos].z - CurrentMap->SnowLevel - 1);
-				TempColor.b = MountainSnowColor.b - (CurrentMap->data[TempArrayPos].z - CurrentMap->SnowLevel - 1);
+				TempColor.r = MountainSnowColor.r - (char)(CurrentMap->data[TempArrayPos].z - CurrentMap->SnowLevel - 1);
+				TempColor.g = MountainSnowColor.g - (char)(CurrentMap->data[TempArrayPos].z - CurrentMap->SnowLevel - 1);
+				TempColor.b = MountainSnowColor.b - (char)(CurrentMap->data[TempArrayPos].z - CurrentMap->SnowLevel - 1);
 				TempColor.a = MountainSnowColor.a;
 			}
 
@@ -420,9 +420,9 @@ void ProgramManager::DrawBiomeMap()
 		}
 		else if(CurrentMap->data[TempArrayPos].Biome == 3)
 		{
-			TempColor.r = DesertColor.r + (CurrentMap->data[TempArrayPos].z - CurrentMap->SeaLevel);
-			TempColor.g = DesertColor.g + (CurrentMap->data[TempArrayPos].z - CurrentMap->SeaLevel);
-			TempColor.b = DesertColor.b + (CurrentMap->data[TempArrayPos].z - CurrentMap->SeaLevel);
+			TempColor.r = DesertColor.r + (char)(CurrentMap->data[TempArrayPos].z - CurrentMap->SeaLevel);
+			TempColor.g = DesertColor.g + (char)(CurrentMap->data[TempArrayPos].z - CurrentMap->SeaLevel);
+			TempColor.b = DesertColor.b + (char)(CurrentMap->data[TempArrayPos].z - CurrentMap->SeaLevel);
 			TempColor.a = DesertColor.a;
 
 			CurrentMap->data[TempArrayPos].BaseColor.r = TempColor.r;
@@ -447,7 +447,7 @@ void ProgramManager::DrawBiomeMap()
 		else if(CurrentMap->data[TempArrayPos].Biome == 5)
 		{
 			TempColor.r = ForestColor.r;
-			TempColor.g = ForestColor.g + CurrentMap->data[TempArrayPos].z - CurrentMap->SeaLevel;
+			TempColor.g = ForestColor.g + (char)(CurrentMap->data[TempArrayPos].z - CurrentMap->SeaLevel);
 			TempColor.b = ForestColor.b;
 			TempColor.a = ForestColor.a;
 
@@ -473,7 +473,7 @@ void ProgramManager::DrawBiomeMap()
 		else if(CurrentMap->data[TempArrayPos].Biome == 7)
 		{
 			TempColor.r = TForestColor.r;
-			TempColor.g = TForestColor.g + CurrentMap->data[TempArrayPos].z - CurrentMap->SeaLevel;
+			TempColor.g = TForestColor.g + (char)(CurrentMap->data[TempArrayPos].z - CurrentMap->SeaLevel);
 			TempColor.b = TForestColor.b;
 			TempColor.a = TForestColor.a;
 
@@ -486,7 +486,7 @@ void ProgramManager::DrawBiomeMap()
 		else if(CurrentMap->data[TempArrayPos].Biome == 8)
 		{
 			TempColor.r = RainforestColor.r;
-			TempColor.g = RainforestColor.g + CurrentMap->data[TempArrayPos].z - CurrentMap->SeaLevel;
+			TempColor.g = RainforestColor.g + (char)(CurrentMap->data[TempArrayPos].z - CurrentMap->SeaLevel);
 			TempColor.b = RainforestColor.b;
 			TempColor.a = RainforestColor.a;
 
@@ -498,9 +498,9 @@ void ProgramManager::DrawBiomeMap()
 		}
 		else if(CurrentMap->data[TempArrayPos].Biome == 9)
 		{
-			TempColor.r = BareColor.r - CurrentMap->data[TempArrayPos].z - CurrentMap->MountainLevel - 1;
-			TempColor.g = BareColor.g - CurrentMap->data[TempArrayPos].z - CurrentMap->MountainLevel - 1;
-			TempColor.b = BareColor.b - CurrentMap->data[TempArrayPos].z - CurrentMap->MountainLevel - 1;
+			TempColor.r = BareColor.r - (char)(CurrentMap->data[TempArrayPos].z - CurrentMap->MountainLevel - 1);
+			TempColor.g = BareColor.g - (char)(CurrentMap->data[TempArrayPos].z - CurrentMap->MountainLevel - 1);
+			TempColor.b = BareColor.b - (char)(CurrentMap->data[TempArrayPos].z - CurrentMap->MountainLevel - 1);
 			TempColor.a = BareColor.a;
 
 			CurrentMap->data[TempArrayPos].BaseColor.r = TempColor.r;
@@ -511,9 +511,9 @@ void ProgramManager::DrawBiomeMap()
 		}
 		else if(CurrentMap->data[TempArrayPos].Biome == 10)
 		{
-			TempColor.r = ScorchedColor.r + CurrentMap->data[TempArrayPos].z - 199;
-			TempColor.g = ScorchedColor.g + CurrentMap->data[TempArrayPos].z - 199;
-			TempColor.b = ScorchedColor.b + CurrentMap->data[TempArrayPos].z - 199;
+			TempColor.r = ScorchedColor.r + (char)(CurrentMap->data[TempArrayPos].z - 199);
+			TempColor.g = ScorchedColor.g + (char)(CurrentMap->data[TempArrayPos].z - 199);
+			TempColor.b = ScorchedColor.b + (char)(CurrentMap->data[TempArrayPos].z - 199);
 			TempColor.a = ScorchedColor.a;
 
 			CurrentMap->data[TempArrayPos].BaseColor.r = TempColor.r;
@@ -527,7 +527,7 @@ void ProgramManager::DrawBiomeMap()
 
 			TempColor.r = WaterColor.r;
 			TempColor.g = WaterColor.g;
-			TempColor.b = WaterColor.b + CurrentMap->data[TempArrayPos].z;
+			TempColor.b = WaterColor.b + (char)CurrentMap->data[TempArrayPos].z;
 			TempColor.a = WaterColor.a;
 
 			CurrentMap->data[TempArrayPos].BaseColor.r = TempColor.r;
@@ -540,7 +540,7 @@ void ProgramManager::DrawBiomeMap()
 		{
 			TempColor.r = WaterColor.r;
 			TempColor.g = WaterColor.g;
-			TempColor.b = WaterColor.b + CurrentMap->data[TempArrayPos].z;
+			TempColor.b = WaterColor.b + (char)CurrentMap->data[TempArrayPos].z;
 			TempColor.a = WaterColor.a;
 
 			CurrentMap->data[TempArrayPos].BaseColor.r = TempColor.r;
@@ -553,7 +553,7 @@ void ProgramManager::DrawBiomeMap()
 		{
 			TempColor.r = IceColor.r;
 			TempColor.g = IceColor.g;
-			TempColor.b = IceColor.b + CurrentMap->data[TempArrayPos].z;
+			TempColor.b = IceColor.b + (char)CurrentMap->data[TempArrayPos].z;
 			TempColor.a = IceColor.a;
 
 			CurrentMap->data[TempArrayPos].BaseColor.r = TempColor.r;
@@ -564,9 +564,9 @@ void ProgramManager::DrawBiomeMap()
 		}
 		else if(CurrentMap->data[TempArrayPos].Biome == 14)
 		{
-			TempColor.r = SavannahColor.r + (CurrentMap->data[TempArrayPos].z - CurrentMap->SeaLevel);// / 3;
-			TempColor.g = SavannahColor.g + (CurrentMap->data[TempArrayPos].z - CurrentMap->SeaLevel);// / 1.25;
-			TempColor.b = SavannahColor.b + (CurrentMap->data[TempArrayPos].z - CurrentMap->SeaLevel);
+			TempColor.r = SavannahColor.r + (char)(CurrentMap->data[TempArrayPos].z - CurrentMap->SeaLevel);// / 3;
+			TempColor.g = SavannahColor.g + (char)(CurrentMap->data[TempArrayPos].z - CurrentMap->SeaLevel);// / 1.25;
+			TempColor.b = SavannahColor.b + (char)(CurrentMap->data[TempArrayPos].z - CurrentMap->SeaLevel);
 			TempColor.a = SavannahColor.a;
 
 			CurrentMap->data[TempArrayPos].BaseColor.r = TempColor.r;
@@ -630,10 +630,10 @@ void ProgramManager::DrawBiomeMap()
 
 void ProgramManager::DrawRegionMap()
 {
-	int ArraySize = (CurrentMap->x * CurrentMap->y) - 1;
+	//int ArraySize = (CurrentMap->x * CurrentMap->y) - 1;
 	sf::Color TempColor;
 
-	int Counter = 0;
+	//int Counter = 0;
 	for(int i = 0; i < CurrentMap->NatureRegionsContainer.size(); i++)
 	{
 		if(!CurrentMap->NatureRegionsContainer[i].ColorSet)
@@ -697,11 +697,11 @@ void ProgramManager::DrawHeightRegionMap()
 
 void ProgramManager::DrawWaterRegionMap()
 {
-	int ArraySize = (CurrentMap->x * CurrentMap->y) - 1;
+	//int ArraySize = (CurrentMap->x * CurrentMap->y) - 1;
 	sf::Color TempColor;
 	TempColor.a = 255;
 
-	int Counter = 0;
+	//int Counter = 0;
 	for(int i = 0; i < CurrentWRM->ContainedRegions.size(); i++)
 	{
 		if(!CurrentWRM->ContainedRegions[i].ColorSet)
@@ -736,9 +736,9 @@ void ProgramManager::DrawWaterRegionMap()
 			int XPos = CurrentMap->data[i].x;
 			int YPos = CurrentMap->data[i].y;
 
-			TempColor.r = CurrentMap->data[i].z;
-			TempColor.g = CurrentMap->data[i].z;
-			TempColor.b = CurrentMap->data[i].z;
+			TempColor.r = (char)CurrentMap->data[i].z;
+			TempColor.g = (char)CurrentMap->data[i].z;
+			TempColor.b = (char)CurrentMap->data[i].z;
 
 			MapImage.setPixel(XPos, YPos, TempColor);
 		}
@@ -751,15 +751,15 @@ void ProgramManager::DrawWaterRegionMap()
 	}
 }
 
-sf::Color ProgramManager::GetTileColor(int Position, sf::Image *MapImage)
+sf::Color ProgramManager::GetTileColor(int Position, sf::Image* MapImagePtr)
 {
-	return MapImage->getPixel(Position % CurrentMap->x, Position / CurrentMap->x);
+	return MapImagePtr->getPixel(Position % CurrentMap->x, Position / CurrentMap->x);
 }
 
 void ProgramManager::BlendBiomeColors()
 {
-	sf::Image MapImage;
-	MapImage = MapTexture.copyToImage();
+	sf::Image TempMapImage;
+	TempMapImage = MapTexture.copyToImage();
 
 	sf::Color TempColor;
 	int TempRed;
@@ -775,9 +775,9 @@ void ProgramManager::BlendBiomeColors()
 			{
 				if(CurrentMap->IsBiomeBorder(i))
 				{
-					TempRed = GetTileColor(i, &MapImage).r;
-					TempGreen = GetTileColor(i, &MapImage).g;
-					TempBlue = GetTileColor(i, &MapImage).b;
+					TempRed = GetTileColor(i, &TempMapImage).r;
+					TempGreen = GetTileColor(i, &TempMapImage).g;
+					TempBlue = GetTileColor(i, &TempMapImage).b;
 					SuccessCount = 1;
 
 					if(CurrentMap->data[i].Left() > -1)
@@ -786,9 +786,9 @@ void ProgramManager::BlendBiomeColors()
 						{
 							if(CurrentMap->data[CurrentMap->data[i].Left()].z < CurrentMap->MountainLevel)
 							{
-								TempRed += GetTileColor(CurrentMap->data[i].Left(), &MapImage).r;
-								TempGreen += GetTileColor(CurrentMap->data[i].Left(), &MapImage).g;
-								TempBlue += GetTileColor(CurrentMap->data[i].Left(), &MapImage).b;
+								TempRed += GetTileColor(CurrentMap->data[i].Left(), &TempMapImage).r;
+								TempGreen += GetTileColor(CurrentMap->data[i].Left(), &TempMapImage).g;
+								TempBlue += GetTileColor(CurrentMap->data[i].Left(), &TempMapImage).b;
 
 								SuccessCount++;
 							}
@@ -800,9 +800,9 @@ void ProgramManager::BlendBiomeColors()
 						{
 							if(CurrentMap->data[CurrentMap->data[i].Right()].z < CurrentMap->MountainLevel)
 							{
-								TempRed += GetTileColor(CurrentMap->data[i].Right(), &MapImage).r;
-								TempGreen += GetTileColor(CurrentMap->data[i].Right(), &MapImage).g;
-								TempBlue += GetTileColor(CurrentMap->data[i].Right(), &MapImage).b;
+								TempRed += GetTileColor(CurrentMap->data[i].Right(), &TempMapImage).r;
+								TempGreen += GetTileColor(CurrentMap->data[i].Right(), &TempMapImage).g;
+								TempBlue += GetTileColor(CurrentMap->data[i].Right(), &TempMapImage).b;
 
 								SuccessCount++;
 							}
@@ -814,9 +814,9 @@ void ProgramManager::BlendBiomeColors()
 						{
 							if(CurrentMap->data[CurrentMap->data[i].Above()].z < CurrentMap->MountainLevel)
 							{
-								TempRed += GetTileColor(CurrentMap->data[i].Above(), &MapImage).r;
-								TempGreen += GetTileColor(CurrentMap->data[i].Above(), &MapImage).g;
-								TempBlue += GetTileColor(CurrentMap->data[i].Above(), &MapImage).b;
+								TempRed += GetTileColor(CurrentMap->data[i].Above(), &TempMapImage).r;
+								TempGreen += GetTileColor(CurrentMap->data[i].Above(), &TempMapImage).g;
+								TempBlue += GetTileColor(CurrentMap->data[i].Above(), &TempMapImage).b;
 
 								SuccessCount++;
 							}
@@ -828,9 +828,9 @@ void ProgramManager::BlendBiomeColors()
 						{
 							if(CurrentMap->data[CurrentMap->data[i].Below()].z < CurrentMap->MountainLevel)
 							{
-								TempRed += GetTileColor(CurrentMap->data[i].Below(), &MapImage).r;
-								TempGreen += GetTileColor(CurrentMap->data[i].Below(), &MapImage).g;
-								TempBlue += GetTileColor(CurrentMap->data[i].Below(), &MapImage).b;
+								TempRed += GetTileColor(CurrentMap->data[i].Below(), &TempMapImage).r;
+								TempGreen += GetTileColor(CurrentMap->data[i].Below(), &TempMapImage).g;
+								TempBlue += GetTileColor(CurrentMap->data[i].Below(), &TempMapImage).b;
 
 								SuccessCount++;
 							}
@@ -842,9 +842,9 @@ void ProgramManager::BlendBiomeColors()
 						{
 							if(CurrentMap->data[CurrentMap->data[i].UpperLeft()].z < CurrentMap->MountainLevel)
 							{
-								TempRed += GetTileColor(CurrentMap->data[i].UpperLeft(), &MapImage).r;
-								TempGreen += GetTileColor(CurrentMap->data[i].UpperLeft(), &MapImage).g;
-								TempBlue += GetTileColor(CurrentMap->data[i].UpperLeft(), &MapImage).b;
+								TempRed += GetTileColor(CurrentMap->data[i].UpperLeft(), &TempMapImage).r;
+								TempGreen += GetTileColor(CurrentMap->data[i].UpperLeft(), &TempMapImage).g;
+								TempBlue += GetTileColor(CurrentMap->data[i].UpperLeft(), &TempMapImage).b;
 
 								SuccessCount++;
 							}
@@ -856,9 +856,9 @@ void ProgramManager::BlendBiomeColors()
 						{
 							if(CurrentMap->data[CurrentMap->data[i].LowerLeft()].z < CurrentMap->MountainLevel)
 							{
-								TempRed += GetTileColor(CurrentMap->data[i].LowerLeft(), &MapImage).r;
-								TempGreen += GetTileColor(CurrentMap->data[i].LowerLeft(), &MapImage).g;
-								TempBlue += GetTileColor(CurrentMap->data[i].LowerLeft(), &MapImage).b;
+								TempRed += GetTileColor(CurrentMap->data[i].LowerLeft(), &TempMapImage).r;
+								TempGreen += GetTileColor(CurrentMap->data[i].LowerLeft(), &TempMapImage).g;
+								TempBlue += GetTileColor(CurrentMap->data[i].LowerLeft(), &TempMapImage).b;
 
 								SuccessCount++;
 							}
@@ -870,9 +870,9 @@ void ProgramManager::BlendBiomeColors()
 						{
 							if(CurrentMap->data[CurrentMap->data[i].UpperRight()].z < CurrentMap->MountainLevel)
 							{
-								TempRed += GetTileColor(CurrentMap->data[i].UpperRight(), &MapImage).r;
-								TempGreen += GetTileColor(CurrentMap->data[i].UpperRight(), &MapImage).g;
-								TempBlue += GetTileColor(CurrentMap->data[i].UpperRight(), &MapImage).b;
+								TempRed += GetTileColor(CurrentMap->data[i].UpperRight(), &TempMapImage).r;
+								TempGreen += GetTileColor(CurrentMap->data[i].UpperRight(), &TempMapImage).g;
+								TempBlue += GetTileColor(CurrentMap->data[i].UpperRight(), &TempMapImage).b;
 
 								SuccessCount++;
 							}
@@ -884,9 +884,9 @@ void ProgramManager::BlendBiomeColors()
 						{
 							if(CurrentMap->data[CurrentMap->data[i].LowerRight()].z < CurrentMap->MountainLevel)
 							{
-								TempRed += GetTileColor(CurrentMap->data[i].LowerRight(), &MapImage).r;
-								TempGreen += GetTileColor(CurrentMap->data[i].LowerRight(), &MapImage).g;
-								TempBlue += GetTileColor(CurrentMap->data[i].LowerRight(), &MapImage).b;
+								TempRed += GetTileColor(CurrentMap->data[i].LowerRight(), &TempMapImage).r;
+								TempGreen += GetTileColor(CurrentMap->data[i].LowerRight(), &TempMapImage).g;
+								TempBlue += GetTileColor(CurrentMap->data[i].LowerRight(), &TempMapImage).b;
 
 								SuccessCount++;
 							}
@@ -899,21 +899,21 @@ void ProgramManager::BlendBiomeColors()
 						TempGreen /= SuccessCount;
 						TempBlue /= SuccessCount;
 
-						TempColor.r = TempRed;
-						TempColor.g = TempGreen;
-						TempColor.b = TempBlue;
+						TempColor.r = (char)TempRed;
+						TempColor.g = (char)TempGreen;
+						TempColor.b = (char)TempBlue;
 
-						MapImage.setPixel(i % CurrentMap->x, i / CurrentMap->x, TempColor);
+						TempMapImage.setPixel(i % CurrentMap->x, i / CurrentMap->x, TempColor);
 					}
 				}
 			}
 		}
 	}
-
-	MapTexture.loadFromImage(MapImage);
+	
+	MapTexture.loadFromImage(TempMapImage);
 	if(ExportMapImages)
 	{
-		MapImage.saveToFile("MapExports/BlendedBiomeMapExport.png");
+		TempMapImage.saveToFile("MapExports/BlendedBiomeMapExport.png");
 	}
 }
 
@@ -1056,9 +1056,9 @@ void ProgramManager::BlendTileBackgrounds()
 						TempGreen /= SuccessCount;
 						TempBlue /= SuccessCount;
 
-						CurrentMap->data[i].BaseColor.r = TempRed;
-						CurrentMap->data[i].BaseColor.g = TempGreen;
-						CurrentMap->data[i].BaseColor.b = TempBlue;
+						CurrentMap->data[i].BaseColor.r = (char)TempRed;
+						CurrentMap->data[i].BaseColor.g = (char)TempGreen;
+						CurrentMap->data[i].BaseColor.b = (char)TempBlue;
 					}
 				}
 			}
@@ -1636,11 +1636,11 @@ void ProgramManager::DrawTiles()
 			{
 				CurrentMap->data[Pos].BaseColor.r = WaterColor.r;
 				CurrentMap->data[Pos].BaseColor.g = WaterColor.g;
-				CurrentMap->data[Pos].BaseColor.b = WaterColor.b + CurrentMap->data[Pos].z;
+				CurrentMap->data[Pos].BaseColor.b = WaterColor.b + (char)CurrentMap->data[Pos].z;
 
 				CurrentMap->data[Pos].ForeColor.r = WaterColor.r;
 				CurrentMap->data[Pos].ForeColor.g = WaterColor.g;
-				CurrentMap->data[Pos].ForeColor.b = WaterColor.b + CurrentMap->data[Pos].z;
+				CurrentMap->data[Pos].ForeColor.b = WaterColor.b + (char)CurrentMap->data[Pos].z;
 
 				CurrentMap->data[Pos].HasForeground = 0;
 				CurrentMap->data[Pos].TileID = 0;
@@ -1679,9 +1679,9 @@ void ProgramManager::DrawTiles()
 			}
 			if(CurrentMap->data[Pos].z > CurrentMap->SeaLevel && CurrentMap->data[Pos].IsRiver == 0)
 			{
-				CurrentMap->data[Pos].BaseColor.r = CurrentMap->data[Pos].z;
-				CurrentMap->data[Pos].BaseColor.g = CurrentMap->data[Pos].z;
-				CurrentMap->data[Pos].BaseColor.b = CurrentMap->data[Pos].z;
+				CurrentMap->data[Pos].BaseColor.r = (char)CurrentMap->data[Pos].z;
+				CurrentMap->data[Pos].BaseColor.g = (char)CurrentMap->data[Pos].z;
+				CurrentMap->data[Pos].BaseColor.b = (char)CurrentMap->data[Pos].z;
 
 				CurrentMap->data[Pos].HasForeground = 0;
 				CurrentMap->data[Pos].TileID = 0;
@@ -1690,7 +1690,7 @@ void ProgramManager::DrawTiles()
 		if(CurrentMap->data[Pos].Biome == 1)
 		{
 			CurrentMap->data[Pos].BaseColor.r = TundraColor.r;
-			CurrentMap->data[Pos].BaseColor.g = TundraColor.g + (CurrentMap->data[Pos].z - CurrentMap->SeaLevel);
+			CurrentMap->data[Pos].BaseColor.g = TundraColor.g + (char)(CurrentMap->data[Pos].z - CurrentMap->SeaLevel);
 			CurrentMap->data[Pos].BaseColor.b = TundraColor.b;
 
 			CurrentMap->data[Pos].ForeColor.r = TundraColor.r;
@@ -1705,9 +1705,9 @@ void ProgramManager::DrawTiles()
 			int GreenChange = (255 - SnowColor.g) / (CurrentMap->MountainLevel - CurrentMap->SeaLevel);
 			if(CurrentMap->data[Pos].z >= CurrentMap->MountainLevel)
 			{
-				CurrentMap->data[Pos].BaseColor.r = BareColor.r - CurrentMap->data[Pos].z - CurrentMap->MountainLevel - 1;//MountainSnowColor.r - (CurrentMap->data[Pos].z - CurrentMap->SnowLevel - 1);
-				CurrentMap->data[Pos].BaseColor.g = BareColor.g - CurrentMap->data[Pos].z - CurrentMap->MountainLevel - 1;//MountainSnowColor.g - (CurrentMap->data[Pos].z - CurrentMap->SnowLevel - 1);
-				CurrentMap->data[Pos].BaseColor.b = BareColor.b - CurrentMap->data[Pos].z - CurrentMap->MountainLevel - 1;//MountainSnowColor.b - (CurrentMap->data[Pos].z - CurrentMap->SnowLevel - 1);
+				CurrentMap->data[Pos].BaseColor.r = BareColor.r - (char)(CurrentMap->data[Pos].z - CurrentMap->MountainLevel - 1);//MountainSnowColor.r - (CurrentMap->data[Pos].z - CurrentMap->SnowLevel - 1);
+				CurrentMap->data[Pos].BaseColor.g = BareColor.g - (char)(CurrentMap->data[Pos].z - CurrentMap->MountainLevel - 1);//MountainSnowColor.g - (CurrentMap->data[Pos].z - CurrentMap->SnowLevel - 1);
+				CurrentMap->data[Pos].BaseColor.b = BareColor.b - (char)(CurrentMap->data[Pos].z - CurrentMap->MountainLevel - 1);//MountainSnowColor.b - (CurrentMap->data[Pos].z - CurrentMap->SnowLevel - 1);
 
 				if(CurrentMap->IsDeepMountain(Pos) == 0)
 				{
@@ -1724,8 +1724,8 @@ void ProgramManager::DrawTiles()
 			}
 			else
 			{
-				CurrentMap->data[Pos].BaseColor.r = SnowColor.r + (CurrentMap->data[Pos].z - CurrentMap->SeaLevel - 1);
-				CurrentMap->data[Pos].BaseColor.g = SnowColor.g + ((CurrentMap->data[Pos].z - CurrentMap->SeaLevel - 1) * GreenChange);
+				CurrentMap->data[Pos].BaseColor.r = SnowColor.r + (char)(CurrentMap->data[Pos].z - CurrentMap->SeaLevel - 1);
+				CurrentMap->data[Pos].BaseColor.g = SnowColor.g + (char)((CurrentMap->data[Pos].z - CurrentMap->SeaLevel - 1) * GreenChange);
 				CurrentMap->data[Pos].BaseColor.b = SnowColor.b;// + (CurrentMap->data[TempArrayPos].z - CurrentMap->SeaLevel - 1);
 				CurrentMap->data[Pos].BaseColor.a = 255;
 
@@ -1741,9 +1741,9 @@ void ProgramManager::DrawTiles()
 		}
 		else if(CurrentMap->data[Pos].Biome == 3)
 		{
-			CurrentMap->data[Pos].BaseColor.r = DesertColor.r + (CurrentMap->data[Pos].z - CurrentMap->SeaLevel);
-			CurrentMap->data[Pos].BaseColor.g = DesertColor.g + (CurrentMap->data[Pos].z - CurrentMap->SeaLevel);
-			CurrentMap->data[Pos].BaseColor.b = DesertColor.b + (CurrentMap->data[Pos].z - CurrentMap->SeaLevel);
+			CurrentMap->data[Pos].BaseColor.r = DesertColor.r + (char)(CurrentMap->data[Pos].z - CurrentMap->SeaLevel);
+			CurrentMap->data[Pos].BaseColor.g = DesertColor.g + (char)(CurrentMap->data[Pos].z - CurrentMap->SeaLevel);
+			CurrentMap->data[Pos].BaseColor.b = DesertColor.b + (char)(CurrentMap->data[Pos].z - CurrentMap->SeaLevel);
 
 			CurrentMap->data[Pos].ForeColor.r = DesertColor.r;
 			CurrentMap->data[Pos].ForeColor.g = DesertColor.g;
@@ -1780,7 +1780,7 @@ void ProgramManager::DrawTiles()
 		else if(CurrentMap->data[Pos].Biome == 5)
 		{
 			CurrentMap->data[Pos].BaseColor.r = ForestColor.r;
-			CurrentMap->data[Pos].BaseColor.g = ForestColor.g + CurrentMap->data[Pos].z - CurrentMap->SeaLevel;
+			CurrentMap->data[Pos].BaseColor.g = ForestColor.g + (char)(CurrentMap->data[Pos].z - CurrentMap->SeaLevel);
 			CurrentMap->data[Pos].BaseColor.b = ForestColor.b;
 
 			CurrentMap->data[Pos].ForeColor.r = ForestColor.r;
@@ -1808,7 +1808,7 @@ void ProgramManager::DrawTiles()
 		else if(CurrentMap->data[Pos].Biome == 7)
 		{
 			CurrentMap->data[Pos].BaseColor.r = TForestColor.r;
-			CurrentMap->data[Pos].BaseColor.g = TForestColor.g + CurrentMap->data[Pos].z - CurrentMap->SeaLevel;
+			CurrentMap->data[Pos].BaseColor.g = TForestColor.g + (char)(CurrentMap->data[Pos].z - CurrentMap->SeaLevel);
 			CurrentMap->data[Pos].BaseColor.b = TForestColor.b;
 
 			CurrentMap->data[Pos].ForeColor.r = TForestColor.r;
@@ -1820,7 +1820,7 @@ void ProgramManager::DrawTiles()
 		else if(CurrentMap->data[Pos].Biome == 8)
 		{
 			CurrentMap->data[Pos].BaseColor.r = RainforestColor.r;
-			CurrentMap->data[Pos].BaseColor.g = RainforestColor.g + CurrentMap->data[Pos].z - CurrentMap->SeaLevel;
+			CurrentMap->data[Pos].BaseColor.g = RainforestColor.g + (char)(CurrentMap->data[Pos].z - CurrentMap->SeaLevel);
 			CurrentMap->data[Pos].BaseColor.b = RainforestColor.b;
 
 			CurrentMap->data[Pos].ForeColor.r = RainforestColor.r;
@@ -1833,9 +1833,9 @@ void ProgramManager::DrawTiles()
 		}
 		else if(CurrentMap->data[Pos].Biome == 9)
 		{
-			CurrentMap->data[Pos].BaseColor.r = BareColor.r - CurrentMap->data[Pos].z - CurrentMap->MountainLevel - 1;
-			CurrentMap->data[Pos].BaseColor.g = BareColor.g - CurrentMap->data[Pos].z - CurrentMap->MountainLevel - 1;
-			CurrentMap->data[Pos].BaseColor.b = BareColor.b - CurrentMap->data[Pos].z - CurrentMap->MountainLevel - 1;
+			CurrentMap->data[Pos].BaseColor.r = BareColor.r - (char)(CurrentMap->data[Pos].z - CurrentMap->MountainLevel - 1);
+			CurrentMap->data[Pos].BaseColor.g = BareColor.g - (char)(CurrentMap->data[Pos].z - CurrentMap->MountainLevel - 1);
+			CurrentMap->data[Pos].BaseColor.b = BareColor.b - (char)(CurrentMap->data[Pos].z - CurrentMap->MountainLevel - 1);
 
 			if(CurrentMap->IsDeepMountain(Pos) == 0)
 			{
@@ -1852,9 +1852,9 @@ void ProgramManager::DrawTiles()
 		}
 		else if(CurrentMap->data[Pos].Biome == 10)
 		{
-			CurrentMap->data[Pos].BaseColor.r = ScorchedColor.r + CurrentMap->data[Pos].z - 199;
-			CurrentMap->data[Pos].BaseColor.g = ScorchedColor.g + CurrentMap->data[Pos].z - 199;
-			CurrentMap->data[Pos].BaseColor.b = ScorchedColor.b + CurrentMap->data[Pos].z - 199;
+			CurrentMap->data[Pos].BaseColor.r = ScorchedColor.r + (char)(CurrentMap->data[Pos].z - 199);
+			CurrentMap->data[Pos].BaseColor.g = ScorchedColor.g + (char)(CurrentMap->data[Pos].z - 199);
+			CurrentMap->data[Pos].BaseColor.b = ScorchedColor.b + (char)(CurrentMap->data[Pos].z - 199);
 
 			if(CurrentMap->IsDeepMountain(Pos) == 0)
 			{
@@ -1873,7 +1873,7 @@ void ProgramManager::DrawTiles()
 		{
 			CurrentMap->data[Pos].BaseColor.r = WaterColor.r;
 			CurrentMap->data[Pos].BaseColor.g = WaterColor.g;
-			CurrentMap->data[Pos].BaseColor.b = WaterColor.b + CurrentMap->data[Pos].z;
+			CurrentMap->data[Pos].BaseColor.b = WaterColor.b + (char)CurrentMap->data[Pos].z;
 
 			CurrentMap->data[Pos].ForeColor.r = WaterColor.r;
 			CurrentMap->data[Pos].ForeColor.g = WaterColor.g;
@@ -1892,7 +1892,7 @@ void ProgramManager::DrawTiles()
 		{
 			CurrentMap->data[Pos].BaseColor.r = TaigaColor.r;
 			CurrentMap->data[Pos].BaseColor.g = TaigaColor.g;
-			CurrentMap->data[Pos].BaseColor.b = TaigaColor.b + CurrentMap->data[Pos].z;
+			CurrentMap->data[Pos].BaseColor.b = TaigaColor.b + (char)CurrentMap->data[Pos].z;
 
 			CurrentMap->data[Pos].ForeColor.r = TaigaColor.r;
 			CurrentMap->data[Pos].ForeColor.g = TaigaColor.g;
@@ -1906,7 +1906,7 @@ void ProgramManager::DrawTiles()
 		{
 			CurrentMap->data[Pos].BaseColor.r = IceColor.r;
 			CurrentMap->data[Pos].BaseColor.g = IceColor.g;
-			CurrentMap->data[Pos].BaseColor.b = IceColor.b + CurrentMap->data[Pos].z;
+			CurrentMap->data[Pos].BaseColor.b = IceColor.b + (char)CurrentMap->data[Pos].z;
 
 			CurrentMap->data[Pos].ForeColor.r = IceColor.r;
 			CurrentMap->data[Pos].ForeColor.g = IceColor.g;
@@ -1917,9 +1917,9 @@ void ProgramManager::DrawTiles()
 		}
 		else if(CurrentMap->data[Pos].Biome == 14)
 		{
-			CurrentMap->data[Pos].BaseColor.r = SavannahColor.r + (CurrentMap->data[Pos].z - CurrentMap->SeaLevel);
-			CurrentMap->data[Pos].BaseColor.g = SavannahColor.g + (CurrentMap->data[Pos].z - CurrentMap->SeaLevel);
-			CurrentMap->data[Pos].BaseColor.b = SavannahColor.b + (CurrentMap->data[Pos].z - CurrentMap->SeaLevel);
+			CurrentMap->data[Pos].BaseColor.r = SavannahColor.r + (char)(CurrentMap->data[Pos].z - CurrentMap->SeaLevel);
+			CurrentMap->data[Pos].BaseColor.g = SavannahColor.g + (char)(CurrentMap->data[Pos].z - CurrentMap->SeaLevel);
+			CurrentMap->data[Pos].BaseColor.b = SavannahColor.b + (char)(CurrentMap->data[Pos].z - CurrentMap->SeaLevel);
 
 			CurrentMap->data[Pos].ForeColor.r = SavannahColor.r;
 			CurrentMap->data[Pos].ForeColor.g = SavannahColor.g;
@@ -2075,10 +2075,10 @@ void ProgramManager::ProcessSignal(int SignalID)
 	}
 }
 
-void ProgramManager::UpdateShaderVariables(int ArrayXSize, int TileID)
+void ProgramManager::UpdateShaderVariables(int ArrayXSize, int NewTileID)
 {
 	TShader.ArrayXSize = ArrayXSize;
-	TShader.TileID = TileID;
+	TShader.TileID = NewTileID;
 	TShader.TileXSize = (float)TilesXSize;
 	TShader.TileYSize = (float)TilesYSize;
 	TShader.UpdateShaderVariables();
@@ -2359,7 +2359,7 @@ void ProgramManager::CommenceWorldGen()
 
 	MMan.MainMap.CalculateRainShadow(0);//Threadable
 	MMan.MainMap.SmoothRainfall();
-	MMan.MainMap.ApplyNoiseToRainfall(0);
+	MMan.MainMap.ApplyNoiseToRainfall();
 	Draw();
 	///UIMan.WGProgressBar->incrementValue();
 	SetupMapSprite();
@@ -2937,7 +2937,7 @@ bool ProgramManager::LoadWorldGenSettings()
 		MainConfig["Mountain Rate 1"] = 4;
 		MainConfig["Mountain Rate 2"] = 4;
 		MainConfig["Land Decrease Level"] = 28;
-		MainConfig["Mountain Decrease Level"] = 10;
+		MainConfig["Mountain Decrease Level"] = 20;
 		MainConfig["Rainfall Noise Threshold"] = 170.0f;
 		MainConfig["Height Turbulence"] = true;
 		MainConfig["Sea Level"] = 130;

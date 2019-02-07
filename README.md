@@ -48,6 +48,7 @@ It's been several years since I've worked on this project, and I aim to update i
 - Add file selector gui for loading world setting files.
 - Allow users to save and load generated maps.
 - Store terrain coloring rules in json files.
+- See what it'd take to get the world generator to compile with /permissive-
 
 ### 1.3.0
 - Add basic lua scripting and allow lua scripts to control terrain coloring. Give them access to all of the map data.

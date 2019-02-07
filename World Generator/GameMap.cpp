@@ -11,7 +11,7 @@ void MapSystem::GameMap::GenerateHeightMap()
 
     if(SeedType == 0)
     {
-        Seed = time(NULL);
+        Seed = (int)time(NULL);
     }
     else if(SeedType != 0)
     {
@@ -471,7 +471,7 @@ void MapSystem::GameMap::IncrementModifiers()
 
 int MapSystem::GameMap::GetChannelHeight()
 {
-    srand(time(NULL));
+    srand((unsigned int)time(NULL));
     int ChannelWidth = 0;
 
     while(ChannelWidth < MinimumChannelHeight)
@@ -500,7 +500,7 @@ bool MapSystem::GameMap::InvalidAngle(int Angle)
 
 void MapSystem::GameMap::SetWindAngles()
 {
-    srand(time(NULL));
+    srand((unsigned int)time(NULL));
     int CurrentAngle = -1;
     int CurrentRow = 0; //Current Y-Value.
     int ChannelHeight;
@@ -615,7 +615,7 @@ void MapSystem::GameMap::CalculateMapRainfall(bool DebugMessages)
                 {
                     do//right/east
                     {
-                        if(data[ConvertToAbsolute(GridX2, GridY2)].z > SeaLevel);
+                        if(data[ConvertToAbsolute(GridX2, GridY2)].z > SeaLevel)
                         {
                             TempArrayPos2 = ConvertToAbsolute(GridX2, GridY2);
                             if(data[TempArrayPos2].rainfall < RainfallOverlapValue)
@@ -689,7 +689,7 @@ void MapSystem::GameMap::CalculateMapRainfall(bool DebugMessages)
                 {
                     do//left/west
                     {
-                        if(data[ConvertToAbsolute(GridX2, GridY2)].z > SeaLevel);
+                        if(data[ConvertToAbsolute(GridX2, GridY2)].z > SeaLevel)
                         {
                             TempArrayPos2 = ConvertToAbsolute(GridX2, GridY2);
 
@@ -767,7 +767,7 @@ void MapSystem::GameMap::CalculateMapRainfall(bool DebugMessages)
                 {
                     do//up/north
                     {
-                        if(data[ConvertToAbsolute(GridX2, GridY2)].z > SeaLevel);
+                        if(data[ConvertToAbsolute(GridX2, GridY2)].z > SeaLevel)
                         {
                             TempArrayPos2 = ConvertToAbsolute(GridX2, GridY2);
 
@@ -845,7 +845,7 @@ void MapSystem::GameMap::CalculateMapRainfall(bool DebugMessages)
                 {
                     do//down/south
                     {
-                        if(data[ConvertToAbsolute(GridX2, GridY2)].z > SeaLevel);
+                        if(data[ConvertToAbsolute(GridX2, GridY2)].z > SeaLevel)
                         {
                             TempArrayPos2 = ConvertToAbsolute(GridX2, GridY2);
 
@@ -923,7 +923,7 @@ void MapSystem::GameMap::CalculateMapRainfall(bool DebugMessages)
                 {
                     do//upperleft/northwest
                     {
-                        if(data[ConvertToAbsolute(GridX2, GridY2)].z > SeaLevel);
+                        if(data[ConvertToAbsolute(GridX2, GridY2)].z > SeaLevel)
                         {
                             TempArrayPos2 = ConvertToAbsolute(GridX2, GridY2);
 
@@ -1003,7 +1003,7 @@ void MapSystem::GameMap::CalculateMapRainfall(bool DebugMessages)
                 {
                     do//upperright/northeast
                     {
-                        if(data[ConvertToAbsolute(GridX2, GridY2)].z > SeaLevel);
+                        if(data[ConvertToAbsolute(GridX2, GridY2)].z > SeaLevel)
                         {
                             TempArrayPos2 = ConvertToAbsolute(GridX2, GridY2);
 
@@ -1083,7 +1083,7 @@ void MapSystem::GameMap::CalculateMapRainfall(bool DebugMessages)
                 {
                     do//lowerleft/southwest
                     {
-                        if(data[ConvertToAbsolute(GridX2, GridY2)].z > SeaLevel);
+                        if(data[ConvertToAbsolute(GridX2, GridY2)].z > SeaLevel)
                         {
                             TempArrayPos2 = ConvertToAbsolute(GridX2, GridY2);
 
@@ -1163,7 +1163,7 @@ void MapSystem::GameMap::CalculateMapRainfall(bool DebugMessages)
                 {
                     do//lowerright/southeast
                     {
-                        if(data[ConvertToAbsolute(GridX2, GridY2)].z > SeaLevel);
+                        if(data[ConvertToAbsolute(GridX2, GridY2)].z > SeaLevel)
                         {
                             TempArrayPos2 = ConvertToAbsolute(GridX2, GridY2);
 
@@ -1562,12 +1562,12 @@ void MapSystem::GameMap::GenerateTemperatureMap()
         if(data[i].y <= y / 2)
         {
             int TempY = data[i].y;
-            data[i].temperature = ((TemperatureMultiplier * pow(TempY, 2)) + (1 * TempY) + 1) / TemperatureDivisor;
+            data[i].temperature = (float)((TemperatureMultiplier * pow(TempY, 2)) + (1 * TempY) + 1) / TemperatureDivisor;
         }
         else
         {
             int TempY = y - data[i].y;
-            data[i].temperature = ((TemperatureMultiplier * pow(TempY, 2)) + (1 * TempY) + 1) / TemperatureDivisor;
+            data[i].temperature = (float)((TemperatureMultiplier * pow(TempY, 2)) + (1 * TempY) + 1) / TemperatureDivisor;
         }
         if(data[i].temperature > 255)
         {
@@ -1580,7 +1580,7 @@ void MapSystem::GameMap::GenerateTemperatureMap()
     }
 }
 
-void MapSystem::GameMap::ApplyNoiseToRainfall(bool DebugMessages)
+void MapSystem::GameMap::ApplyNoiseToRainfall()
 {
     for(int i = 0; i < MapSize; i++)
     {
@@ -1676,7 +1676,7 @@ void MapSystem::GameMap::ApplyNoiseToTemperature()//Observe differences between 
 {
     for(int i = 0; i < MapSize; i++)
     {
-        int seed2 = time(NULL);
+        int seed2 = (int)time(NULL);
         srand(seed2);
 		
         float NewTemperature = scaled_octave_noise_3d(7.0f, 0.5f, 0.1f, 1.0f, 0.0f, 255.0f, (float)data[i].x, (float)data[i].y, (float)rand());
@@ -1797,7 +1797,7 @@ void MapSystem::GameMap::SmoothNoise(bool DebugMessages)
     std::cout << FunctionSeconds.asSeconds() << " Seconds.";
 }
 
-void MapSystem::GameMap::InterpolateX(bool DebugMessages)
+void MapSystem::GameMap::InterpolateX()
 {
     int GridX = 0;
     int GridY = 0;
@@ -1818,8 +1818,8 @@ void MapSystem::GameMap::InterpolateX(bool DebugMessages)
         int TempArrayPos = ConvertToAbsolute(GridX, GridY);
 
         float TempFloatZX = (float)data[TempArrayPos].z;
-        float var1 = TempFloatZX * 3.1415927;
-        float var2 = (1 - cosf(var1)) * .5;
+        float var1 = TempFloatZX * 3.1415927f;
+        float var2 = (1.0f - cosf(var1)) * 0.5f;
         float var3;
 
         if(CurrentPos > 0)
@@ -1862,7 +1862,7 @@ void MapSystem::GameMap::InterpolateX(bool DebugMessages)
     std::cout <<  FunctionSeconds.asSeconds() << " Seconds.";
 }
 
-void MapSystem::GameMap::InterpolateY(bool DebugMessages)
+void MapSystem::GameMap::InterpolateY()
 {
     int GridX = 0;
     int GridY = 0;
@@ -1883,8 +1883,8 @@ void MapSystem::GameMap::InterpolateY(bool DebugMessages)
         int TempArrayPos = ConvertToAbsolute(GridX, GridY);
 
         float TempFloatZX = (float)data[TempArrayPos].z;
-        float var1 = TempFloatZX * 3.1415927;
-        float var2 = (1 - cosf(var1)) * .5;
+        float var1 = TempFloatZX * 3.1415927f;
+        float var2 = (1.0f - cosf(var1)) * 0.5f;
         float var3;
 
         if(CurrentPos > 0)
@@ -1927,10 +1927,10 @@ void MapSystem::GameMap::InterpolateY(bool DebugMessages)
     std::cout <<  FunctionSeconds.asSeconds() << " Seconds.";
 }
 
-void MapSystem::GameMap::InterpolateBoth(bool DebugMessages)
+void MapSystem::GameMap::InterpolateBoth()
 {
-    InterpolateX(DebugMessages);
-    InterpolateY(DebugMessages);
+    InterpolateX();
+    InterpolateY();
 }
 
 int MapSystem::GameMap::IsCorner(int cx, int cy)
@@ -2052,8 +2052,8 @@ void MapSystem::GameMap::SmoothNoiseOutside(bool DebugMessages)
         TempArrayPos = ConvertToAbsolute(GridX, GridY);
 
         float TempFloatZX = (float)data[TempArrayPos].z;
-        float var1 = TempFloatZX * 3.1415927;
-        float var2 = (1 - cosf(var1)) * .5;
+        float var1 = TempFloatZX * 3.1415927f;
+        float var2 = (1.0f - cosf(var1)) * 0.5f;
         float var3;
 
         if(CurrentPos > 0)
@@ -2085,11 +2085,11 @@ void MapSystem::GameMap::SmoothNoiseOutside(bool DebugMessages)
 
     while(GridX <= XLimit)
     {
-        int TempArrayPos = ConvertToAbsolute(GridX, GridY);
+        TempArrayPos = ConvertToAbsolute(GridX, GridY);
 
         float TempFloatZX = (float)data[TempArrayPos].z;
-        float var1 = TempFloatZX * 3.1415927;
-        float var2 = (1 - cosf(var1)) * .5;
+        float var1 = TempFloatZX * 3.1415927f;
+        float var2 = (1.0f - cosf(var1)) * 0.5f;
         float var3;
 
         if(CurrentPos > 0)
@@ -2121,11 +2121,11 @@ void MapSystem::GameMap::SmoothNoiseOutside(bool DebugMessages)
 
     while(GridY <= YLimit)
     {
-        int TempArrayPos = ConvertToAbsolute(GridX, GridY);
+        TempArrayPos = ConvertToAbsolute(GridX, GridY);
 
         float TempFloatZX = (float)data[TempArrayPos].z;
-        float var1 = TempFloatZX * 3.1415927;
-        float var2 = (1 - cosf(var1)) * .5;
+        float var1 = TempFloatZX * 3.1415927f;
+        float var2 = (1.0f - cosf(var1)) * 0.5f;
         float var3;
 
         if(CurrentPos > 0)
@@ -2157,11 +2157,11 @@ void MapSystem::GameMap::SmoothNoiseOutside(bool DebugMessages)
 
     while(GridY <= YLimit)
     {
-        int TempArrayPos = ConvertToAbsolute(GridX, GridY);
+        TempArrayPos = ConvertToAbsolute(GridX, GridY);
 
         float TempFloatZX = (float)data[TempArrayPos].z;
-        float var1 = TempFloatZX * 3.1415927;
-        float var2 = (1 - cosf(var1)) * .5;
+        float var1 = TempFloatZX * 3.1415927f;
+        float var2 = (1.0f - cosf(var1)) * 0.5f;
         float var3;
 
         if(CurrentPos > 0)
@@ -2396,7 +2396,7 @@ void MapSystem::GameMap::CalculateMapRegions(bool DebugMessages)
     sf::Time FunctionSeconds = FunctionTime.getElapsedTime();
     std::cout <<  FunctionSeconds.asSeconds() << " Seconds.";
 
-    int RegionCount = NatureRegionsContainer.size();
+    int RegionCount = (int)NatureRegionsContainer.size();
     std::cout << "\n\nNumber of Regions: " << RegionCount;
 }
 
@@ -2631,9 +2631,9 @@ void MapSystem::GameMap::SetRiverBaseColor(int Position)
     int finalg = (leftg + rightg + aboveg + belowg + upperleftg + lowerleftg + upperrightg + lowerrightg) / 8;
     int finalb = (leftb + rightb + aboveb + belowb + upperleftb + lowerleftb + upperrightb + lowerrightb) / 8;
 
-    data[Position].BaseColor.r = finalr;
-    data[Position].BaseColor.g = finalg;
-    data[Position].BaseColor.b = finalb;
+    data[Position].BaseColor.r = (char)finalr;
+    data[Position].BaseColor.g = (char)finalg;
+    data[Position].BaseColor.b = (char)finalb;
 }
 
 void MapSystem::GameMap::SetMountainBaseColor(int Position)
@@ -2895,9 +2895,9 @@ void MapSystem::GameMap::SetMountainBaseColor(int Position)
     finalg /= SuccessCount;
     finalb /= SuccessCount;
 
-    data[Position].BaseColor.r = finalr;
-    data[Position].BaseColor.g = finalg;
-    data[Position].BaseColor.b = finalb;
+    data[Position].BaseColor.r = (char)finalr;
+    data[Position].BaseColor.g = (char)finalg;
+    data[Position].BaseColor.b = (char)finalb;
 }
 
 int MapSystem::GameMap::GetDistance(int PositionOne, int PositionTwo)

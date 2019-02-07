@@ -7,46 +7,46 @@ void MapSystem::MapManager::SetAsDefault()
     _y = 256;
 
     _octaves = 7;
-    _persistence = .65;
-    _scale = .0065;
-    _amplitude = 1;
+    _persistence = 0.65f;
+    _scale = 0.0065f;
+    _amplitude = 1.0f;
 
     _CornerSmoothScale = 16;
     _SideSmoothScale = 8;
     _CenterSmoothScale = 1;
     _SeedType = 0;
 
-    _DoMapSmoothing = 0;
-    _DoMapSideSmoothing = 0;
+    _DoMapSmoothing = false;
+    _DoMapSideSmoothing = false;
 
-    _TempLowBound = 273.3;
-    _TempHighBound = 318.15;
+    _TempLowBound = 273.3f;
+    _TempHighBound = 318.15f;
 
-    _TempRange = 0;
-    _TempChangeDelta = 0;
+    _TempRange = 0.0f;
+    _TempChangeDelta = 0.0f;
 
     _HeightOfEquator = 2;
 
-    _RainfallDivisor = 4;
-    _RainfallOverlapValue = 70;
-    _RainfallOverlapMultiplier = 4;
+    _RainfallDivisor = 4.0f;
+    _RainfallOverlapValue = 70.0f;
+    _RainfallOverlapMultiplier = 4.0f;
 
-    _BaseWindRainfall = 135;
-    _PostMountainWindRainfall = 5;
-    _PostWaterWindRainfall = 180;
+    _BaseWindRainfall = 135.0f;
+    _PostMountainWindRainfall = 5.0f;
+    _PostWaterWindRainfall = 180.0f;
 
-    _RainfallIncreaseDelta = 2.5;
-    _RainfallDecreaseDelta = 1.5;
-    _RainfallMultiplier = 6.0;
+    _RainfallIncreaseDelta = 2.5f;
+    _RainfallDecreaseDelta = 1.5f;
+    _RainfallMultiplier = 6.0f;
 
-    _MountainRate1 = 4;
-    _MountainRate2 = 4;
+    _MountainRate1 = 4.0f;
+    _MountainRate2 = 4.0f;
 
-    _LandDecreaseLevel = 28;
-    _MountainDecreaseLevel = 10;
+    _LandDecreaseLevel = 28.0f;
+    _MountainDecreaseLevel = 10.0f;
 
-    _RainfallNoiseThreshold = 170;
-    _HeightTurbulence = 1;
+    _RainfallNoiseThreshold = 170.0f;
+    _HeightTurbulence = true;
 
     _SeaLevel = 130;
     _MountainLevel = 190;
@@ -79,8 +79,8 @@ void MapSystem::MapManager::SetAsDefault()
     _SameMoveRestrictions = 0;
     _DirectionRestrictions = 1;
 
-    _CurrentCount = .01;
-    _Modifier = .01;
+    _CurrentCount = 0.01f;
+    _Modifier = 0.01f;
 
     _MinimumTargetSize = 60;
 

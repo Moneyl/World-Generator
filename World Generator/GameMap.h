@@ -82,7 +82,7 @@ public:
     void FlattenIsolatedWater();
 
     void CalculateRainShadow(bool DebugMessages);
-    void ApplyNoiseToRainfall(bool DebugMessages);
+    void ApplyNoiseToRainfall();
 
     int GetRiverDirection(int Position);
     void SetRiverBaseColor(int Position);
@@ -126,9 +126,9 @@ public:
         SeedType = aSeedType;
     }
 
-    void InterpolateX(bool DebugMessages);
-    void InterpolateY(bool DebugMessages);
-    void InterpolateBoth(bool DebugMessages);
+    void InterpolateX();
+    void InterpolateY();
+    void InterpolateBoth();
 
     void SmoothNoise(bool DebugMessages);
     void SmoothNoiseOutside(bool DebugMessages);

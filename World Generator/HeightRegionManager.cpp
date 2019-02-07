@@ -346,7 +346,7 @@ void MapSystem::HeightRegionManager::CalculateHeightRegions(bool DebugMessages)
     sf::Time FunctionSeconds = FunctionTime.getElapsedTime();
     std::cout <<  FunctionSeconds.asSeconds() << " Seconds.";
 
-    int RegionCount = HeightRegionContainer.size();
+    int RegionCount = (int)HeightRegionContainer.size();
     std::cout << "\n\nNumber of Regions: " << RegionCount;
 }
 
