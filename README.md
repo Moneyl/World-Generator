@@ -64,7 +64,12 @@ It's been several years since I've worked on this project, and I aim to update i
 ### 2.1.0
 - Split world generation into multiple "modules". Ex: heightmap gen, temperature sim, rainfall sim, river gen, erosion sim, tectonics sim, volcanism sim. Should allow for easier mixing and matching of modules to create unique maps. 
 
+### 2.2.0
+- Add node graph allowing users to chain together different noisegen methods or worldgen modules to create their own end result
+- Allow users to define their own color palettes and biomes.
+- Allow users to define a custom height range.
+
 ## Libraries Used 
 - [Dear ImGui](https://github.com/ocornut/imgui)
 - [Json for Modern C++](https://github.com/nlohmann/json)
-- [Libnoise](http://libnoise.sourceforge.net/)
+- [FastNoise](https://github.com/Auburns/FastNoise)
