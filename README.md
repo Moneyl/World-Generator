@@ -72,4 +72,4 @@ It's been several years since I've worked on this project, and I aim to update i
 ## Libraries Used 
 - [Dear ImGui](https://github.com/ocornut/imgui)
 - [Json for Modern C++](https://github.com/nlohmann/json)
-- [Libnoise](http://libnoise.sourceforge.net/)
+- [FastNoise](https://github.com/Auburns/FastNoise)
