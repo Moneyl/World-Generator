@@ -7,6 +7,9 @@
 #include "SFML\window.hpp"
 #include "SFML\system.hpp"
 
+#include "imgui.h"
+#include "imgui-SFML.h"
+
 #include <string>
 #include <map>
 #include <vector>

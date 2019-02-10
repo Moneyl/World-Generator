@@ -1252,6 +1252,7 @@ void ProgramManager::DisplayWindow()
 	UpdateFloatingTextPosition();
 
 	///UIMan.GameGui.draw();//******************************//
+	ImGui::SFML::Render(*CurrentWindow);
 	CurrentWindow->display();
 }
 
