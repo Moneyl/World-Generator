@@ -1600,8 +1600,6 @@ void MapSystem::GameMap::ApplyNoiseToRainfall()
 		NewRainfall *= 127.5f; //Multiply by 127.5f to make maximum 255.0f
 		NewRainfall = (NewRainfall + data[i].rainfall) / 2.0f;
 
-        //float NewRainfall = scaled_octave_noise_3d(1, .9, .1, 1, 0, 255, data[i].x, data[i].y, data[i].rainfall); //Neat rainfall noise, possibly looks more realistic.
-
         if(data[i].rainfall < 70)
         {
             if(data[i].rainfall + (NewRainfall / 4) <= 255)
