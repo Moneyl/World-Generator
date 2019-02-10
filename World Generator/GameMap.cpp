@@ -18,19 +18,17 @@ void MapSystem::GameMap::GenerateHeightMap()
         Seed = SeedType;
     }
 
-    for(int i = 0; i < (x * y) - 1; i++)
-    {
-        srand(Seed);
-        data[i].z = static_cast<int>(rand() * rand() * SeedModifier);
-    }
-
+	FastNoise HeightMapNoise1;
+	HeightMapNoise1.SetNoiseType(FastNoise::SimplexFractal);
+	HeightMapNoise1.SetFractalOctaves(octaves);
+	HeightMapNoise1.SetFractalLacunarity(persistence);
+	HeightMapNoise1.SetFractalGain(scale);
     for(int i = 0; i < MapSize; i++)
     {
-        //float NewHeight = scaled_octave_noise_3d(1, .2, .1, 1, 0, 255, data[i].x, data[i].y, data[i].z);
-        float NewHeight = scaled_octave_noise_3d(octaves, persistence, scale, 
-			amplitude, 0.0f, 255.0f, (float)data[i].x, (float)data[i].y, (float)data[i].z);
-
-        data[i].z = static_cast<int> (NewHeight);
+		float NewHeight = HeightMapNoise1.GetNoise((float)data[i].x, (float)data[i].y);
+		NewHeight += 1.0f; //Add 1.0f to make the minimum 0.0f instead of -1.0f
+		NewHeight *= 127.5f; //Multiply by 127.5f to make maximum 255.0f
+		data[i].z = (int)NewHeight;
     }
 
     if(SeedModifier < 1.0f)
@@ -48,10 +46,16 @@ void MapSystem::GameMap::GenerateHeightMap()
 
 void MapSystem::GameMap::Turbulence()
 {
+	FastNoise TurbulenceNoise1;
+	TurbulenceNoise1.SetNoiseType(FastNoise::SimplexFractal);
+	TurbulenceNoise1.SetFractalOctaves(15.0f);
+	TurbulenceNoise1.SetFractalLacunarity(0.99f);
+	TurbulenceNoise1.SetFractalGain(0.005f);
     for(int i = 0; i < MapSize; i++)
     {
-        float NewHeight = scaled_octave_noise_3d(15.0f, 0.99f, 0.005f, 1.0f, 
-			0.0f, 255.0f, (float)data[i].x, (float)data[i].y, (float)data[i].z);
+		float NewHeight = TurbulenceNoise1.GetNoise((float)data[i].x, (float)data[i].y);
+		NewHeight += 1.0f; //Add 1.0f to make the minimum 0.0f instead of -1.0f
+		NewHeight *= 127.5f; //Multiply by 127.5f to make maximum 255.0f
 
         if(data[i].z > SeaLevel)
         {
@@ -546,7 +550,7 @@ void MapSystem::GameMap::SetWindAngles()
 
 void MapSystem::GameMap::ApplyNoiseToWindAngles()
 {
-    for(int i = 0; i < (x * y) - 1; i++)
+    /*for(int i = 0; i < (x * y) - 1; i++)
     {
         int Noise = static_cast<int>(rand() * scaled_octave_noise_3d(15.0f, 
 			0.99f, 0.005f, 1.0f, 0.0f, (float)MaximumNoiseAngle, 
@@ -554,7 +558,7 @@ void MapSystem::GameMap::ApplyNoiseToWindAngles()
 			(float)data[i].x)) % MaximumNoiseAngle;
 
         data[i].WindAngle += Noise;
-    }
+    }*/
 }
 
 void MapSystem::GameMap::CalculateMapRainfall(bool DebugMessages)
@@ -1584,11 +1588,18 @@ void MapSystem::GameMap::GenerateTemperatureMap()
 
 void MapSystem::GameMap::ApplyNoiseToRainfall()
 {
+	FastNoise RainfallNoise1;
+	RainfallNoise1.SetNoiseType(FastNoise::SimplexFractal);
+	RainfallNoise1.SetFractalOctaves(1.0f);
+	RainfallNoise1.SetFractalLacunarity(0.9f);
+	RainfallNoise1.SetFractalGain(0.1f);
     for(int i = 0; i < MapSize; i++)
     {
-        float NewRainfall = scaled_octave_noise_3d(1.0f, 0.1f, 0.01f, 1.0f, 
-			0.0f, 255.0f, (float)data[i].x, (float)data[i].y, 
-			(float)data[i].rainfall);
+		float NewRainfall = RainfallNoise1.GetNoise((float)data[i].x, (float)data[i].y);
+		NewRainfall += 1.0f; //Add 1.0f to make the minimum 0.0f instead of -1.0f
+		NewRainfall *= 127.5f; //Multiply by 127.5f to make maximum 255.0f
+		NewRainfall = (NewRainfall + data[i].rainfall) / 2.0f;
+
         //float NewRainfall = scaled_octave_noise_3d(1, .9, .1, 1, 0, 255, data[i].x, data[i].y, data[i].rainfall); //Neat rainfall noise, possibly looks more realistic.
 
         if(data[i].rainfall < 70)
@@ -1676,12 +1687,20 @@ void MapSystem::GameMap::SmoothRainfall()
 
 void MapSystem::GameMap::ApplyNoiseToTemperature()//Observe differences between this and rainfall noise to improve noise for both
 {
+	FastNoise TemperatureNoise1;
+	TemperatureNoise1.SetNoiseType(FastNoise::SimplexFractal);
+	TemperatureNoise1.SetFractalOctaves(7.0f);
+	TemperatureNoise1.SetFractalLacunarity(0.5f);
+	TemperatureNoise1.SetFractalGain(0.1f);
     for(int i = 0; i < MapSize; i++)
     {
         int seed2 = (int)time(NULL);
         srand(seed2);
 		
-        float NewTemperature = scaled_octave_noise_3d(7.0f, 0.5f, 0.1f, 1.0f, 0.0f, 255.0f, (float)data[i].x, (float)data[i].y, (float)rand());
+		float NewTemperature = TemperatureNoise1.GetNoise((float)data[i].x, (float)data[i].y);
+		NewTemperature += 1.0f; //Add 1.0f to make the minimum 0.0f instead of -1.0f
+		NewTemperature *= 127.5f; //Multiply by 127.5f to make maximum 255.0f
+		NewTemperature = (NewTemperature + data[i].rainfall) / 2.0f;
 
         if(data[i].temperature + (NewTemperature / 4) < 255)
         {

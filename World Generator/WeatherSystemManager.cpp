@@ -82,7 +82,7 @@ void MapSystem::WeatherSystemManager::SetWindAngles()
 
 void MapSystem::WeatherSystemManager::ApplyNoiseToWindAngles()
 {
-    for(int i = 0; i < (CurrentMap->x * CurrentMap->y) - 1; i++)
+    /*for(int i = 0; i < (CurrentMap->x * CurrentMap->y) - 1; i++)
     {
         int Noise = static_cast<int>(rand() * scaled_octave_noise_3d(15.0f,
 			0.99f, 0.005f, 1.0f, 0.0f, (float)MaximumNoiseAngle, 
@@ -90,7 +90,7 @@ void MapSystem::WeatherSystemManager::ApplyNoiseToWindAngles()
 			(float)CurrentMap->data[i].x)) % MaximumNoiseAngle;
 
         CurrentMap->data[i].WindAngle += Noise;
-    }
+    }*/
 }
 
 int MapSystem::WeatherSystemManager::AddSystem()

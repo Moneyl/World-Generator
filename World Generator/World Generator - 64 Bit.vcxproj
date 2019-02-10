@@ -87,7 +87,7 @@
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>./include/ImGui-SFML;./include/ImGui;./include/SFML;./include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./include/FastNoise;./include/ImGui-SFML;./include/ImGui;./include/SFML;./include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <DisableLanguageExtensions>false</DisableLanguageExtensions>
@@ -98,7 +98,7 @@
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>./include/ImGui-SFML;./include/ImGui;./include/SFML;./include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./include/FastNoise;./include/ImGui-SFML;./include/ImGui;./include/SFML;./include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>SFML_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -116,7 +116,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>./include/ImGui-SFML;./include/ImGui;./include/SFML;./include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./include/FastNoise;./include/ImGui-SFML;./include/ImGui;./include/SFML;./include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <DisableLanguageExtensions>false</DisableLanguageExtensions>
@@ -133,7 +133,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>./include/ImGui-SFML;./include/ImGui;./include/SFML;./include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./include/FastNoise;./include/ImGui-SFML;./include/ImGui;./include/SFML;./include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>SFML_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -153,6 +153,7 @@
     <ClInclude Include="HeightRegion.h" />
     <ClInclude Include="HeightRegionInfo.h" />
     <ClInclude Include="HeightRegionManager.h" />
+    <ClInclude Include="include\FastNoise\FastNoise.h" />
     <ClInclude Include="include\ImGui\imconfig.h" />
     <ClInclude Include="include\ImGui\imgui.h" />
     <ClInclude Include="include\ImGui\imgui_internal.h" />
@@ -162,7 +163,6 @@
     <ClInclude Include="include\ImGui\imstb_truetype.h" />
     <ClInclude Include="NatureRegion.h" />
     <ClInclude Include="ProgramManager.h" />
-    <ClInclude Include="SimplexNoise.h" />
     <ClInclude Include="StaticTextManager.h" />
     <ClInclude Include="TextManager.h" />
     <ClInclude Include="Tileset.h" />
@@ -175,6 +175,7 @@
     <ClCompile Include="HeightRegion.cpp" />
     <ClCompile Include="HeightRegionInfo.cpp" />
     <ClCompile Include="HeightRegionManager.cpp" />
+    <ClCompile Include="include\FastNoise\FastNoise.cpp" />
     <ClCompile Include="include\ImGui-SFML\imgui-SFML.cpp" />
     <ClCompile Include="include\ImGui\imgui.cpp" />
     <ClCompile Include="include\ImGui\imgui_demo.cpp" />
@@ -187,7 +188,6 @@
     <ClCompile Include="River.cpp" />
     <ClCompile Include="RiverGenerator.cpp" />
     <ClCompile Include="RiverManager.cpp" />
-    <ClCompile Include="SimplexNoise.cpp" />
     <ClCompile Include="StaticTextManager.cpp" />
     <ClCompile Include="TextManager.cpp" />
     <ClCompile Include="Tileset.cpp" />

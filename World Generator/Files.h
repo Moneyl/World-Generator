@@ -29,4 +29,5 @@
 namespace fs = std::filesystem;
 using json = nlohmann::json;
 
+#include <FastNoise.h>
 #endif // FILES_H
