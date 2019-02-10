@@ -40,6 +40,7 @@ int main()
 	MainWindow.setVerticalSyncEnabled(Program.VSync);
 	Program.CurrentWindow = &MainWindow;
 	Program.StartStateManager();
+	Program.EnterWorldGen();
 
 	sf::Clock LoopTimer;
 	sf::Time DeltaTime;
