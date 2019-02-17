@@ -196,5 +196,5 @@ void MapSystem::MapManager::Reset()
     std::cout << "\n\nRegion Count After Reset: " << MainMap.NatureRegionsContainer.size();
     std::cout << "\nHeight Region Count After Reset: " << MainHRM.HeightRegionContainer.size();
     std::cout << "\nWater Region Count After Reset: " << MainWRM.ContainedRegions.size();
-    std::cout << "\nRiver Count After Reset: " << MainRM.ContainedRivers.size();
+    std::cout << "\nRiver Count After Reset: " << MainRM.ContainedRivers.size() << "\n";
 }

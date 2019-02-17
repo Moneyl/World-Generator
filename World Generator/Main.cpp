@@ -95,17 +95,27 @@ int main()
 			ImGui::ShowDemoWindow(&DrawDemoWindow);
 		}
 
-		if (!ImGui::Begin("Main Menu", &DrawMainMenu))
+		if (!ImGui::Begin("World Gen Settings", &DrawMainMenu))
 		{
 			ImGui::End();
 		}
 		else
 		{
-			ImGui::Text("I'm the main menu!");
-			if (ImGui::Button("I'm a button!"))
+			ImGui::InputFloat("Height Octaves", &Program.MMan._octaves, 0.01f, 0.1f, 3);
+			ImGui::InputFloat("Height Persistence", &Program.MMan._persistence, 0.01f, 0.1f, 3);
+			ImGui::InputFloat("Height Scale", &Program.MMan._scale, 0.01f, 0.1f, 3);
+
+			if (ImGui::Button("Generate"))
 			{
-				std::cout << "Button pressed!\n";
+				if (Program.CurrentState == ProgramManager::WorldGen)
+				{
+					Program.ResetWorldGen();
+					std::cout << "World Generator Reset" << std::endl;
+					Program.CommenceWorldGen();
+					std::cout << "World Generator Commenced" << std::endl;
+				}
 			}
+
 			ImGui::End();
 		}
 		

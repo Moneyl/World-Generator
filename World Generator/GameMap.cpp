@@ -19,6 +19,7 @@ void MapSystem::GameMap::GenerateHeightMap()
     }
 
 	FastNoise HeightMapNoise1;
+	HeightMapNoise1.SetSeed(time(NULL));
 	HeightMapNoise1.SetNoiseType(FastNoise::SimplexFractal);
 	HeightMapNoise1.SetFractalOctaves(octaves);
 	HeightMapNoise1.SetFractalLacunarity(persistence);

@@ -2217,7 +2217,7 @@ void ProgramManager::CommenceWorldGen()
 	sf::Clock FunctionTime;
 	FunctionTime.restart();
 	///UIMan.WGProgressBar->setText("Generating height map.");
-	DisplayWindow();
+	///DisplayWindow();
 	MMan.MainMap.GenerateHeightMap();
 
 	SetTileWindowPositions();//Set positions for tiles since this is the first point at which they exist.
@@ -2236,7 +2236,7 @@ void ProgramManager::CommenceWorldGen()
 	{
 		FunctionTime.restart();
 		///UIMan.WGProgressBar->setText("Applying turbulence to height map.");
-		DisplayWindow();
+		///DisplayWindow();
 		MMan.MainMap.Turbulence();
 		Draw();
 		SetupMapSprite();
@@ -2258,7 +2258,7 @@ void ProgramManager::CommenceWorldGen()
 	{
 		FunctionTime.restart();
 		///UIMan.WGProgressBar->setText("Smoothing map.");
-		DisplayWindow();
+		//DisplayWindow();
 		MMan.MainMap.SmoothNoise(0);
 		Draw();
 		SetupMapSprite();
@@ -2280,7 +2280,7 @@ void ProgramManager::CommenceWorldGen()
 	{
 		FunctionTime.restart();
 		///UIMan.WGProgressBar->setText("Smoothing map sides.");
-		DisplayWindow();
+		//DisplayWindow();
 		MMan.MainMap.SmoothNoiseOutside(0);
 		MMan.MainMap.SmoothNoiseOutside(0);
 		SetupMapSprite();
@@ -2300,7 +2300,7 @@ void ProgramManager::CommenceWorldGen()
 
 	FunctionTime.restart();
 	///UIMan.WGProgressBar->setText("Flattening small water bodies.");
-	DisplayWindow();
+	//DisplayWindow();
 	MMan.MainWRM.CalculateWaterRegions(0);
 	MMan.MainWRM.FlattenSmallWaterBodies();
 	MMan.MainWRM.ClearWaterRegions();
@@ -2316,7 +2316,7 @@ void ProgramManager::CommenceWorldGen()
 
 	FunctionTime.restart();
 	///UIMan.WGProgressBar->setText("Generating rivers.");
-	DisplayWindow();
+	//DisplayWindow();
 	MMan.MainRM.GenerateRivers(0);
 	Draw();
 	///UIMan.WGProgressBar->incrementValue();
@@ -2329,7 +2329,7 @@ void ProgramManager::CommenceWorldGen()
 
 	FunctionTime.restart();
 	///UIMan.WGProgressBar->setText("Calculating height regions.");
-	DisplayWindow();
+	//DisplayWindow();
 	MMan.MainHRM.CalculateHeightRegions(0);//Threadable
 	Draw();
 	///UIMan.WGProgressBar->incrementValue();
@@ -2342,7 +2342,7 @@ void ProgramManager::CommenceWorldGen()
 
 	FunctionTime.restart();
 	///UIMan.WGProgressBar->setText("Generating temperature map.");
-	DisplayWindow();
+	//DisplayWindow();
 	MMan.MainMap.GenerateTemperatureMap();//Threadable
 	MMan.MainMap.ApplyNoiseToTemperature();
 	Draw();
@@ -2356,7 +2356,7 @@ void ProgramManager::CommenceWorldGen()
 
 	FunctionTime.restart();
 	///UIMan.WGProgressBar->setText("Generating rainshadow.");
-	DisplayWindow();
+	//DisplayWindow();
 
 	MMan.MainMap.CalculateRainShadow(0);//Threadable
 	MMan.MainMap.SmoothRainfall();
@@ -2386,7 +2386,7 @@ void ProgramManager::CommenceWorldGen()
 
 	FunctionTime.restart();
 	///UIMan.WGProgressBar->setText("Setting tile biomes.");
-	DisplayWindow();
+	//DisplayWindow();
 	MMan.MainMap.SetTileBiomes();
 	Draw();
 	///UIMan.WGProgressBar->incrementValue();
@@ -2399,7 +2399,7 @@ void ProgramManager::CommenceWorldGen()
 
 	FunctionTime.restart();
 	///UIMan.WGProgressBar->setText("Calculating Map regions.");
-	DisplayWindow();
+	//DisplayWindow();
 	MMan.MainMap.CalculateMapRegions(0);
 	Draw();
 	///UIMan.WGProgressBar->incrementValue();
