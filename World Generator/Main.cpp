@@ -39,6 +39,8 @@ int main()
 	}
 	MainWindow.setVerticalSyncEnabled(Program.VSync);
 	Program.CurrentWindow = &MainWindow;
+	Program.Gui.Program = &Program;
+	Program.Gui.MMan = &Program.MMan; //Todo: Move these pointer inits into a program init function
 	Program.StartStateManager();
 	Program.EnterWorldGen();
 
@@ -49,7 +51,7 @@ int main()
 	sf::Event GameEvent;
 
 	bool DrawDemoWindow = true;
-	bool DrawMainMenu = true;
+	bool DrawWorldGenSettings = true;
 	ImGui::SFML::Init(MainWindow);
 	while(MainWindow.isOpen())
 	{
@@ -95,32 +97,8 @@ int main()
 			ImGui::ShowDemoWindow(&DrawDemoWindow);
 		}
 
-		if (!ImGui::Begin("World Gen Settings", &DrawMainMenu))
-		{
-			ImGui::End();
-		}
-		else
-		{
-			ImGui::InputFloat("Height Octaves", &Program.MMan._octaves, 0.01f, 0.1f, 3);
-			ImGui::InputFloat("Height Persistence", &Program.MMan._persistence, 0.01f, 0.1f, 3);
-			ImGui::InputFloat("Height Scale", &Program.MMan._scale, 0.01f, 0.1f, 3);
-
-			if (ImGui::Button("Generate"))
-			{
-				if (Program.CurrentState == ProgramManager::WorldGen)
-				{
-					Program.ResetWorldGen();
-					std::cout << "World Generator Reset" << std::endl;
-					Program.CommenceWorldGen();
-					std::cout << "World Generator Commenced" << std::endl;
-				}
-			}
-
-			ImGui::End();
-		}
-		
+		Program.Gui.Draw("World gen settings", &DrawWorldGenSettings);
 		ImGui::EndFrame();
-		//End of gui drawing code
 		Program.DisplayWindow();
 
 		CurrentFrame = LoopTimer.getElapsedTime();

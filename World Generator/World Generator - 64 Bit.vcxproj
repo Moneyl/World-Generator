@@ -150,6 +150,7 @@
     <ClInclude Include="Files.h" />
     <ClInclude Include="GameMap.h" />
     <ClInclude Include="Globals.h" />
+    <ClInclude Include="GuiManager.h" />
     <ClInclude Include="HeightRegion.h" />
     <ClInclude Include="HeightRegionInfo.h" />
     <ClInclude Include="HeightRegionManager.h" />
@@ -166,12 +167,12 @@
     <ClInclude Include="StaticTextManager.h" />
     <ClInclude Include="TextManager.h" />
     <ClInclude Include="Tileset.h" />
-    <ClInclude Include="UIManager.h" />
     <ClInclude Include="WorldTile.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameMap.cpp" />
     <ClCompile Include="Globals.cpp" />
+    <ClCompile Include="GuiManager.cpp" />
     <ClCompile Include="HeightRegion.cpp" />
     <ClCompile Include="HeightRegionInfo.cpp" />
     <ClCompile Include="HeightRegionManager.cpp" />
@@ -191,7 +192,6 @@
     <ClCompile Include="StaticTextManager.cpp" />
     <ClCompile Include="TextManager.cpp" />
     <ClCompile Include="Tileset.cpp" />
-    <ClCompile Include="UIManager.cpp" />
     <ClCompile Include="WaterRegion.cpp" />
     <ClCompile Include="WaterRegionManager.cpp" />
     <ClCompile Include="WeatherSystem.cpp" />
@@ -202,7 +202,6 @@
     <ResourceCompile Include="resource.rc" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="DefaultWorld.json" />
     <None Include="Settings.json" />
     <None Include="TileFragment.frag" />
     <None Include="TileVertex.vert" />
@@ -210,9 +209,6 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="IconTwo.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="Todo.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

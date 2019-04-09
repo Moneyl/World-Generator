@@ -1,7 +1,7 @@
 #include "Tileset.h"
 #include "GameMap.h"
 #include "StaticTextManager.h"
-#include "UIManager.h"
+#include "GuiManager.h"
 //#include "Globals.h"
 
 class TileShader
@@ -232,6 +232,7 @@ public:
 	MapSystem::WaterRegionManager* CurrentWRM;
 	MapSystem::HeightRegionManager* CurrentHRM;
 	MapSystem::MapManager MMan;
+	GuiManager Gui;
 
 	sf::Texture MenuBackgroundTexture;
 	sf::Sprite BackgroundSprite;

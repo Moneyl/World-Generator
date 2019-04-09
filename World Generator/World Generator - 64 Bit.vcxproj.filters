@@ -48,9 +48,6 @@
     <ClInclude Include="Tileset.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="UIManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="WorldTile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -76,6 +73,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\FastNoise\FastNoise.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GuiManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -119,9 +119,6 @@
     <ClCompile Include="Tileset.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="UIManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="WaterRegion.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -161,6 +158,9 @@
     <ClCompile Include="include\FastNoise\FastNoise.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GuiManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc">
@@ -168,7 +168,6 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="DefaultWorld.json" />
     <None Include="Settings.json" />
     <None Include="TileFragment.frag" />
     <None Include="TileVertex.vert" />
@@ -178,8 +177,5 @@
     <Image Include="IconTwo.ico">
       <Filter>Resource Files</Filter>
     </Image>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="Todo.txt" />
   </ItemGroup>
 </Project>
