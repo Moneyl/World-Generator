@@ -6,6 +6,8 @@ A procedural world generator initially inspired by Dwarf Fortress. This was my f
 The generator first creates a height map using simplex noise, and then applies temperature, rainfall, and river simulations to it to form a world map. It represents the final world as a 2D map and has options for multiple map views, including the biome map, heightmap, temperature map, rainfall map, region map, water region map, and more.
 
 ## Gallery
+This is a gallery of some select maps that had good generation results. The default generation settings might not create maps exactly like these without tweaks. The old noise library was replaced with something more versatile and generation settings that fit the old ones exactly haven't been found yet.
+
 ![alt text](https://github.com/Moneyl/World-Generator/blob/master/Github%20Images/World_Generator_Sbvg45lKoY.png "Shaded biome map 400x256 world. blue = ocean, dark green = forests, light green = grasslands, sand colored = desert, golden = savannha.")
 Shaded biome map for a 400x256 world. blue = ocean, dark green = forests, light green = grasslands, sand colored = desert, golden = savannha.
 
