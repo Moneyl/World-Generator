@@ -1,5 +1,7 @@
 # World Generator
-A procedural world generator initially inspired by Dwarf Fortress. This was my first large programming project so the code is pretty bad and has several multi-thousand LOC files, a mess of classes and functions, and poor documentation. I don't plan on working on this again any time soon, just keeping this here so I don't lose it if I decide to pick the project up again.
+Archived as the code is a big mess and it'd be easier to start from scratch than to clean up this code.
+
+A procedural world generator initially inspired by Dwarf Fortress. This was my first large programming project so the code is pretty bad and has several multi-thousand LOC files, a mess of classes and functions, and poor documentation. I don't plan on working on this again any time soon, just keeping this here as a backup and as a good reminder for myself on how not to design software.
 
 The generator first creates a height map using simplex noise, and then applies temperature, rainfall, and river simulations to it to form a world map. It represents the final world as a 2D map and has options for multiple map views, including the biome map, heightmap, temperature map, rainfall map, region map, water region map, and more.
 
