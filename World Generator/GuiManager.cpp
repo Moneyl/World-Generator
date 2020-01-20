@@ -31,36 +31,45 @@ void GuiManager::Draw(const char* Title, bool* OpenState)
 			std::cout << "World Generator Commenced" << std::endl;
 		}
 	}
+	ImGui::SameLine();
+	if(ImGui::Button("Reset generator settings"))
+	{
+		if (Program->CurrentState == ProgramManager::WorldGen)
+		{
+			Program->MMan.SetAsDefault();
+		}
+	}
 
 	ImGui::Separator();
 	ImGui::Text("Height map settings:");
 	ImGui::Separator();
 	ImGui::PushItemWidth(GuiInputWidth);
 	ImGui::InputInt("Seed", &MMan->_Seed);
-	ImGui::PushItemWidth(GuiInputWidth);
+	//ImGui::PushItemWidth(GuiInputWidth);
 	ImGui::InputInt("Map width", &MMan->_x);
-	ImGui::PushItemWidth(GuiInputWidth);
+	//ImGui::PushItemWidth(GuiInputWidth);
 	ImGui::InputInt("Map height", &MMan->_y);
-	ImGui::PushItemWidth(GuiInputWidth);
+	//ImGui::PushItemWidth(GuiInputWidth);
 	ImGui::InputFloat("Height Octaves", &MMan->_octaves, 0.01f, 0.1f, 3);
-	ImGui::PushItemWidth(GuiInputWidth);
+	//ImGui::PushItemWidth(GuiInputWidth);
 	ImGui::InputFloat("Height Persistence", &MMan->_persistence, 0.01f, 0.1f, 3);
-	ImGui::PushItemWidth(GuiInputWidth);
+	//ImGui::PushItemWidth(GuiInputWidth);
 	ImGui::InputFloat("Height Scale", &MMan->_scale, 0.01f, 0.1f, 3);
+	ImGui::InputFloat("Height frequency", &NoiseFrequency, 0.01f, 0.1f, 3);
 	ImGui::Checkbox("Height turbulence", &MMan->_HeightTurbulence);
-	ImGui::PushItemWidth(GuiInputWidth);
+	//ImGui::PushItemWidth(GuiInputWidth);
 	ImGui::InputInt("Sea level", &MMan->_SeaLevel);
-	ImGui::PushItemWidth(GuiInputWidth);
+	//ImGui::PushItemWidth(GuiInputWidth);
 	ImGui::InputInt("Mountain level", &MMan->_MountainLevel);
-	ImGui::PushItemWidth(GuiInputWidth);
+	//ImGui::PushItemWidth(GuiInputWidth);
 	ImGui::InputInt("Snow level", &MMan->_SnowLevel);
-	ImGui::PushItemWidth(GuiInputWidth);
+	//ImGui::PushItemWidth(GuiInputWidth);
 	ImGui::InputFloat("Mountain rate 1", &MMan->_MountainRate1);
-	ImGui::PushItemWidth(GuiInputWidth);
+	//ImGui::PushItemWidth(GuiInputWidth);
 	ImGui::InputFloat("Mountain rate 2", &MMan->_MountainRate2);
-	ImGui::PushItemWidth(GuiInputWidth);
+	//ImGui::PushItemWidth(GuiInputWidth);
 	ImGui::InputFloat("Land decrease level", &MMan->_LandDecreaseLevel);
-	ImGui::PushItemWidth(GuiInputWidth);
+	//ImGui::PushItemWidth(GuiInputWidth);
 	ImGui::InputFloat("Mountain decrease level", &MMan->_MountainDecreaseLevel);
 
 	ImGui::Separator();

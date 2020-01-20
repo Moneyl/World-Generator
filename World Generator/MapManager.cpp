@@ -1,14 +1,17 @@
 #include "GameMap.h"
 #include "Files.h"
 
+//Todo: Make this code for managing settings less of a maintenance hell
 void MapSystem::MapManager::SetAsDefault()
 {
+    ProfileName = "Default World Gen";
+
     _x = 400;
     _y = 256;
 
     _octaves = 7;
-    _persistence = 0.65f;
-    _scale = 0.0065f;
+    _persistence = 2.38f;
+    _scale = 0.55f;
     _amplitude = 1.0f;
 
     _CornerSmoothScale = 16;
@@ -89,6 +92,7 @@ void MapSystem::MapManager::SetAsDefault()
 
 void MapSystem::MapManager::SetParameters()
 {
+    //Todo: Rework this when settings files are redone. 
     //MainMap.MapWidth = _MapWidth;
     //MainMap.MapHeight = _MapHeight;
 

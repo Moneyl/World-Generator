@@ -1,5 +1,11 @@
 #include "GameMap.h"
 
+const FastNoise::NoiseType TotalNoise =                   FastNoise::SimplexFractal;
+const FastNoise::NoiseType HeightMapNoiseType =           TotalNoise;
+const FastNoise::NoiseType HeightMapTurbulenceNoiseType = TotalNoise;
+const FastNoise::NoiseType RainfallNoiseType =            TotalNoise;
+const FastNoise::NoiseType TemperatureNoiseType =         TotalNoise;
+
 void MapSystem::GameMap::GenerateHeightMap()
 {
     SetWorldTileCoordinates();
@@ -20,10 +26,12 @@ void MapSystem::GameMap::GenerateHeightMap()
 
 	FastNoise HeightMapNoise1;
 	HeightMapNoise1.SetSeed(time(NULL));
-	HeightMapNoise1.SetNoiseType(FastNoise::SimplexFractal);
+	HeightMapNoise1.SetNoiseType(HeightMapNoiseType);
 	HeightMapNoise1.SetFractalOctaves(octaves);
 	HeightMapNoise1.SetFractalLacunarity(persistence);
 	HeightMapNoise1.SetFractalGain(scale);
+    HeightMapNoise1.SetFrequency(NoiseFrequency);
+
     for(int i = 0; i < MapSize; i++)
     {
 		float NewHeight = HeightMapNoise1.GetNoise((float)data[i].x, (float)data[i].y);
@@ -48,10 +56,12 @@ void MapSystem::GameMap::GenerateHeightMap()
 void MapSystem::GameMap::Turbulence()
 {
 	FastNoise TurbulenceNoise1;
-	TurbulenceNoise1.SetNoiseType(FastNoise::SimplexFractal);
-	TurbulenceNoise1.SetFractalOctaves(15.0f);
-	TurbulenceNoise1.SetFractalLacunarity(0.99f);
-	TurbulenceNoise1.SetFractalGain(0.005f);
+	TurbulenceNoise1.SetNoiseType(HeightMapTurbulenceNoiseType);
+	TurbulenceNoise1.SetFractalOctaves(7);
+	TurbulenceNoise1.SetFractalLacunarity(2.0f);
+	TurbulenceNoise1.SetFractalGain(0.5f);
+    TurbulenceNoise1.SetFrequency(NoiseFrequency * 1.4f);
+
     for(int i = 0; i < MapSize; i++)
     {
 		float NewHeight = TurbulenceNoise1.GetNoise((float)data[i].x, (float)data[i].y);
@@ -1590,7 +1600,7 @@ void MapSystem::GameMap::GenerateTemperatureMap()
 void MapSystem::GameMap::ApplyNoiseToRainfall()
 {
 	FastNoise RainfallNoise1;
-	RainfallNoise1.SetNoiseType(FastNoise::SimplexFractal);
+	RainfallNoise1.SetNoiseType(RainfallNoiseType);
 	RainfallNoise1.SetFractalOctaves(1.0f);
 	RainfallNoise1.SetFractalLacunarity(0.9f);
 	RainfallNoise1.SetFractalGain(0.1f);
@@ -1687,7 +1697,7 @@ void MapSystem::GameMap::SmoothRainfall()
 void MapSystem::GameMap::ApplyNoiseToTemperature()//Observe differences between this and rainfall noise to improve noise for both
 {
 	FastNoise TemperatureNoise1;
-	TemperatureNoise1.SetNoiseType(FastNoise::SimplexFractal);
+	TemperatureNoise1.SetNoiseType(TemperatureNoiseType);
 	TemperatureNoise1.SetFractalOctaves(7.0f);
 	TemperatureNoise1.SetFractalLacunarity(0.5f);
 	TemperatureNoise1.SetFractalGain(0.1f);

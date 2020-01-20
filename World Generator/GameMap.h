@@ -1,6 +1,8 @@
 //#include "Files.h"
 #include "WorldTile.h"
 
+static float NoiseFrequency = 0.005f;
+
 namespace MapSystem
 {
 
@@ -560,7 +562,7 @@ public:
 class MapManager
 {
 public:
-    MapManager() {};
+    MapManager() { SetAsDefault(); };
     ~MapManager() {};
 
     GameMap MainMap;
@@ -577,7 +579,7 @@ public:
     //MAP GEN PARAMETERS - Start as default values.
     //Main Map Parameters:
 
-    std::string ProfileName;
+    std::string ProfileName = "Default World Gen";
 
     int _x = 400;
     int _y = 256;
